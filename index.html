@@ -442,6 +442,22 @@
   .bn-item.active{color:var(--accent)}
   .bn-item .ic{font-size:18px}
   body{padding-bottom:72px}
+
+  /* ===== Process Points Panel ===== */
+  .pp-panel{background:linear-gradient(135deg,rgba(124,77,255,.10),rgba(0,229,255,.06));border:1px solid var(--border-2);border-radius:14px;padding:14px;margin-top:14px}
+  .pp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+  .pp-title{font-size:12px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+  .pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .pp-card{background:rgba(10,16,32,.65);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;transition:all .2s;position:relative;overflow:hidden}
+  .pp-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .pp-card .pp-name{font-size:10.5px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.3px;margin-bottom:4px}
+  .pp-card .pp-count{font-size:18px;font-weight:800;color:var(--accent);font-family:"Orbitron",sans-serif;margin-bottom:2px}
+  .pp-card .pp-value{font-size:11px;color:#ffd700;font-family:"JetBrains Mono",monospace;margin-bottom:2px}
+  .pp-card .pp-coins{font-size:10.5px;color:var(--accent-3);font-weight:600;margin-bottom:6px}
+  .pp-card .pp-rate{font-size:9px;color:var(--muted);margin-bottom:6px;line-height:1.4}
+  .pp-total-bar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:10px 12px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:10px}
+  .pp-total-bar .lbl{font-size:11px;color:var(--muted);font-family:"Orbitron",sans-serif}
+  .pp-total-bar .val{font-size:18px;font-weight:800;color:#ffd700;font-family:"Orbitron",sans-serif}
 </style>
 </head>
 <body>
@@ -744,8 +760,8 @@
           <div class="pay-method">
             <div class="pm-logo">🏦</div>
             <div class="pm-name">BRI</div>
-            <div class="pm-desc">Bank Rakyat · No. Rek</div>
-            <input type="text" class="pay-input" id="rek-BRI" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
+            <div class="pm-desc">Bank Rakyat · No. Rek 15 digit</div>
+            <input type="text" class="pay-input" id="rek-BRI" placeholder="15 digit rekening BRI" maxlength="16" oninput="updateRedeemButtons()">
             <button class="redeem-btn" disabled onclick="startRedeem('BRI')">Cairkan</button>
           </div>
           <div class="pay-method">
@@ -757,6 +773,75 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Process Points → Coin Conversion Panel -->
+    <div class="pp-panel">
+      <div class="pp-head">
+        <div class="pp-title">⚡ Process Points → Coin Conversion</div>
+        <div style="font-size:10.5px;color:var(--muted)">9 level × 5 event types · multi-currency</div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5">
+        Setiap event pertahanan (Sensor Triggers, Gateway Relays, Cloud Writes, Intercepts, Breaches) mengakumulasi
+        <b style="color:var(--accent)">process points</b> level 1-9. Tiap level punya nilai mata uang berbeda
+        (<b style="color:#ffd700">Rp</b>/<b style="color:#3AAFA9">RM</b>/<b style="color:#8B5CF6">SR</b>/
+        <b style="color:#EE7733">$</b>/<b style="color:#FFD700">₿</b>). Klik <b>Convert</b> untuk mengubah points → coins
+        (1 coin = Rp 1.000 IDR equivalent). Coins masuk ke wallet dan bisa ditarik via Tier Multi-Currency Conversion.
+      </p>
+      <div class="pp-grid">
+        <div class="pp-card">
+          <div class="pp-name">📡 Sensor Triggers</div>
+          <div class="pp-count" id="pp-sensor">L0/9</div>
+          <div class="pp-value" id="ppv-sensor">—</div>
+          <div class="pp-coins" id="ppc-sensor">0 coins</div>
+          <div class="pp-rate">Curr: Rp<br/>L9=Rp 200K</div>
+          <button class="redeem-btn" id="ppb-sensor" disabled onclick="convertProcessToCoins('sensor')">Convert</button>
+        </div>
+        <div class="pp-card">
+          <div class="pp-name">⇄ Gateway Relays</div>
+          <div class="pp-count" id="pp-gateway">L0/9</div>
+          <div class="pp-value" id="ppv-gateway">—</div>
+          <div class="pp-coins" id="ppc-gateway">0 coins</div>
+          <div class="pp-rate">Curr: RM<br/>L9=RM 200</div>
+          <button class="redeem-btn" id="ppb-gateway" disabled onclick="convertProcessToCoins('gateway')">Convert</button>
+        </div>
+        <div class="pp-card">
+          <div class="pp-name">☁ Cloud Writes</div>
+          <div class="pp-count" id="pp-cloud">L0/9</div>
+          <div class="pp-value" id="ppv-cloud">—</div>
+          <div class="pp-coins" id="ppc-cloud">0 coins</div>
+          <div class="pp-rate">Curr: SR<br/>L9=SR 500</div>
+          <button class="redeem-btn" id="ppb-cloud" disabled onclick="convertProcessToCoins('cloud')">Convert</button>
+        </div>
+        <div class="pp-card">
+          <div class="pp-name">🛡 Intercepts</div>
+          <div class="pp-count" id="pp-intercept">L0/9</div>
+          <div class="pp-value" id="ppv-intercept">—</div>
+          <div class="pp-coins" id="ppc-intercept">0 coins</div>
+          <div class="pp-rate">Curr: $<br/>L9=$ 500</div>
+          <button class="redeem-btn" id="ppb-intercept" disabled onclick="convertProcessToCoins('intercept')">Convert</button>
+        </div>
+        <div class="pp-card">
+          <div class="pp-name">⚠ Breaches</div>
+          <div class="pp-count" id="pp-breach">L0/9</div>
+          <div class="pp-value" id="ppv-breach">—</div>
+          <div class="pp-coins" id="ppc-breach">0 coins</div>
+          <div class="pp-rate">Curr: ₿<br/>L9=₿ 200K</div>
+          <button class="redeem-btn" id="ppb-breach" disabled onclick="convertProcessToCoins('breach')">Convert</button>
+        </div>
+      </div>
+      <div class="pp-total-bar">
+        <div>
+          <div class="lbl">TOTAL CONVERTIBLE COINS</div>
+          <div class="val" id="ppTotal">0 coins</div>
+        </div>
+        <button class="redeem-btn" id="ppTotalBtn" disabled onclick="convertAllProcessToCoins()" style="max-width:160px">🔄 Convert All to Coins</button>
+      </div>
+      <!-- Waterfall chart image -->
+      <img src="waterfall_process_points_conversion.png" alt="Waterfall Chart Process Points Conversion" style="width:100%;border-radius:10px;border:1px solid var(--border);margin-top:12px;display:block" />
+      <p style="font-size:10.5px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.5">
+        <b style="color:var(--accent)">Waterfall chart</b> — contoh konversi Level 5: Sensor Rp20K + Gateway RM20 + Cloud SR100 + Intercept $100 + Breach ₿20K = <b style="color:var(--accent-3)">2.350 coins</b>
+      </p>
     </div>
 
     <!-- Merchant QRIS section -->
@@ -863,10 +948,10 @@
           <b style="color:var(--accent)">Waterfall chart 1</b> — nilai kumulatif maksimum yang dapat dicairkan seiring bertambahnya coin.<br/>
           Total max redeemable: <b style="color:var(--accent-3)">Rp 697,5 Juta</b> (24 coin = $45.000)
         </p>
-        <img src="waterfall_redemption_process_with_identity.png" alt="Waterfall Chart Redemption Process with Identity Verification" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;margin-top:10px" />
+        <img src="waterfall_redemption_process_with_identity.png" alt="Waterfall Chart Redemption Process with Coin Selection + Identity Verification" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;margin-top:10px" />
         <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
-          <b style="color:var(--accent)">Waterfall chart 2</b> — proses pencairan 8 tahap dengan <b style="color:#EE7733">identity verification</b>.<br/>
-          Identity verification: <b style="color:#EE7733">180ms (22,1%)</b> · Total end-to-end: <b style="color:var(--accent-3)">815ms</b>
+          <b style="color:var(--accent)">Waterfall chart 2</b> — proses pencairan 9 tahap dengan <b style="color:#FFD700">Coin Selection</b> + <b style="color:#EE7733">identity verification</b>.<br/>
+          Coin Selection: <b style="color:#FFD700">350ms (31,4%)</b> · Identity: <b style="color:#EE7733">180ms (16,1%)</b> · Total: <b style="color:var(--accent-3)">1115ms</b>
         </p>
       </div>
     </div>
@@ -985,6 +1070,8 @@
         <tr><td>Redeem Wallet (Dana/Gopay/Bank)</td><td>Tukar 20 coin → Rp 10.000 ke e-wallet/bank</td><td>BSI, BNI, BRI, Danamon, Dana, Gopay</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>QRIS Merchant Scan</td><td>Bayar barang di Indomaret/Alfamidi/Alfamart</td><td>QRIS barcode scan via komputer</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Identity Verification</td><td>Verifikasi identitas sebelum pencairan (No. Telp/Rekening)</td><td>Modal identitas + account matching</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Coin Selection</td><td>User pilih jumlah coin yang dikeluarkan (mis. 5 coin → Rp 5.000)</td><td>Modal pemilihan tier + preview sisa saldo</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Process Points Conversion</td><td>5 event types × 9 level (Rp/RM/SR/$/₿) → coins</td><td>Convert per type atau Convert All</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Camera Scan Barcode</td><td>Scan produk supermarket &amp; bayar coin</td><td>Pilih lokasi → scan → checkout</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -1002,6 +1089,36 @@
   <b>Kubah Simulasi Menghalau Serangan Masuk — Mode Penelusuran Benda</b> · Kuatro Sensor Defense System
   <br/>Sinkron dengan <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener" style="color:var(--accent)">indonesiamajukaribmu.github.io/kuba-simutret/</a> · berjalan penuh menggunakan cloud data.
 </footer>
+
+<!-- ===== Coin Selection Modal (user chooses how many coins to withdraw) ===== -->
+<div class="verify-modal" id="coinSelectModal">
+  <div class="verify-card">
+    <div class="vc-head">
+      <div class="vc-title">🪙 Pilih Jumlah Coin untuk Pencairan</div>
+      <button class="vc-close" onclick="closeCoinSelect()">✕</button>
+    </div>
+    <div style="background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:10px;padding:12px;margin-bottom:12px">
+      <div style="font-size:11px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:.3px">SALDO SAAT INI</div>
+      <div style="font-size:26px;font-weight:800;color:#ffd700;font-family:'Orbitron',sans-serif;text-shadow:0 0 10px rgba(255,215,0,.4)" id="csBalance">0 🪙</div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'Orbitron',sans-serif;letter-spacing:.3px">PILIH TIER PENCAIRAN (jumlah coin yang dikeluarkan):</div>
+    <select id="csTierSelect" class="pay-input" style="font-size:13px;padding:10px;font-family:'JetBrains Mono',monospace" onchange="updateTierPreview()">
+      <!-- options populated dynamically -->
+    </select>
+    <div id="csTierPreview" style="background:rgba(0,229,255,.06);border:1px solid var(--border-2);border-radius:10px;padding:12px;margin-top:12px;font-size:12px;line-height:1.8">
+      <div style="color:var(--muted);text-align:center">Pilih tier untuk melihat detail</div>
+    </div>
+    <p style="font-size:10.5px;color:var(--muted);margin-top:10px;line-height:1.5">
+      💡 Anda memilih sendiri <b style="color:#ffd700">berapa coin</b> yang ingin dikeluarkan.
+      Misal: pilih <b>5 coin</b> → hanya 5 coin keluar, dapat <b>Rp 5.000</b>.
+      Sisa saldo tetap tersimpan di wallet.
+    </p>
+    <div class="verify-actions" style="margin-top:12px">
+      <button class="btn-cancel" onclick="closeCoinSelect()">Batal</button>
+      <button class="btn-confirm" onclick="confirmCoinSelection()">Lanjutkan ke Verifikasi →</button>
+    </div>
+  </div>
+</div>
 
 <!-- ===== Identity Verification Modal ===== -->
 <div class="verify-modal" id="verifyModal">
@@ -1105,8 +1222,50 @@ const COIN_TIERS = [
   { coins: 27,   curr:'RM', amount: 35663 },
   { coins: 28,   curr:'$',  amount: 28939 },
 ];
-const EXCH_RATE = { 'Rp':1, '$':15500, 'RM':3500, 'SR':4100, '¥':105, '₹':190 };
-const CURR_SYM  = { 'Rp':'Rp', '$':'$', 'RM':'RM', 'SR':'SR', '¥':'¥', '₹':'₹' };
+const EXCH_RATE = { 'Rp':1, '$':15500, 'RM':3500, 'SR':4100, '¥':105, '₹':190, '₿':15 };
+const CURR_SYM  = { 'Rp':'Rp', '$':'$', 'RM':'RM', 'SR':'SR', '¥':'¥', '₹':'₹', '₿':'₿' };
+
+/* ============================================================
+   Process Points Conversion Table — 9 levels × 5 event types
+   From user's screenshot: Sensor(Rp) / Gateway(RM) / Cloud(SR) / Intercept($) / Breach(₿)
+   ============================================================ */
+const PROCESS_TIERS = [
+  { level:1, sensor:{c:'Rp',a:1000},    gateway:{c:'RM',a:1},    cloud:{c:'SR',a:1},    intercept:{c:'$',a:1},    breach:{c:'₿',a:1000} },
+  { level:2, sensor:{c:'Rp',a:2000},    gateway:{c:'RM',a:2},    cloud:{c:'SR',a:5},    intercept:{c:'$',a:2},    breach:{c:'₿',a:2000} },
+  { level:3, sensor:{c:'Rp',a:5000},    gateway:{c:'RM',a:5},    cloud:{c:'SR',a:10},   intercept:{c:'$',a:10},   breach:{c:'₿',a:5000} },
+  { level:4, sensor:{c:'Rp',a:10000},   gateway:{c:'RM',a:10},   cloud:{c:'SR',a:50},   intercept:{c:'$',a:50},   breach:{c:'₿',a:10000} },
+  { level:5, sensor:{c:'Rp',a:20000},   gateway:{c:'RM',a:20},   cloud:{c:'SR',a:100},  intercept:{c:'$',a:100},  breach:{c:'₿',a:20000} },
+  { level:6, sensor:{c:'Rp',a:25000},   gateway:{c:'RM',a:25},   cloud:{c:'SR',a:200},  intercept:{c:'$',a:200},  breach:{c:'₿',a:25000} },
+  { level:7, sensor:{c:'Rp',a:50000},   gateway:{c:'RM',a:50},   cloud:{c:'SR',a:300},  intercept:{c:'$',a:300},  breach:{c:'₿',a:50000} },
+  { level:8, sensor:{c:'Rp',a:100000},  gateway:{c:'RM',a:100},  cloud:{c:'SR',a:400},  intercept:{c:'$',a:400},  breach:{c:'₿',a:100000} },
+  { level:9, sensor:{c:'Rp',a:200000},  gateway:{c:'RM',a:200},  cloud:{c:'SR',a:500},  intercept:{c:'$',a:500},  breach:{c:'₿',a:200000} },
+];
+const PROCESS_COIN_RATE = 1000; // 1 coin = Rp 1.000 IDR equivalent
+let processCounts = { sensor:0, gateway:0, cloud:0, intercept:0, breach:0 };
+const PROCESS_LABELS = { sensor:'Sensor Triggers', gateway:'Gateway Relays', cloud:'Cloud Writes', intercept:'Intercepts', breach:'Breaches' };
+
+function incrProcessCount(type){
+  if(processCounts[type] < 9){
+    processCounts[type]++;
+  } else {
+    processCounts[type] = 9; // cap at level 9
+  }
+  updateProcessPointsUI();
+}
+
+function getProcessTier(type){
+  const c = processCounts[type];
+  if(c === 0) return null;
+  return PROCESS_TIERS[c - 1];
+}
+
+function getProcessCoins(type){
+  const tier = getProcessTier(type);
+  if(!tier) return 0;
+  const v = tier[type];
+  const idr = v.a * EXCH_RATE[v.c];
+  return Math.floor(idr / PROCESS_COIN_RATE);
+}
 
 function tierIDR(t){ return t.amount * EXCH_RATE[t.curr]; }
 function tierIDRStr(t){ const idr = tierIDR(t); return 'Rp ' + (idr >= 1e6 ? (idr/1e6).toFixed(2)+'M' : idr >= 1e3 ? (idr/1e3).toFixed(0)+'K' : idr); }
@@ -1282,6 +1441,7 @@ function spawnObject(){
           g.remove();
           stats.stopped++;
           barCounts.intercept++;
+          incrProcessCount('intercept');
           updateStats();
           updateBarChart();
           log(`✓ Benda #${id} (${objType.type}) DINEUTRALISIR interceptor`, 'ok');
@@ -1301,6 +1461,7 @@ function spawnObject(){
       }
       if(objType.threat){
         stats.breached++; barCounts.breach++;
+        incrProcessCount('breach');
         updateStats(); updateBarChart();
         log(`✗ Benda #${id} (${objType.type}) TEMBUS fasilitas mata!`, 'err');
         spawnExplosion(x, y, '#ff3b3b');
@@ -1346,6 +1507,7 @@ const STAGE_JITTER= [8, 12, 14, 40, 18, 6, 8];
 function triggerDetectionCascade(objId, sensorIdx, objType, origin){
   stats.detected++;
   barCounts.sensor++;
+  incrProcessCount('sensor');
   updateStats();
   const sensorNames = ['S1·PIR','S2·MMW Radar','S3·LIDAR','S4·Camera IoT','S5·COIN'];
   const sensorName = sensorNames[sensorIdx];
@@ -1357,10 +1519,10 @@ function triggerDetectionCascade(objId, sensorIdx, objType, origin){
   setSensorRow(4, 'ok', now());
 
   pulseNode('n-sensor','alert'); setTimeout(()=>pulseNode('n-sensor','live'), 700);
-  setTimeout(()=>{ pulseNode('n-gateway','alert'); barCounts.gateway++; updateBarChart();
+  setTimeout(()=>{ pulseNode('n-gateway','alert'); barCounts.gateway++; incrProcessCount('gateway'); updateBarChart();
     setTimeout(()=>pulseNode('n-gateway','live'),700);
     log(`⇄ Gateway relay Benda #${objId} → MQTT/TLS`, 'ok'); }, 220);
-  setTimeout(()=>{ pulseNode('n-cloud','alert'); barCounts.cloud++; updateBarChart();
+  setTimeout(()=>{ pulseNode('n-cloud','alert'); barCounts.cloud++; incrProcessCount('cloud'); updateBarChart();
     setTimeout(()=>pulseNode('n-cloud','live'),700);
     log(`☁ Cloud: time-series write + snapshot ${objType.icon} #${objId}`, 'ok'); }, 520);
   setTimeout(()=>{ pulseNode('n-dash','alert'); barCounts.dash++; updateBarChart();
@@ -1475,11 +1637,134 @@ function updateRedeemButtons(best){
 }
 
 function startRedeem(method){
-  const tier = bestTierForBalance(coinBalance);
-  if(!tier){
+  const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
+  // Validate input first (for non-merchant)
+  if(!isMerchant){
+    let accountType, accountValue;
+    if(['DANA','GoPay'].includes(method)){
+      accountType = 'No. Telp';
+      accountValue = $('phone-' + method) ? $('phone-' + method).value.trim() : '';
+    } else {
+      accountType = 'No. Rekening';
+      accountValue = $('rek-' + method) ? $('rek-' + method).value.trim() : '';
+    }
+    if(accountValue.length < 5){
+      log(`✗ Isi ${accountType} untuk ${method} dulu (min 5 digit)`, 'err');
+      return;
+    }
+  }
+  // Check balance
+  const best = bestTierForBalance(coinBalance);
+  if(!best){
     log(`✗ Tidak ada tier pencairan tersedia — kumpulkan minimal 1 coin`, 'err');
     return;
   }
+  // Open coin selection modal FIRST (user picks how many coins)
+  openCoinSelection(method);
+}
+
+/* ============================================================
+   Coin Selection — user chooses how many coins to withdraw
+   ============================================================ */
+let pendingRedeemMethod = null;
+let selectedTier = null;
+
+function openCoinSelection(method){
+  pendingRedeemMethod = method;
+  const modal = $('coinSelectModal');
+  if(!modal) return;
+  $('csBalance').textContent = coinBalance + ' 🪙';
+  const select = $('csTierSelect');
+  select.innerHTML = '';
+  // Available tiers: coins <= balance, sorted by IDR value descending (best first)
+  const available = COIN_TIERS.filter(t => t.coins <= coinBalance)
+                              .sort((a,b) => tierIDR(b) - tierIDR(a));
+  if(available.length === 0){
+    select.innerHTML = '<option>Tidak ada tier tersedia</option>';
+    $('csTierPreview').innerHTML = '<div style="color:var(--muted);text-align:center">Kumpulkan coin lebih banyak</div>';
+  } else {
+    // Add option for each available tier (best value first)
+    available.forEach((t, idx) => {
+      const opt = document.createElement('option');
+      opt.value = t.coins;
+      const idr = tierIDR(t);
+      const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+      const bestTag = idx === 0 ? ' ★ BEST' : '';
+      opt.textContent = `${t.coins} coin → ${CURR_SYM[t.curr]} ${t.amount.toLocaleString('id-ID')} (≈ ${idrStr})${bestTag}`;
+      select.appendChild(opt);
+    });
+    // Also add lower-value tiers sorted by coin amount for user convenience
+    const byCoin = COIN_TIERS.filter(t => t.coins <= coinBalance)
+                            .sort((a,b) => a.coins - b.coins);
+    // Add a separator option
+    if(byCoin.length > 1){
+      const sep = document.createElement('option');
+      sep.disabled = true;
+      sep.textContent = '─── Urutkan berdasarkan coin ───';
+      select.appendChild(sep);
+      byCoin.forEach(t => {
+        // Skip if already in select
+        if([...select.options].some(o => parseFloat(o.value) === t.coins && !o.disabled)) return;
+        const opt = document.createElement('option');
+        opt.value = t.coins;
+        const idr = tierIDR(t);
+        const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+        opt.textContent = `${t.coins} coin → ${CURR_SYM[t.curr]} ${t.amount.toLocaleString('id-ID')} (≈ ${idrStr})`;
+        select.appendChild(opt);
+      });
+    }
+    // Default select the best tier (first option)
+    select.selectedIndex = 0;
+    updateTierPreview();
+  }
+  modal.classList.add('show');
+  log(`🪙 Pilih jumlah coin untuk pencairan via ${method} — saldo: ${coinBalance} coin`, 'info');
+}
+
+function updateTierPreview(){
+  const select = $('csTierSelect');
+  const coins = parseFloat(select.value);
+  if(!coins || isNaN(coins)){
+    $('csTierPreview').innerHTML = '<div style="color:var(--muted);text-align:center">Pilih tier untuk melihat detail</div>';
+    return;
+  }
+  const tier = COIN_TIERS.find(t => t.coins === coins);
+  if(!tier){
+    $('csTierPreview').innerHTML = '<div style="color:var(--muted);text-align:center">Tier tidak valid</div>';
+    return;
+  }
+  const idr = tierIDR(tier);
+  const idrStr = 'Rp ' + idr.toLocaleString('id-ID');
+  const remaining = coinBalance - tier.coins;
+  const isBest = bestTierForBalance(coinBalance) === tier;
+  $('csTierPreview').innerHTML = `
+    <div><b>Coin dikeluarkan:</b> <span style="color:#ffd700;font-weight:700">${tier.coins} 🪙</span></div>
+    <div><b>Nilai diterima:</b> <span style="color:var(--accent);font-weight:700">${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}</span></div>
+    <div><b>Setara IDR:</b> <span style="color:var(--accent-3)">${idrStr}</span></div>
+    <div><b>Sisa saldo setelah:</b> <span style="color:#cfe6ff">${remaining} 🪙</span></div>
+    ${isBest ? '<div style="color:var(--accent-3);font-weight:700;margin-top:4px">★ Tier dengan nilai IDR tertinggi</div>' : ''}
+  `;
+}
+
+function closeCoinSelect(){
+  const modal = $('coinSelectModal');
+  if(modal) modal.classList.remove('show');
+}
+
+function confirmCoinSelection(){
+  const select = $('csTierSelect');
+  const coins = parseFloat(select.value);
+  if(!coins || isNaN(coins)){
+    log('✗ Pilih tier dulu', 'err');
+    return;
+  }
+  const tier = COIN_TIERS.find(t => t.coins === coins);
+  if(!tier){ log('✗ Tier tidak ditemukan', 'err'); return; }
+  selectedTier = tier;
+  closeCoinSelect();
+  log(`✓ Tier dipilih: ${tier.coins} coin → ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`, 'ok');
+  // Proceed to identity verification with the SELECTED tier (not auto-best)
+  const method = pendingRedeemMethod;
   const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
   let accountType, accountValue;
   if(isMerchant){
@@ -1487,18 +1772,10 @@ function startRedeem(method){
     accountValue = method;
   } else if(['DANA','GoPay'].includes(method)){
     accountType = 'No. Telp';
-    accountValue = $('phone-' + method) ? $('phone-' + method).value.trim() : '';
-    if(accountValue.length < 5){
-      log(`✗ Isi No. Telp untuk ${method} dulu (min 5 digit)`, 'err');
-      return;
-    }
+    accountValue = $('phone-' + method).value.trim();
   } else {
     accountType = 'No. Rekening';
-    accountValue = $('rek-' + method) ? $('rek-' + method).value.trim() : '';
-    if(accountValue.length < 5){
-      log(`✗ Isi No. Rekening untuk ${method} dulu (min 5 digit)`, 'err');
-      return;
-    }
+    accountValue = $('rek-' + method).value.trim();
   }
   openVerifyModal(method, tier, accountType, accountValue);
 }
@@ -1702,6 +1979,97 @@ function scrollToSec(id){
     document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
     event.currentTarget.classList.add('active');
   }
+}
+
+/* ============================================================
+   Process Points → Coin Conversion
+   ============================================================ */
+function updateProcessPointsUI(){
+  const types = ['sensor','gateway','cloud','intercept','breach'];
+  types.forEach(type => {
+    const count = processCounts[type];
+    const countEl = $('pp-' + type);
+    const valEl = $('ppv-' + type);
+    const coinEl = $('ppc-' + type);
+    const btnEl = $('ppb-' + type);
+    if(countEl) countEl.textContent = `L${count}/9`;
+    if(count === 0){
+      if(valEl) valEl.textContent = '—';
+      if(coinEl) coinEl.textContent = '0 coins';
+      if(btnEl) btnEl.disabled = true;
+    } else {
+      const tier = PROCESS_TIERS[count - 1];
+      const v = tier[type];
+      const idr = v.a * EXCH_RATE[v.c];
+      const coins = Math.floor(idr / PROCESS_COIN_RATE);
+      if(valEl) valEl.textContent = `${CURR_SYM[v.c]} ${v.a.toLocaleString('id-ID')}`;
+      if(coinEl) coinEl.textContent = `${coins} coins`;
+      if(btnEl) btnEl.disabled = (coins === 0);
+    }
+  });
+  // Update total
+  let totalCoins = 0;
+  types.forEach(t => totalCoins += getProcessCoins(t));
+  if($('ppTotal')) $('ppTotal').textContent = totalCoins + ' coins';
+  if($('ppTotalBtn')) $('ppTotalBtn').disabled = (totalCoins === 0);
+}
+
+function convertProcessToCoins(type){
+  const count = processCounts[type];
+  if(count === 0){
+    log(`✗ Tidak ada ${PROCESS_LABELS[type]} points untuk dikonversi`, 'err');
+    return;
+  }
+  const tier = PROCESS_TIERS[count - 1];
+  const v = tier[type];
+  const idr = v.a * EXCH_RATE[v.c];
+  const coins = Math.floor(idr / PROCESS_COIN_RATE);
+  if(coins === 0){
+    log(`✗ Nilai ${PROCESS_LABELS[type]} L${count} terlalu kecil untuk konversi coin`, 'err');
+    return;
+  }
+  coinBalance += coins;
+  coinsEarnedTotal += coins;
+  barCounts.coin += coins;
+  const origStr = `${CURR_SYM[v.c]} ${v.a.toLocaleString('id-ID')}`;
+  const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+  log(`🔄 ${PROCESS_LABELS[type]} L${count} (${origStr} ≈ ${idrStr}) → +${coins} coins`, 'ok');
+  processCounts[type] = 0;
+  updateCoinUI();
+  updateBarChart();
+  updateProcessPointsUI();
+  flashCoinSensor();
+}
+
+function convertAllProcessToCoins(){
+  let totalCoins = 0;
+  let details = [];
+  const types = ['sensor','gateway','cloud','intercept','breach'];
+  types.forEach(type => {
+    const count = processCounts[type];
+    if(count === 0) return;
+    const tier = PROCESS_TIERS[count - 1];
+    const v = tier[type];
+    const idr = v.a * EXCH_RATE[v.c];
+    const coins = Math.floor(idr / PROCESS_COIN_RATE);
+    if(coins > 0){
+      totalCoins += coins;
+      details.push(`${PROCESS_LABELS[type]} L${count}=${coins}c`);
+      processCounts[type] = 0;
+    }
+  });
+  if(totalCoins === 0){
+    log(`✗ Tidak ada process points cukup untuk konversi`, 'err');
+    return;
+  }
+  coinBalance += totalCoins;
+  coinsEarnedTotal += totalCoins;
+  barCounts.coin += totalCoins;
+  updateCoinUI();
+  updateBarChart();
+  updateProcessPointsUI();
+  flashCoinSensor();
+  log(`🔄 Semua process points converted: +${totalCoins} coins (${details.join(', ')})`, 'ok');
 }
 
 function buildTierTable(){
@@ -2072,7 +2440,8 @@ function resetSim(){
   barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
   scannedObjects = [];
   coinBalance = 0; coinsEarnedTotal = 0; coinsCashedOut = 0; coinHistory = [];
-  updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI();
+  processCounts = { sensor:0, gateway:0, cloud:0, intercept:0, breach:0 };
+  updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI(); updateProcessPointsUI();
   for(let i=0;i<5;i++) setSensorRow(i,'idle','—');
   if($('txHistory')) $('txHistory').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>';
   // Reset camera cart & inputs
@@ -2085,6 +2454,7 @@ function resetSim(){
   ['phone-DANA','phone-GoPay','rek-BSI','rek-BNI','rek-BRI','rek-Danamon'].forEach(id => { if($(id)) $(id).value = ''; });
   // Close verify modal if open
   closeVerifyModal();
+  closeCoinSelect();
   setMetric('m-status','ARMED');
   setMode('STANDBY');
   $('btnStart').textContent = '▶ Mode Penelusuran Benda';
@@ -2115,6 +2485,7 @@ updateWaterfallChart();
 updateBarChart();
 updateStats();
 updateCoinUI();
+updateProcessPointsUI();
 setMode('STANDBY');
 </script>
 
