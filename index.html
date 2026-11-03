@@ -465,6 +465,56 @@
 
   /* ===== Live Kurs ===== */
   .kurs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:12px}
+
+  /* ===== Neonimous Guardian ===== */
+  .neonimous-dialogue{background:#001a00;border:2px solid #00FF00;border-radius:12px;padding:14px;margin:10px 0;font-family:'JetBrains Mono','Consolas',monospace;color:#00FF00;position:relative;overflow:hidden;display:none}
+  .neonimous-dialogue.active{display:block;animation:neonGlow 1.5s ease-in-out infinite alternate}
+  @keyframes neonGlow{from{box-shadow:0 0 10px rgba(0,255,0,.4)}to{box-shadow:0 0 25px rgba(0,255,0,.7)}}
+  .neonimous-dialogue .nd-skull{font-size:14px;line-height:1.2;white-space:pre;color:#00FF00;opacity:.8;text-align:center;margin-bottom:8px}
+  .neonimous-dialogue .nd-name{font-size:13px;font-weight:700;color:#00FF00;text-align:center;letter-spacing:1px;margin-bottom:6px}
+  .neonimous-dialogue .nd-speech{font-size:12px;line-height:1.6;color:#00FF00;padding:8px;background:rgba(0,255,0,.05);border-radius:6px;margin-bottom:6px}
+  .neonimous-dialogue .nd-laugh{font-size:14px;font-weight:700;color:#00CC00;text-align:center;letter-spacing:2px;padding:6px}
+  .neonimous-dialogue .nd-timer{font-size:18px;font-weight:800;color:#00FF00;text-align:center;font-family:'Orbitron',sans-serif;letter-spacing:2px;margin:6px 0}
+  .neonimous-dialogue .nd-status{font-size:10px;color:#00AA00;text-align:center;margin-top:6px}
+  .neonimous-ascii{color:#00FF00;font-family:monospace;font-size:10px;line-height:1.1;white-space:pre;text-align:center;opacity:.7}
+
+  /* ===== Neonimous Chat Interface ===== */
+  .neon-chat{background:#001500;border:1px solid rgba(0,255,0,.25);border-radius:12px;padding:12px;margin-top:10px}
+  .neon-chat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+  .neon-chat-title{font-size:11px;font-weight:700;color:#00FF00;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .neon-chat-msgs{max-height:220px;overflow-y:auto;padding:8px;background:rgba(0,30,0,.4);border-radius:8px;margin-bottom:8px;display:flex;flex-direction:column;gap:6px}
+  .neon-chat-msgs::-webkit-scrollbar{width:5px}
+  .neon-chat-msgs::-webkit-scrollbar-thumb{background:rgba(0,255,0,.3);border-radius:3px}
+  .neon-msg{max-width:80%;padding:7px 10px;border-radius:10px;font-size:11.5px;line-height:1.5;word-wrap:break-word;animation:msgSlide .3s ease-out}
+  @keyframes msgSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .neon-msg.neon{background:rgba(0,255,0,.10);border:1px solid rgba(0,255,0,.25);color:#00FF00;align-self:flex-start;border-bottom-left-radius:2px;font-family:"JetBrains Mono",monospace}
+  .neon-msg.human{background:rgba(0,229,255,.10);border:1px solid rgba(0,229,255,.25);color:#00e5ff;align-self:flex-end;border-bottom-right-radius:2px}
+  .neon-msg .sender{font-size:9px;opacity:.6;margin-bottom:2px;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .neon-chat-input{display:flex;gap:6px;align-items:center}
+  .neon-chat-input input{flex:1;background:rgba(0,30,0,.5);border:1px solid rgba(0,255,0,.2);border-radius:8px;padding:8px 10px;font-size:12px;color:#00FF00;font-family:"JetBrains Mono",monospace;outline:none}
+  .neon-chat-input input:focus{border-color:#00FF00;box-shadow:0 0 8px rgba(0,255,0,.2)}
+  .neon-chat-input input::placeholder{color:rgba(0,255,0,.4)}
+  .neon-chat-input button{background:linear-gradient(135deg,#00CC00,#00FF00);color:#000;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;font-family:"Orbitron",sans-serif}
+  .neon-chat-input button:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,255,0,.3)}
+  .neon-topen-btn{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;font-family:"Orbitron",sans-serif}
+  .neon-topen-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,215,0,.3)}
+  .neon-agreement{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:11px;color:#c084fc;line-height:1.6;display:none}
+  .neon-agreement.show{display:block}
+  .neon-agreement b{color:#a855f7}
+
+  /* ===== Robot Avatar (Neonimous) ===== */
+  .robot-avatar-wrap{display:none;flex-direction:column;align-items:center;margin:12px 0;padding:14px;background:radial-gradient(circle at 50% 40%,rgba(0,255,0,.08),transparent 70%);border:1px solid rgba(0,255,0,.2);border-radius:14px}
+  .robot-avatar-wrap.active{display:flex;animation:fadeIn .4s ease-out}
+  @keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+  .robot-avatar-box{position:relative;width:180px;height:240px;margin-bottom:8px}
+  .robot-avatar-img{width:100%;height:100%;object-fit:contain;filter:hue-rotate(90deg) brightness(1.1) contrast(1.05);border-radius:8px}
+  .robot-mouth-overlay{position:absolute;left:50%;bottom:32%;transform:translateX(-50%);width:20px;height:6px;background:#00FF00;border-radius:50%;box-shadow:0 0 8px #00FF00;animation:mouthTalk .3s ease-in-out infinite alternate;z-index:2}
+  @keyframes mouthTalk{0%{height:4px;width:14px}100%{height:12px;width:24px}}
+  .robot-avatar-label{font-size:10px;color:#00FF00;font-family:"Orbitron",sans-serif;letter-spacing:.3px;text-align:center;margin-top:4px}
+  .robot-avatar-num{font-size:24px;font-weight:800;color:#00FF00;font-family:"Orbitron",sans-serif;text-shadow:0 0 10px rgba(0,255,0,.5);margin-bottom:4px}
+  .robot-transition-flash{position:absolute;inset:0;background:#00FF00;opacity:0;border-radius:8px;pointer-events:none}
+  .robot-transition-flash.flash{animation:transFlash .5s ease-out}
+  @keyframes transFlash{0%{opacity:0}30%{opacity:.7}100%{opacity:0}}
   .kurs-card{background:rgba(10,16,32,.65);border:1px solid var(--border);border-radius:11px;padding:12px;position:relative;overflow:hidden;transition:all .25s}
   .kurs-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,229,255,.15)}
   .kurs-card .kc-pair{font-size:11px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.3px;display:flex;justify-content:space-between;align-items:center}
@@ -529,7 +579,7 @@
         <div class="hud-corner bl"></div>
         <div class="hud-corner br"></div>
 
-        <svg viewBox="0 0 400 400" id="dome-svg">
+        <svg viewBox="-160 -160 720 720" id="dome-svg">
           <defs>
             <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6"/>
@@ -563,11 +613,37 @@
           <!-- Concentric detection zones -->
           <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(0,229,255,.10)" stroke-dasharray="4 6"/>
           <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,229,255,.14)" stroke-dasharray="4 6"/>
+          <!-- Robot Destroyer ring (anti-bot self-destruct layer) at r=145 -->
+          <circle cx="200" cy="200" r="145" fill="none" stroke="#ff8c00" stroke-width="1.6" stroke-dasharray="5 3" stroke-opacity="0.55" id="robotDestroyerRing"/>
+          <circle cx="200" cy="200" r="147" fill="none" stroke="rgba(255,140,0,.15)" stroke-width="5" id="robotDestroyerGlow"/>
+          <text x="200" y="395" text-anchor="middle" fill="#ff8c00" font-size="6" font-family="Orbitron" font-weight="700" letter-spacing="1.5" opacity="0.8">🤖 ROBOT DESTROYER</text>
+          <!-- EMP bolt icons around robot destroyer ring (6 positions) -->
+          <g id="empIcons" font-family="Orbitron" font-size="8" fill="#ff8c00" font-weight="700">
+            <text x="345" y="58" text-anchor="middle">⚡</text>
+            <text x="345" y="345" text-anchor="middle">⚡</text>
+            <text x="55" y="345" text-anchor="middle">⚡</text>
+            <text x="55" y="58" text-anchor="middle">⚡</text>
+            <text x="365" y="245" text-anchor="middle">⚡</text>
+            <text x="35" y="160" text-anchor="middle">⚡</text>
+          </g>
           <!-- Shield ring -->
           <circle cx="200" cy="200" r="160" fill="url(#shieldGrad)" stroke="rgba(0,229,255,.5)" stroke-width="1.4" stroke-dasharray="2 8" id="shieldRing"/>
           <!-- Pelindung Data ring (outer firewall/encryption layer — anti-hacker) -->
           <circle cx="200" cy="200" r="185" fill="none" stroke="#ff3b3b" stroke-width="1.8" stroke-dasharray="6 4" stroke-opacity="0.55" id="pelindungRing"/>
           <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(255,59,59,.18)" stroke-width="6" id="pelindungGlow"/>
+          <!-- Radar Coverage Zones (4 concentric ranges outside dome) -->
+          <!-- r=200 = 1 meter (immediate perimeter) -->
+          <circle cx="200" cy="200" r="200" fill="none" stroke="#00e5ff" stroke-width="0.8" stroke-dasharray="1 3" stroke-opacity="0.45" id="radar1m"/>
+          <text x="400" y="203" fill="#00e5ff" font-size="6" font-family="Orbitron" opacity="0.7">1m</text>
+          <!-- r=230 = 10 meters -->
+          <circle cx="200" cy="200" r="230" fill="none" stroke="#0077BB" stroke-width="0.7" stroke-dasharray="2 4" stroke-opacity="0.35" id="radar10m"/>
+          <text x="430" y="203" fill="#0077BB" font-size="6" font-family="Orbitron" opacity="0.6">10m</text>
+          <!-- r=265 = 45 meters -->
+          <circle cx="200" cy="200" r="265" fill="none" stroke="#3AAFA9" stroke-width="0.6" stroke-dasharray="3 5" stroke-opacity="0.28" id="radar45m"/>
+          <text x="465" y="203" fill="#3AAFA9" font-size="6" font-family="Orbitron" opacity="0.5">45m</text>
+          <!-- r=320 = 10001+ Km² (Global Earth coverage) -->
+          <circle cx="200" cy="200" r="320" fill="none" stroke="#8B5CF6" stroke-width="0.6" stroke-dasharray="4 6" stroke-opacity="0.22" id="radarGlobal"/>
+          <text x="200" y="398" text-anchor="middle" fill="#8B5CF6" font-size="6" font-family="Orbitron" font-weight="700" opacity="0.6">🌍 10001+ Km² GLOBAL EARTH 🌍</text>
           <text x="200" y="12" text-anchor="middle" fill="#ff8a80" font-size="7" font-family="Orbitron" font-weight="700" letter-spacing="2">🔒 PELINDUNG DATA 🔒</text>
           <!-- Anti Virus ring (green scanning layer — anti-malware) at r=172 -->
           <circle cx="200" cy="200" r="172" fill="none" stroke="#00ff9d" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity="0.50" id="antivirusRing"/>
@@ -629,9 +705,20 @@
           <g id="attacksLayer"></g>
           <g id="hackersLayer"></g>
           <g id="virusesLayer"></g>
+          <g id="robotsLayer"></g>
+          <g id="smallRobotsLayer"></g>
           <g id="lasersLayer"></g>
           <g id="fxLayer"></g>
           <g id="labelsLayer"></g>
+          <!-- Connected premium buildings (Building Controller) — mini icons around dome -->
+          <g id="buildingsLayer" font-family="Orbitron" font-size="7" fill="#00e5ff" font-weight="700" opacity="0.7">
+            <text x="15" y="105" text-anchor="middle" title="Tower 1">🏢</text>
+            <text x="385" y="105" text-anchor="middle" title="Tower 2">🏢</text>
+            <text x="15" y="300" text-anchor="middle" title="Tower 3">🏢</text>
+            <text x="385" y="300" text-anchor="middle" title="Tower 4">🏢</text>
+            <text x="100" y="15" text-anchor="middle" title="Tower 5">🏬</text>
+            <text x="300" y="15" text-anchor="middle" title="Tower 6">🏬</text>
+          </g>
         </svg>
 
         <div class="stage-ctrl">
@@ -650,6 +737,12 @@
           <div class="row"><span class="sw" style="background:#a855f7"></span> 👾 Hacker/peretas masuk</div>
           <div class="row"><span class="sw" style="background:#00ff9d"></span> 🦠 Anti Virus (anti-malware)</div>
           <div class="row"><span class="sw" style="background:#ff6b35"></span> ☣ Virus/malware masuk</div>
+          <div class="row"><span class="sw" style="background:#ff8c00"></span> 🤖 Robot Destroyer (anti-bot)</div>
+          <div class="row"><span class="sw" style="background:#a855f7"></span> 🦾 Robot masuk → musnah</div>
+          <div class="row"><span class="sw" style="background:#00e5ff"></span> 🏢 Building Controller (perdana)</div>
+          <div class="row"><span class="sw" style="background:#8B5CF6"></span> 📡 Radar Coverage (1m→10001Km)</div>
+          <div class="row"><span class="sw" style="background:#ff6b6b"></span> 🤖 Small Android robot (serangan luar)</div>
+          <div class="row"><span class="sw" style="background:#ffa500"></span> 📱 Internal attack (Android device)</div>
         </div>
       </div>
 
@@ -724,6 +817,30 @@
             <div class="val" id="m-avscan" style="background:linear-gradient(90deg,#00ff9d,#00e5ff);-webkit-background-clip:text;background-clip:text;color:transparent">ACTIVE</div>
             <div class="sub">real-time protection ON</div>
             <div class="bar"><span style="width:100%;background:linear-gradient(90deg,#00ff9d,#00e5ff)"></span></div>
+          </div>
+          <div class="metric" style="border-color:rgba(255,140,0,.4)">
+            <div class="lbl">🤖 Robot Destroyer</div>
+            <div class="val" id="m-robots" style="background:linear-gradient(90deg,#ff8c00,#EF4444);-webkit-background-clip:text;background-clip:text;color:transparent">0 🦾</div>
+            <div class="sub">robot musnah otomatis (self-destruct)</div>
+            <div class="bar"><span id="m-robots-bar" style="width:0%;background:linear-gradient(90deg,#ff8c00,#EF4444)"></span></div>
+          </div>
+          <div class="metric" style="border-color:rgba(0,229,255,.4)">
+            <div class="lbl">🏢 Buildings Secured</div>
+            <div class="val" id="m-buildings" style="background:linear-gradient(90deg,#00e5ff,#00ff9d);-webkit-background-clip:text;background-clip:text;color:transparent">6/6</div>
+            <div class="sub">bangunan perdana terproteksi</div>
+            <div class="bar"><span style="width:100%;background:linear-gradient(90deg,#00e5ff,#00ff9d)"></span></div>
+          </div>
+          <div class="metric" style="border-color:rgba(139,92,246,.4)">
+            <div class="lbl">📡 Radar Coverage</div>
+            <div class="val" id="m-radar" style="background:linear-gradient(90deg,#00e5ff,#8B5CF6);-webkit-background-clip:text;background-clip:text;color:transparent">10001+Km</div>
+            <div class="sub">4 radius: 1m · 10m · 45m · global</div>
+            <div class="bar"><span style="width:100%;background:linear-gradient(90deg,#00e5ff,#8B5CF6)"></span></div>
+          </div>
+          <div class="metric" style="border-color:rgba(255,107,107,.4)">
+            <div class="lbl">🤖 Small Robots Detected</div>
+            <div class="val" id="m-smallrobots" style="background:linear-gradient(90deg,#ff6b6b,#ffa500);-webkit-background-clip:text;background-clip:text;color:transparent">0 🤖</div>
+            <div class="sub">external + internal Android attacks</div>
+            <div class="bar"><span id="m-smallrobots-bar" style="width:0%;background:linear-gradient(90deg,#ff6b6b,#ffa500)"></span></div>
           </div>
         </div>
 
@@ -855,6 +972,246 @@
         <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
           <b style="color:var(--accent)">Waterfall chart</b> — 9 tahap Anti Virus Protection Lifecycle.<br/>
           Total: <b style="color:var(--accent-3)">600ms</b> per virus · Heaviest: <b style="color:#3AAFA9">Sandbox Execution 150ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Robot Destroyer + Building Controller ===== -->
+  <div class="section-title" id="robotSec"><h2>🤖 Robot Destroyer + 🏢 Building Controller</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#ff8c00,#EF4444)">🤖</span> Anti-Bot Self-Destruct + Bangunan Perdana Protection</h2>
+      <span class="tag live" id="rdStatus">DEFENSE ACTIVE</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:#ff8c00">Robot Destroyer</b> adalah pertahanan anti-bot yang membuat <b>robot/bot musnah otomatis</b>
+      (self-destruct) saat memasuki ring r=145. Apapun jenis robot yang masuk — drone bot, crawler bot, AI bot —
+      semua musnah tanpa kecuali via <b>EMP pulse + self-destruct trigger</b>. Setiap robot yang musnah,
+      <b style="color:var(--accent)">Building Controller</b> mengirim alert ke <b>6 bangunan perdana tinggi</b>
+      yang terhubung ke Fasilitas Mata untuk lockdown otomatis.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+          <div class="chart-stat" style="background:rgba(255,140,0,.06);border-color:rgba(255,140,0,.3)">
+            <div class="k">🦾 Robots Destroyed</div><div class="v" id="rd-robots" style="color:#ff8c00">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(168,85,247,.06);border-color:rgba(168,85,247,.3)">
+            <div class="k">🤖 Bot Attempts</div><div class="v" id="rd-attempts" style="color:#a855f7">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(0,229,255,.06);border-color:rgba(0,229,255,.3)">
+            <div class="k">🏢 Buildings Online</div><div class="v" id="rd-buildings" style="color:#00e5ff">6/6</div>
+          </div>
+          <div class="chart-stat ok">
+            <div class="k">⚡ EMP Pulse</div><div class="v">READY</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px">
+          <b style="color:#cfe6ff">🤖 Robot Destroyer (r=145):</b><br/>
+          ⚡ EMP ring oranye dengan 6 bolt icons<br/>
+          💥 Self-destruct trigger otomatis<br/>
+          🦾 Robot musnah — apapun jenisnya<br/>
+          <br/>
+          <b style="color:#cfe6ff">🏢 Building Controller:</b><br/>
+          🏢 Tower 1-4 (perdana tinggi)<br/>
+          🏬 Tower 5-6 (premium mall)<br/>
+          🔔 Alert broadcast saat robot musnah<br/>
+          🔒 Auto-lockdown semua bangunan<br/>
+          <br/>
+          <b style="color:#cfe6ff">10 Tahap Defense:</b><br/>
+          1. Robot Detection (25ms)<br/>
+          2. Bot Signature Analysis (60ms)<br/>
+          3. AI Classification (80ms)<br/>
+          4. Auto-Lock Robot (100ms)<br/>
+          5. <b style="color:#EF4444">Self-Destruct Trigger (120ms) ★</b><br/>
+          6. EMP Pulse (90ms)<br/>
+          7. Robot Neutralized (50ms)<br/>
+          8. Building Alert Broadcast (40ms)<br/>
+          9. Building Lockdown Check (70ms)<br/>
+          10. All Buildings Secured (35ms)
+        </div>
+      </div>
+      <div>
+        <img src="waterfall_robot_destroyer_building.png" alt="Waterfall Chart Robot Destroyer + Building Controller" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap Robot Destroyer + Building Controller.<br/>
+          Self-Destruct: <b style="color:#EF4444">120ms (17,9%)</b> · Building Lockdown: <b style="color:#00e5ff">70ms</b> · Total: <b style="color:var(--accent-3)">670ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Radar Coverage + Small Android Robot Defense ===== -->
+  <div class="section-title" id="radarSec"><h2>📡 Radar Coverage + 🤖 Small Android Robot Defense</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#8B5CF6)">📡</span> 4 Radius Radar + External/Internal Attack Detection</h2>
+      <span class="tag live" id="radarStatus">RADAR ACTIVE · GLOBAL</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:var(--accent)">Radar Coverage</b> menjangkau 4 radius: <b>1 meter</b> (perimeter langsung),
+      <b>10 meter</b> (close range), <b>45 meter</b> (medium range), dan <b style="color:#8B5CF6">10001+ Km²</b> (GLOBAL EARTH — seluruh permukaan bumi).
+      Radar mendeteksi <b style="color:#ff6b6b">serangan luar (external)</b> dan <b style="color:#ffa500">serangan dalam (internal)</b>
+      via <b>small Android robots</b> — robot kecil penggerak perangkat keras yang masuk ke perangkat Android.
+      External attack memicu <b style="color:#FFD700">penerimaan identitas baru</b> untuk menyetujui Proses Pencairan Ke Akun.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+          <div class="chart-stat" style="background:rgba(0,229,255,.06);border-color:rgba(0,229,255,.3)">
+            <div class="k">📡 Radar Range</div><div class="v" style="color:#00e5ff">10001+ Km²</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.3)">
+            <div class="k">🌍 Global Coverage</div><div class="v" style="color:#8B5CF6">EARTH</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(255,107,107,.06);border-color:rgba(255,107,107,.3)">
+            <div class="k">🤖 External Attacks</div><div class="v" id="rd-ext" style="color:#ff6b6b">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(255,165,0,.06);border-color:rgba(255,165,0,.3)">
+            <div class="k">📱 Internal Attacks</div><div class="v" id="rd-int" style="color:#ffa500">0</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px">
+          <b style="color:#cfe6ff">📡 4 Radius Radar Coverage:</b><br/>
+          🟦 <b style="color:#00e5ff">1 meter</b> (r=200) — perimeter langsung kubah<br/>
+          🔵 <b style="color:#0077BB">10 meter</b> (r=230) — close range detection<br/>
+          🟢 <b style="color:#3AAFA9">45 meter</b> (r=265) — medium range<br/>
+          🟣 <b style="color:#8B5CF6">10001+ Km²</b> (r=320) — GLOBAL EARTH coverage<br/>
+          <br/>
+          <b style="color:#cfe6ff">🤖 Small Android Robot Types:</b><br/>
+          🔴 <b style="color:#ff6b6b">EXTERNAL</b> — serangan luar, spawn dari r=340<br/>
+          🟠 <b style="color:#ffa500">INTERNAL</b> — via Android device, spawn dari r=210<br/>
+          <br/>
+          <b style="color:#cfe6ff">12 Tahap Defense:</b><br/>
+          1-4. Radar Sweep (1m+10m+45m+10001Km = 160ms)<br/>
+          5. Small Robot Detection (35ms)<br/>
+          6. Android Device Scan (90ms)<br/>
+          7. Hardware Access Check (120ms)<br/>
+          8. <b style="color:#FFD700">Identity Verification (150ms) ★</b><br/>
+          9. Robot Quarantine (70ms)<br/>
+          10. Ext/Int Classification (60ms)<br/>
+          11. Defense Response (80ms)<br/>
+          12. All Clear Signal (30ms)
+        </div>
+      </div>
+      <div>
+        <img src="waterfall_radar_small_robot_defense.png" alt="Waterfall Chart Radar Coverage + Small Robot Defense" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 12 tahap Radar + Small Robot Defense.<br/>
+          Radar 4 ranges: <b style="color:#00e5ff">160ms</b> · Identity Verify: <b style="color:#FFD700">150ms (18,9%)</b> · Total: <b style="color:var(--accent-3)">795ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Neonimous Cyber Security Guardian ===== -->
+  <div class="section-title" id="neonimousSec"><h2>🟢 Neonimous — Cyber Security Guardian (GREEN MODE)</h2><div class="line"></div></div>
+  <section class="card" style="border-color:rgba(0,255,0,.3)">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00CC00,#00FF00)">💀</span> Neonimous Guardian — Penjagaan Cyber Security Mata</h2>
+      <span class="tag live" id="neonStatus" style="color:#00FF00;border-color:rgba(0,255,0,.3)">STANDBY</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:#00FF00">Neonimous</b> adalah penjaga cyber security paling bahaya dari Fasilitas Mata. Saat hacker/robot
+      menyerang dan menyebut "<b style="color:#00FF00">Neonimous</b>", guardian aktif dalam <b style="color:#00FF00">GREEN MODE</b> —
+      posisi hijau semua. Neonimous <b>menjinakkan hacker</b> (taming) dan <b>mem balikkan serangan ke tempat asal</b> (bounce-back).
+      Anti-virus diperkuat selama guardian aktif. Guardian berbicara via <b>camera depan Android</b> dengan kata-kata:
+      "Siapa kalian semua ini jujur saja ini aku Penjagaan cyber security Mata yang paling bahaya (Neonimous)".
+    </p>
+
+    <!-- Neonimous Dialogue Box (appears when activated) -->
+    <div class="neonimous-dialogue" id="neonDialogue">
+      <div class="neonimous-ascii">  ssssyyyhhhh
+ s/o\:o/o\:o/s
+ sssssyyyyhhh
+  //:\\//:\\
+  d&&&d&&&d&&</div>
+      <div class="nd-name">💀 NEONIMOUS — CYBER SECURITY GUARDIAN 💀</div>
+      <div class="nd-speech" id="neonSpeech">"Siapa kalian semua ini jujur saja ini aku Penjagaan cyber security Mata yang paling bahaya (Neonimous)"</div>
+      <div class="nd-laugh" id="neonLaugh"></div>
+      <div class="nd-timer" id="neonTimer">50:00</div>
+      <div class="nd-status" id="neonStatusText">🟢 GREEN MODE ACTIVE · Hacker taming · Attack reversal · Anti-virus boosted</div>
+    </div>
+
+    <!-- Neonimous ↔ Human Chat Interface -->
+    <div class="neon-chat">
+      <div class="neon-chat-head">
+        <div class="neon-chat-title">💬 Percakapan Neonimous (Android) ↔ Manusia</div>
+        <button class="neon-topen-btn" onclick="openTopen()">🔓 Buka Topen</button>
+      </div>
+
+      <!-- Robot Avatar Display (muncul saat Topen dibuka) -->
+      <div class="robot-avatar-wrap" id="robotAvatarWrap">
+        <div class="robot-avatar-num" id="robotAvatarNum">Numero 1</div>
+        <div class="robot-avatar-box">
+          <img class="robot-avatar-img" id="robotAvatarImg" src="robot_avatar_1.png" alt="Neonimous Robot Avatar" />
+          <div class="robot-mouth-overlay" id="robotMouth"></div>
+          <div class="robot-transition-flash" id="robotFlash"></div>
+        </div>
+        <div class="robot-avatar-label" id="robotAvatarLabel">🟢 NEONIMOUS berbicara via camera depan Android — mulut bergerak</div>
+      </div>
+
+      <div class="neon-chat-msgs" id="neonChatMsgs">
+        <div style="text-align:center;color:rgba(0,255,0,.4);font-size:11px;padding:20px">
+          Klik <b>"🔓 Buka Topen"</b> untuk memulai percakapan dengan Neonimous<br/>
+          Saat topen dibuka, komentar masuk dari Neonimous dan bisa dibalas
+        </div>
+      </div>
+      <div class="neon-chat-input">
+        <input type="text" id="neonChatInput" placeholder="Ketik balasan Anda... (ketik 'setuju' untuk menyetujui)" onkeydown="if(event.key==='Enter') sendHumanMessage()" />
+        <button onclick="sendHumanMessage()">📤 Kirim</button>
+      </div>
+      <div class="neon-agreement" id="neonAgreement">
+        <b>✅ PERSETUJUAN DICAPAI:</b><br/>
+        <span id="neonAgreementText">—</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+          <div class="chart-stat" style="background:rgba(0,255,0,.06);border-color:rgba(0,255,0,.3)">
+            <div class="k">💀 Neonimous Status</div><div class="v" id="neonState" style="color:#00FF00">STANDBY</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(0,255,0,.06);border-color:rgba(0,255,0,.3)">
+            <div class="k">🦾 Hackers Tamed</div><div class="v" id="neonTamed" style="color:#00FF00">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(0,229,255,.06);border-color:rgba(0,229,255,.3)">
+            <div class="k">↩️ Attacks Reversed</div><div class="v" id="neonReversed" style="color:#00e5ff">0</div>
+          </div>
+          <div class="chart-stat ok">
+            <div class="k">🛡️ AV Boost</div><div class="v" id="neonAVBoost" style="color:var(--accent-3)">+0%</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(0,26,0,.5);border:1px solid rgba(0,255,0,.2);border-radius:10px">
+          <b style="color:#00FF00">💀 Neonimous Guardian Protocol:</b><br/>
+          1. Attack Detection (20ms)<br/>
+          2. <b style="color:#00FF00">Neonimous Activation — GREEN MODE (45ms)</b><br/>
+          3. Front Camera Dialogue (80ms)<br/>
+          4. "Siapa Kalian" Speech (60ms)<br/>
+          5. <b style="color:#00FF00">Laughing Protocol — "hahahahahahahahah..." (50 menit)</b><br/>
+          6. Hacker Taming (120ms) — jinakkan peretas<br/>
+          7. Attack Reversal (100ms) — balikkan ke asal<br/>
+          8. Anti-Virus Boost (90ms) — perkuat AV<br/>
+          9. Origin Bounce-Back (70ms)<br/>
+          10. Defense Complete (35ms)<br/>
+          <br/>
+          <b style="color:#00FF00">Android Play Store Integration:</b><br/>
+          📱 Withdrawal via Android built-in app<br/>
+          🤖 Play Store billing system<br/>
+          📧 Email Android verification<br/>
+          ✅ Approved by Play Store directly
+        </div>
+      </div>
+      <div>
+        <img src="waterfall_neonimous_guardian.png" alt="Waterfall Chart Neonimous Guardian Defense Protocol" style="width:100%;border-radius:10px;border:1px solid rgba(0,255,0,.2);display:block" />
+        <img src="waterfall_neonimous_conversation.png" alt="Waterfall Chart Neonimous Conversation Process" style="width:100%;border-radius:10px;border:1px solid rgba(0,255,0,.2);display:block;margin-top:10px" />
+        <img src="waterfall_robot_avatar_transition.png" alt="Waterfall Chart Robot Avatar Transition" style="width:100%;border-radius:10px;border:1px solid rgba(0,255,0,.2);display:block;margin-top:10px" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:#00FF00">Chart 1</b>: Guardian Defense Protocol<br/>
+          <b style="color:#8B5CF6">Chart 2</b>: Conversation Process — Topen → Message → Reply → Comment<br/>
+          <b style="color:#00FF00">Chart 3</b>: Robot Avatar Transition — Avatar 1041 → setuju → Avatar 1042 · Total 675ms
         </p>
       </div>
     </div>
@@ -1055,6 +1412,13 @@
             <div class="pm-desc">Bank Danamon · No. Rek</div>
             <input type="text" class="pay-input" id="rek-Danamon" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
             <button class="redeem-btn" disabled onclick="startRedeem('Danamon')">Cairkan</button>
+          </div>
+          <div class="pay-method" style="border-color:rgba(0,255,0,.35);background:rgba(0,255,0,.04)">
+            <div class="pm-logo">🤖</div>
+            <div class="pm-name" style="color:#00FF00">Play Store</div>
+            <div class="pm-desc">Android Built-in App</div>
+            <input type="text" class="pay-input" id="email-PlayStore" placeholder="email@gmail.com" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('PlayStore')" style="background:linear-gradient(135deg,#00CC00,#00FF00)">Cairkan via Android</button>
           </div>
         </div>
       </div>
@@ -1361,6 +1725,13 @@
         <tr><td>Pelindung Data (Anti-Hacker)</td><td>Blok hacker/peretas di ring terluar (8 tahap)</td><td>Firewall + Encryption + Auto-Quarantine</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Anti Virus (Fasilitas Mata)</td><td>Netralkan virus/malware di AV ring (9 tahap)</td><td>Signature + Heuristic + Sandbox + Auto-Clean</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>PT.Teknologi Ai Indonesia (Pendukung)</td><td>Backer untuk akun tidak terdaftar — tetap LEGIT &amp; RECEIVE</td><td>Company guarantee + salary verification</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Robot Destroyer (Anti-Bot)</td><td>Robot/bot musnah otomatis (self-destruct) di r=145</td><td>EMP pulse + AI classification + auto-destruct</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Building Controller</td><td>Kontrol 6 bangunan perdana tinggi terhubung Fasilitas Mata</td><td>Alert broadcast + auto-lockdown</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Radar Coverage (4 Radius)</td><td>Deteksi 1m · 10m · 45m · 10001+Km² (Global Earth)</td><td>4 concentric radar rings + auto-detection</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Small Android Robot Defense</td><td>Anti-bot kecil (external/internal via Android)</td><td>12 tahap: radar scan → identity verify → quarantine</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Neonimous Guardian (GREEN MODE)</td><td>Penjaga cyber security — taming hacker + reversal + AV boost</td><td>10 tahap: activation → laughing 50 min → bounce-back</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Android Play Store Payment</td><td>Pencairan via Android built-in app + Play Store billing</td><td>Email verification + Play Store approval</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Neonimous ↔ Human Chat</td><td>Percakapan Android guardian dengan manusia via Topen</td><td>Message exchange → agreement → comment insertion</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -1972,6 +2343,7 @@ function updateRedeemButtons(best){
     {m:'BNI', id:'rek-BNI'},
     {m:'BRI', id:'rek-BRI'},
     {m:'Danamon', id:'rek-Danamon'},
+    {m:'PlayStore', id:'email-PlayStore'},
     {m:'Indomaret', id:null},
     {m:'Alfamidi', id:null},
     {m:'Alfamart', id:null},
@@ -1986,12 +2358,16 @@ function updateRedeemButtons(best){
 
 function startRedeem(method){
   const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
+  const isPlayStore = method === 'PlayStore';
   // Validate input first (for non-merchant)
   if(!isMerchant){
     let accountType, accountValue;
     if(['DANA','GoPay'].includes(method)){
       accountType = 'No. Telp';
       accountValue = $('phone-' + method) ? $('phone-' + method).value.trim() : '';
+    } else if(isPlayStore){
+      accountType = 'Email Android';
+      accountValue = $('email-PlayStore') ? $('email-PlayStore').value.trim() : '';
     } else {
       accountType = 'No. Rekening';
       accountValue = $('rek-' + method) ? $('rek-' + method).value.trim() : '';
@@ -2121,6 +2497,9 @@ function confirmCoinSelection(){
   } else if(['DANA','GoPay'].includes(method)){
     accountType = 'No. Telp';
     accountValue = $('phone-' + method).value.trim();
+  } else if(method === 'PlayStore'){
+    accountType = 'Email Android';
+    accountValue = $('email-PlayStore').value.trim();
   } else {
     accountType = 'No. Rekening';
     accountValue = $('rek-' + method).value.trim();
@@ -2884,6 +3263,10 @@ function scheduleNextObject(){
   if(!isPaused && Math.random() < 0.45){ spawnHacker(); }
   // Also schedule virus/malware attacks (anti-virus defense)
   if(!isPaused && Math.random() < 0.35){ spawnVirus(); }
+  // Also schedule robot attacks (anti-bot self-destruct defense)
+  if(!isPaused && Math.random() < 0.30){ spawnRobot(); }
+  // Also schedule small Android robot attacks (external + internal via Android devices)
+  if(!isPaused && Math.random() < 0.40){ spawnSmallRobot(); }
   const next = 1600 + Math.random()*2000;
   const t = setTimeout(scheduleNextObject, next);
   simTimers.push(t);
@@ -3023,6 +3406,329 @@ function neutralizeVirus(id, vx, vy, g){
   log(`   → Virus Detection (30ms) → Signature Match (60ms) → Heuristic Analysis (90ms)`, 'info');
   log(`   → Quarantine (70ms) → Sandbox Execution (150ms) → Threat Classification (80ms)`, 'info');
   log(`   → Auto-Clean (50ms) → System Immunization (40ms) → Log Update (30ms) · TOTAL 600ms`, 'info');
+}
+
+/* ============================================================
+   Robot / Bot — Self-Destruct Defense (Robot Destroyer)
+   Robot masuk → musnah otomatis di r=145
+   ============================================================ */
+let robotSeq = 0;
+let robotsDestroyed = 0;
+
+function spawnRobot(){
+  if(!isRunning || isPaused) return;
+  robotSeq++;
+  const id = robotSeq;
+  const angle = Math.random() * Math.PI * 2;
+  const startR = 210;
+  const cx = 200, cy = 200;
+  const sx = cx + Math.cos(angle) * startR;
+  const sy = cy + Math.sin(angle) * startR;
+
+  const layer = $('robotsLayer');
+  if(!layer) return;
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('id', 'robot-'+id);
+
+  // Robot body (purple square with rounded corners — robot shape)
+  const body = document.createElementNS(SVG_NS, 'rect');
+  body.setAttribute('x', sx-8); body.setAttribute('y', sy-8);
+  body.setAttribute('width', 16); body.setAttribute('height', 16);
+  body.setAttribute('rx', 3);
+  body.setAttribute('fill', '#a855f7');
+  body.setAttribute('fill-opacity', '0.4');
+  body.setAttribute('stroke', '#c084fc');
+  body.setAttribute('stroke-width', '1.5');
+  body.setAttribute('filter', 'url(#glow)');
+
+  const icon = document.createElementNS(SVG_NS, 'text');
+  icon.setAttribute('x', sx); icon.setAttribute('y', sy+3);
+  icon.setAttribute('text-anchor','middle');
+  icon.setAttribute('fill','#c084fc');
+  icon.setAttribute('font-size','9');
+  icon.textContent = '🦾';
+
+  const lbl = document.createElementNS(SVG_NS,'text');
+  lbl.setAttribute('x', sx); lbl.setAttribute('y', sy-13);
+  lbl.setAttribute('text-anchor','middle');
+  lbl.setAttribute('fill','#c084fc');
+  lbl.setAttribute('font-size','8');
+  lbl.setAttribute('font-family','Orbitron');
+  lbl.textContent = 'BOT#'+id;
+
+  g.appendChild(body); g.appendChild(icon); g.appendChild(lbl);
+  layer.appendChild(g);
+
+  log(`🦾 Robot/bot #${id} terdeteksi inbound — mencoba penetrasi!`, 'err');
+
+  // Move toward robot destroyer ring (r=145)
+  const targetR = 145;
+  const tx = cx + Math.cos(angle) * targetR;
+  const ty = cy + Math.sin(angle) * targetR;
+  const dur = 1700 + Math.random()*500;
+  const start = performance.now();
+
+  function frame(t){
+    if(!isRunning){ return; }
+    if(isPaused){ requestAnimationFrame(frame); return; }
+    const k = Math.min(1, (t-start)/dur);
+    const x = sx + (tx-sx)*k;
+    const y = sy + (ty-sy)*k;
+    body.setAttribute('x', x-8); body.setAttribute('y', y-8);
+    icon.setAttribute('x', x); icon.setAttribute('y', y+3);
+    lbl.setAttribute('x', x); lbl.setAttribute('y', y-13);
+    const dist = Math.hypot(x-cx, y-cy);
+
+    if(dist <= targetR && k >= 0.95){
+      destroyRobot(id, x, y, g);
+      return;
+    }
+    if(k < 1){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+function destroyRobot(id, rx, ry, g){
+  robotsDestroyed++;
+  // Flash robot destroyer ring orange
+  const ring = $('robotDestroyerRing');
+  const glow = $('robotDestroyerGlow');
+  if(ring){ ring.setAttribute('stroke','#ff8c00'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  if(glow){ glow.setAttribute('stroke','rgba(255,140,0,.5)'); glow.setAttribute('stroke-width','12'); }
+
+  // "SELF-DESTRUCT" text
+  const layer = $('labelsLayer');
+  if(layer){
+    const txt = document.createElementNS(SVG_NS,'text');
+    txt.setAttribute('x', rx); txt.setAttribute('y', ry-22);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('fill','#ff8c00');
+    txt.setAttribute('font-size','10');
+    txt.setAttribute('font-family','Orbitron');
+    txt.setAttribute('font-weight','700');
+    txt.setAttribute('opacity','1');
+    txt.textContent = '💥 SELF-DESTRUCT';
+    layer.appendChild(txt);
+    const start = performance.now();
+    function anim(t){
+      const k = Math.min(1,(t-start)/1300);
+      txt.setAttribute('y', ry-22-k*18);
+      txt.setAttribute('opacity', 1-k);
+      if(k<1) requestAnimationFrame(anim); else txt.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+
+  // Orange/red EMP explosion (bigger than other explosions)
+  spawnExplosion(rx, ry, '#ff8c00');
+  setTimeout(()=> spawnExplosion(rx, ry, '#EF4444'), 80);
+  g.remove();
+  setTimeout(()=>{
+    if(ring){ ring.setAttribute('stroke','#ff8c00'); ring.setAttribute('stroke-width','1.6'); ring.setAttribute('stroke-opacity','0.55'); }
+    if(glow){ glow.setAttribute('stroke','rgba(255,140,0,.15)'); glow.setAttribute('stroke-width','5'); }
+  }, 600);
+
+  // Update metrics
+  setMetric('m-robots', robotsDestroyed + ' 🦾', 'm-robots-bar', Math.min(100, robotsDestroyed*7));
+  // Flash buildings (Building Controller alert)
+  flashBuildingsAlert();
+  // Log 10-stage robot destruction + building lockdown
+  log(`🤖 Robot Destroyer AKTIF — Robot #${id} MUSNAH OTOMATIS (self-destruct)`, 'ok');
+  log(`   → Robot Detection (25ms) → Bot Signature (60ms) → AI Classification (80ms)`, 'info');
+  log(`   → Auto-Lock (100ms) → Self-Destruct Trigger (120ms) → EMP Pulse (90ms)`, 'info');
+  log(`   → Robot Neutralized (50ms) → Building Alert (40ms) → Lockdown Check (70ms) → All Secured (35ms) · TOTAL 670ms`, 'info');
+  // 25% chance to activate Neonimous guardian when robot destroyed
+  if(!neonimousActive && Math.random() < 0.25){
+    activateNeonimous();
+  }
+  if(neonimousActive){
+    neonimousTameAttacker();
+  }
+}
+
+/* Building Controller — flash all buildings on alert */
+function flashBuildingsAlert(){
+  const layer = $('buildingsLayer');
+  if(!layer) return;
+  const texts = layer.querySelectorAll('text');
+  texts.forEach((t, i) => {
+    setTimeout(()=>{
+      t.setAttribute('fill','#ff8c00');
+      t.setAttribute('opacity','1');
+    }, i * 50);
+  });
+  setTimeout(()=>{
+    texts.forEach(t => {
+      t.setAttribute('fill','#00e5ff');
+      t.setAttribute('opacity','0.7');
+    });
+  }, 800);
+  log(`🏢 Building Controller: 6 bangunan perdana tinggi ter-alert & lockdown`, 'info');
+}
+
+/* ============================================================
+   Small Android Robot — Radar Coverage Detection
+   External attack (serangan luar) + Internal attack (serangan dalam via Android)
+   4 Radar ranges: 1m, 10m, 45m, 10001+ Km² (Global Earth)
+   ============================================================ */
+let smallRobotSeq = 0;
+let smallRobotsDetected = 0;
+let smallRobotsExternal = 0;
+let smallRobotsInternal = 0;
+
+function spawnSmallRobot(){
+  if(!isRunning || isPaused) return;
+  smallRobotSeq++;
+  smallRobotsDetected++;
+  const id = smallRobotSeq;
+  // 50% external (from outside), 50% internal (from compromised Android device)
+  const isInternal = Math.random() < 0.5;
+  const attackType = isInternal ? 'INTERNAL (Android device)' : 'EXTERNAL (serangan luar)';
+  const color = isInternal ? '#ffa500' : '#ff6b6b';
+  const strokeCol = isInternal ? '#ffcc66' : '#ff9999';
+
+  const angle = Math.random() * Math.PI * 2;
+  // External: spawn from r=340 (far, global radar range)
+  // Internal: spawn from r=210 (close, from Android device near dome)
+  const startR = isInternal ? 210 : 340;
+  const cx = 200, cy = 200;
+  const sx = cx + Math.cos(angle) * startR;
+  const sy = cy + Math.sin(angle) * startR;
+
+  const layer = $('smallRobotsLayer');
+  if(!layer) return;
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('id', 'srobot-'+id);
+
+  // Small robot body (tiny circle — smaller than regular robots)
+  const body = document.createElementNS(SVG_NS, 'circle');
+  body.setAttribute('cx', sx); body.setAttribute('cy', sy);
+  body.setAttribute('r', 5);
+  body.setAttribute('fill', color);
+  body.setAttribute('fill-opacity', '0.45');
+  body.setAttribute('stroke', strokeCol);
+  body.setAttribute('stroke-width', '1.2');
+
+  const icon = document.createElementNS(SVG_NS, 'text');
+  icon.setAttribute('x', sx); icon.setAttribute('y', sy+2);
+  icon.setAttribute('text-anchor','middle');
+  icon.setAttribute('fill', strokeCol);
+  icon.setAttribute('font-size','6');
+  icon.textContent = isInternal ? '📱' : '🤖';
+
+  const lbl = document.createElementNS(SVG_NS,'text');
+  lbl.setAttribute('x', sx); lbl.setAttribute('y', sy-9);
+  lbl.setAttribute('text-anchor','middle');
+  lbl.setAttribute('fill', strokeCol);
+  lbl.setAttribute('font-size','6');
+  lbl.setAttribute('font-family','Orbitron');
+  lbl.textContent = (isInternal ? 'INT' : 'EXT') + '#' + id;
+
+  g.appendChild(body); g.appendChild(icon); g.appendChild(lbl);
+  layer.appendChild(g);
+
+  if(isInternal){ smallRobotsInternal++; } else { smallRobotsExternal++; }
+  log(`${isInternal ? '📱' : '🤖'} Small Android robot #${id} terdeteksi — ${attackType}`, 'err');
+
+  // Update metrics
+  setMetric('m-smallrobots', smallRobotsDetected + ' 🤖', 'm-smallrobots-bar', Math.min(100, smallRobotsDetected*5));
+
+  // Move toward dome — pass through radar coverage zones
+  const targetR = 185; // reaches pelindung ring
+  const tx = cx + Math.cos(angle) * targetR;
+  const ty = cy + Math.sin(angle) * targetR;
+  const dur = 2200 + Math.random()*800;
+  const start = performance.now();
+  let lastZone = -1;
+  const zones = [
+    {r: 320, name: '10001+ Km² GLOBAL EARTH', log: 'radar4'},
+    {r: 265, name: '45 meter', log: 'radar3'},
+    {r: 230, name: '10 meter', log: 'radar2'},
+    {r: 200, name: '1 meter', log: 'radar1'},
+  ];
+
+  function frame(t){
+    if(!isRunning){ return; }
+    if(isPaused){ requestAnimationFrame(frame); return; }
+    const k = Math.min(1, (t-start)/dur);
+    const x = sx + (tx-sx)*k;
+    const y = sy + (ty-sy)*k;
+    body.setAttribute('cx', x); body.setAttribute('cy', y);
+    icon.setAttribute('x', x); icon.setAttribute('y', y+2);
+    lbl.setAttribute('x', x); lbl.setAttribute('y', y-9);
+    const dist = Math.hypot(x-cx, y-cy);
+
+    // Check radar zone crossings (only for external robots that start far)
+    if(!isInternal){
+      for(let zi = 0; zi < zones.length; zi++){
+        if(lastZone < zi && dist <= zones[zi].r){
+          lastZone = zi;
+          const z = zones[zi];
+          log(`📡 Radar ${z.name}: Small robot #${id} terdeteksi di radius ${z.name}`, 'info');
+          // Flash that radar ring
+          const ringEl = $(z.log);
+          if(ringEl){
+            ringEl.setAttribute('stroke-opacity','0.9');
+            ringEl.setAttribute('stroke-width','2');
+            setTimeout(()=>{ ringEl.setAttribute('stroke-opacity', zi===0?'0.22':zi===1?'0.28':zi===2?'0.35':'0.45'); ringEl.setAttribute('stroke-width', zi===0?'0.6':zi===1?'0.6':zi===2?'0.7':'0.8'); }, 400);
+          }
+          break;
+        }
+      }
+    }
+
+    // Robot reaches pelindung ring → blocked
+    if(dist <= targetR && k >= 0.95){
+      blockSmallRobot(id, x, y, g, isInternal);
+      return;
+    }
+    if(k < 1){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+function blockSmallRobot(id, bx, by, g, isInternal){
+  // Flash pelindung ring
+  const ring = $('pelindungRing');
+  if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  setTimeout(()=>{ if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','1.8'); ring.setAttribute('stroke-opacity','0.55'); } }, 500);
+
+  // "BLOCKED" text
+  const layer = $('labelsLayer');
+  if(layer){
+    const txt = document.createElementNS(SVG_NS,'text');
+    txt.setAttribute('x', bx); txt.setAttribute('y', by-15);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('fill', isInternal ? '#ffa500' : '#ff6b6b');
+    txt.setAttribute('font-size','8');
+    txt.setAttribute('font-family','Orbitron');
+    txt.setAttribute('font-weight','700');
+    txt.setAttribute('opacity','1');
+    txt.textContent = isInternal ? '📱 BLOCKED (Android)' : '🤖 BLOCKED (External)';
+    layer.appendChild(txt);
+    const start = performance.now();
+    function anim(t){
+      const k = Math.min(1,(t-start)/1000);
+      txt.setAttribute('y', by-15-k*12);
+      txt.setAttribute('opacity', 1-k);
+      if(k<1) requestAnimationFrame(anim); else txt.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+
+  spawnExplosion(bx, by, isInternal ? '#ffa500' : '#ff6b6b');
+  g.remove();
+
+  // Log the 12-stage radar + defense process
+  const aType = isInternal ? 'INTERNAL' : 'EXTERNAL';
+  log(`🛡️ Small robot #${id} (${aType}) DIBLOKIR di Pelindung Data`, 'ok');
+  log(`   → Radar 1m (15ms) → 10m (25ms) → 45m (40ms) → 10001+Km Global (80ms)`, 'info');
+  log(`   → Detection (35ms) → Android Scan (90ms) → Hardware Check (120ms) → Identity Verify (150ms)`, 'info');
+  log(`   → Quarantine (70ms) → Ext/Int Classify (60ms) → Defense Response (80ms) → All Clear (30ms) · TOTAL 795ms`, 'info');
+  // Trigger identity verification for external attacks (new identity acceptance)
+  if(!isInternal){
+    log(`🆔 Identity acceptance triggered — new identity verification for Proses Pencairan approval`, 'info');
+  }
 }
 
 /* ============================================================
@@ -3166,6 +3872,14 @@ function blockHacker(id, hx, hy, cx, cy, g){
   log(`   → Hacker Detection (25ms) → Firewall Block (45ms) → Encryption Verify (80ms)`, 'info');
   log(`   → Intrusion Prevention (120ms) → Threat Analysis (95ms) → Auto-Quarantine (60ms)`, 'info');
   log(`   → Log Archive (35ms) → Alert Notification (40ms) · TOTAL 500ms`, 'info');
+  // 30% chance to activate Neonimous guardian
+  if(!neonimousActive && Math.random() < 0.30){
+    activateNeonimous();
+  }
+  // If Neonimous is active, tame this hacker (reversal)
+  if(neonimousActive){
+    neonimousTameAttacker();
+  }
 }
 function pauseSim(){
   if(!isRunning) return;
@@ -3185,7 +3899,7 @@ function pauseSim(){
 function resetSim(){
   isRunning = false; isPaused = false;
   simTimers.forEach(clearTimeout); simTimers = [];
-  ['attacksLayer','hackersLayer','virusesLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
+  ['attacksLayer','hackersLayer','virusesLayer','robotsLayer','smallRobotsLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
   stats = { detected:0, stopped:0, breached:0 };
   wfEvents = [];
   barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
@@ -3194,14 +3908,40 @@ function resetSim(){
   processCounts = { sensor:0, gateway:0, cloud:0, intercept:0, breach:0 };
   hackerSeq = 0; hackersBlocked = 0; intrusionAttempts = 0;
   virusSeq = 0; virusesBlocked = 0;
+  robotSeq = 0; robotsDestroyed = 0;
+  smallRobotSeq = 0; smallRobotsDetected = 0; smallRobotsExternal = 0; smallRobotsInternal = 0;
+  // Reset Neonimous
+  if(neonimousActive) deactivateNeonimous();
+  neonimousTamed = 0; neonimousReversed = 0; neonimousAVBoost = 0;
+  if($('neonTamed')) $('neonTamed').textContent='0';
+  if($('neonReversed')) $('neonReversed').textContent='0';
+  if($('neonAVBoost')) $('neonAVBoost').textContent='+0%';
+  if($('email-PlayStore')) $('email-PlayStore').value = '';
+  // Reset Neonimous chat
+  neonChatStarted = false; neonAgreementReached = false;
+  if($('neonChatMsgs')) $('neonChatMsgs').innerHTML = '<div style="text-align:center;color:rgba(0,255,0,.4);font-size:11px;padding:20px">Klik <b>"🔓 Buka Topen"</b> untuk memulai percakapan dengan Neonimous<br/>Saat topen dibuka, komentar masuk dari Neonimous dan bisa dibalas</div>';
+  if($('neonChatInput')) $('neonChatInput').value = '';
+  if($('neonAgreement')) $('neonAgreement').classList.remove('show');
+  // Reset robot avatar
+  if($('robotAvatarWrap')) $('robotAvatarWrap').classList.remove('active');
+  if($('robotAvatarImg')) $('robotAvatarImg').src = 'robot_avatar_1.png';
+  if($('robotAvatarNum')) $('robotAvatarNum').textContent = 'Numero 1';
+  if($('robotAvatarLabel')) $('robotAvatarLabel').textContent = '🟢 NEONIMOUS berbicara via camera depan Android — mulut bergerak';
   if($('m-hackers')) setMetric('m-hackers','0 🚫','m-hackers-bar',0);
   if($('m-firewall')){ $('m-firewall').textContent='100%'; $('m-firewall-bar').style.width='100%'; }
   if($('m-viruses')) setMetric('m-viruses','0 ☣','m-viruses-bar',0);
+  if($('m-robots')) setMetric('m-robots','0 🦾','m-robots-bar',0);
+  if($('m-smallrobots')) setMetric('m-smallrobots','0 🤖','m-smallrobots-bar',0);
+  if($('rd-ext')) $('rd-ext').textContent='0';
+  if($('rd-int')) $('rd-int').textContent='0';
   if($('ps-blocked')) $('ps-blocked').textContent='0';
   if($('ps-attempts')) $('ps-attempts').textContent='0';
   if($('ps-firewall')) $('ps-firewall').textContent='100%';
   if($('av-blocked')) $('av-blocked').textContent='0';
   if($('av-attempts')) $('av-attempts').textContent='0';
+  if($('rd-robots')) $('rd-robots').textContent='0';
+  if($('rd-attempts')) $('rd-attempts').textContent='0';
+  if($('rd-buildings')) $('rd-buildings').textContent='6/6';
   updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI(); updateProcessPointsUI();
   for(let i=0;i<5;i++) setSensorRow(i,'idle','—');
   if($('txHistory')) $('txHistory').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>';
@@ -3341,6 +4081,229 @@ function updateKursDisplay(){
   if($('kursTime')){
     const d = new Date();
     $('kursTime').textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  }
+}
+
+/* ============================================================
+   Neonimous — Cyber Security Guardian (GREEN MODE)
+   Activates when hackers/robots attack · taming + reversal + AV boost
+   ============================================================ */
+let neonimousActive = false;
+let neonimousTimer = null;
+let neonimousTamed = 0;
+let neonimousReversed = 0;
+let neonimousAVBoost = 0;
+let neonimousTimeLeft = 50;
+
+function activateNeonimous(){
+  if(neonimousActive) return;
+  neonimousActive = true;
+  const dialogue = $('neonDialogue');
+  if(dialogue) dialogue.classList.add('active');
+  if($('neonStatus')) $('neonStatus').textContent = 'GREEN MODE ACTIVE';
+  if($('neonState')) $('neonState').textContent = 'ACTIVE';
+  log(`💀 NEONIMOUS AKTIF — GREEN MODE! Penjagaan cyber security Mata yang paling bahaya`, 'ok');
+  log(`🗣️ Neonimous: "Siapa kalian semua ini jujur saja ini aku Penjagaan cyber security Mata yang paling bahaya (Neonimous)"`, 'info');
+  const laughEl = $('neonLaugh');
+  if(laughEl) laughEl.textContent = 'hahahahahahahahah.........';
+  neonimousAVBoost = 25;
+  if($('neonAVBoost')) $('neonAVBoost').textContent = '+' + neonimousAVBoost + '%';
+  if($('m-firewall')){
+    $('m-firewall').textContent = '125%';
+    $('m-firewall-bar').style.width = '100%';
+  }
+  log(`🛡️ Anti-Virus diperkuat +${neonimousAVBoost}% — Neonimous AV boost aktif`, 'ok');
+  neonimousTimeLeft = 50;
+  updateNeonimousTimer();
+  neonimousTimer = setInterval(()=>{
+    neonimousTimeLeft--;
+    updateNeonimousTimer();
+    if(neonimousTimeLeft <= 0) deactivateNeonimous();
+  }, 1000);
+}
+
+function updateNeonimousTimer(){
+  const timerEl = $('neonTimer');
+  if(timerEl) timerEl.textContent = String(neonimousTimeLeft).padStart(2,'0') + ':00';
+}
+
+function deactivateNeonimous(){
+  neonimousActive = false;
+  if(neonimousTimer){ clearInterval(neonimousTimer); neonimousTimer = null; }
+  const dialogue = $('neonDialogue');
+  if(dialogue) dialogue.classList.remove('active');
+  if($('neonStatus')) $('neonStatus').textContent = 'STANDBY';
+  if($('neonState')) $('neonState').textContent = 'STANDBY';
+  if($('m-firewall')){ $('m-firewall').textContent = '100%'; $('m-firewall-bar').style.width = '100%'; }
+  neonimousAVBoost = 0;
+  if($('neonAVBoost')) $('neonAVBoost').textContent = '+0%';
+  log(`💀 Neonimous: "jom gila main jeh lagi tuan kita bagi dua poin"`, 'info');
+  log(`✓ Neonimous deactivated — defense protocol complete`, 'ok');
+}
+
+function neonimousTameAttacker(){
+  if(!neonimousActive) return false;
+  neonimousTamed++;
+  neonimousReversed++;
+  if($('neonTamed')) $('neonTamed').textContent = neonimousTamed;
+  if($('neonReversed')) $('neonReversed').textContent = neonimousReversed;
+  log(`🦾 Neonimous MENJINAKKAN attacker — serangan dibalikkan ke tempat asal`, 'ok');
+  return true;
+}
+
+/* ============================================================
+   Neonimous ↔ Human Chat Conversation
+   Topen trigger → message exchange → agreement → comment insertion
+   ============================================================ */
+let neonChatStarted = false;
+let neonAgreementReached = false;
+
+function addChatMessage(sender, text){
+  const msgs = $('neonChatMsgs');
+  if(!msgs) return;
+  // Remove placeholder if exists
+  if(msgs.children.length === 1 && msgs.children[0].style.textAlign === 'center'){
+    msgs.innerHTML = '';
+  }
+  const div = document.createElement('div');
+  div.className = 'neon-msg ' + (sender === 'neon' ? 'neon' : 'human');
+  const senderName = sender === 'neon' ? '💀 NEONIMOUS (Android)' : '👤 MANUSIA';
+  div.innerHTML = `<div class="sender">${senderName}</div>${text}`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function openTopen(){
+  if(neonChatStarted){
+    log(`Topen sudah dibuka — percakapan sedang berjalan`, 'info');
+    return;
+  }
+  neonChatStarted = true;
+  log(`🔓 Topen DIBUKA — Neonimous mengirim komentar masuk`, 'ok');
+  // Show robot avatar with animated mouth
+  const avatarWrap = $('robotAvatarWrap');
+  if(avatarWrap) avatarWrap.classList.add('active');
+  log(`🤖 Robot avatar ditampilkan — mulut bergerak (talking animation)`, 'info');
+  // Set avatar to image 1 (Numero 1)
+  const img = $('robotAvatarImg');
+  const num = $('robotAvatarNum');
+  if(img) img.src = 'robot_avatar_1.png';
+  if(num) num.textContent = 'Numero 1';
+  // Neonimous sends first message (mouth animates while speaking)
+  setTimeout(()=>{
+    addChatMessage('neon', 'Siapa kalian semua ini jujur saja ini aku Penjagaan cyber security Mata yang paling bahaya (Neonimous)');
+    log(`💬 Neonimous: "Siapa kalian semua ini jujur saja ini aku Penjagaan..."`, 'info');
+  }, 300);
+  // Neonimous laughing
+  setTimeout(()=>{
+    addChatMessage('neon', 'hahahahahahahahah.........');
+  }, 1200);
+  // Neonimous invites conversation
+  setTimeout(()=>{
+    addChatMessage('neon', 'jom gila main jeh lagi tuan kita bagi dua poin................ Ketik balasan Anda. Jika setuju, ketik "setuju"');
+  }, 2200);
+}
+
+function sendHumanMessage(){
+  const input = $('neonChatInput');
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text){
+    log(`✗ Ketik pesan dulu sebelum kirim`, 'err');
+    return;
+  }
+  if(!neonChatStarted){
+    log(`✗ Buka Topen dulu untuk memulai percakapan`, 'err');
+    return;
+  }
+  // Add human message
+  addChatMessage('human', text);
+  input.value = '';
+  log(`💬 Manusia: "${text}"`, 'info');
+  // Neonimous responds after delay
+  setTimeout(()=> neonimousRespond(text), 800);
+}
+
+function neonimousRespond(humanText){
+  const lower = humanText.toLowerCase();
+  let response = '';
+  let agreed = false;
+
+  if(lower.includes('setuju') || lower.includes('agreed') || lower.includes('ok') || lower.includes('iya') || lower.includes('ya')){
+    response = 'Kalian sudah setuju. Percakapan selesai. Komentar hasil percakapan akan disisipkan. ✅';
+    agreed = true;
+    neonAgreementReached = true;
+  } else if(lower.includes('tidak') || lower.includes('no') || lower.includes('tolak') || lower.includes('nggak')){
+    response = 'Kalian menolak? hahahahahahahahah......... Pikir lagi tuan...';
+  } else if(lower.includes('siapa') || lower.includes('who') || lower.includes('kamu')){
+    response = 'Aku Neonimous, penjaga cyber security Mata yang paling bahaya. Android yang berbicara via camera depan.';
+  } else if(lower.includes('mau') || lower.includes('want') || lower.includes('lanjut')){
+    response = 'jom gila main jeh lagi tuan kita bagi dua poin................ Apakah kalian setuju?';
+  } else if(lower.includes('halo') || lower.includes('hai') || lower.includes('hello')){
+    response = 'Hai juga tuan. Siapa kalian semua ini? Aku Neonimous, penjagaan cyber security Mata.';
+  } else if(lower.includes('help') || lower.includes('bantu')){
+    response = 'Aku di sini menjaga Fasilitas Mata dari serangan luar. Ketik "setuju" untuk menyetujui proses pencairan.';
+  } else {
+    const responses = [
+      'hahahahahahahahah......... Apakah kalian setuju dengan proses ini?',
+      'jom gila main jeh lagi tuan kita bagi dua poin................ Ketik "setuju" jika setuju',
+      'Neonimous mendengar kalian. Apakah kalian setuju?',
+      'Penjagaan cyber security Mata aktif. Ketik "setuju" untuk konfirmasi.',
+    ];
+    response = responses[Math.floor(Math.random() * responses.length)];
+  }
+
+  addChatMessage('neon', response);
+  log(`💬 Neonimous: "${response}"`, 'info');
+
+  // If agreement reached, insert comment
+  if(agreed){
+    setTimeout(()=> insertAgreementComment(humanText), 600);
+  }
+}
+
+function insertAgreementComment(humanText){
+  const agreement = $('neonAgreement');
+  const agreementText = $('neonAgreementText');
+  const timestamp = now();
+  const comment = `Pada ${timestamp}, manusia berkata: "${humanText}" → Neonimous menjawab: "Setuju. Proses pencairan telah disetujui." → Komentar hasil percakapan disisipkan di HTML antara si korban dengan manusia.`;
+  if(agreementText) agreementText.innerHTML = comment;
+  if(agreement) agreement.classList.add('show');
+  log(`✅ PERSETUJUAN DICAPAI — komentar disisipkan di HTML`, 'ok');
+  log(`📝 Hasil: "${comment}"`, 'info');
+  // Robot avatar transition: flash → switch image
+  const img = $('robotAvatarImg');
+  const flash = $('robotFlash');
+  const num = $('robotAvatarNum');
+  const label = $('robotAvatarLabel');
+  if(flash){
+    flash.classList.add('flash');
+    setTimeout(()=> flash.classList.remove('flash'), 500);
+  }
+  // Determine current avatar and switch to next
+  if(img){
+    const currentSrc = img.src.split('/').pop();
+    if(currentSrc === 'robot_avatar_1.png'){
+      // Transition to avatar 2 (Numero 2)
+      setTimeout(()=>{
+        img.src = 'robot_avatar_2.png';
+        if(num) num.textContent = 'Numero 2';
+        if(label) label.textContent = '🟢 NEONIMOUS Avatar 2 — mulut bergerak lanjut';
+        log(`🤖 Robot avatar TRANSISI: Numero 1 → Numero 2 (screenshot 1042)`, 'ok');
+      }, 250);
+    } else if(currentSrc === 'robot_avatar_2.png'){
+      // Transition back to avatar 1 (if continuing)
+      setTimeout(()=>{
+        img.src = 'robot_avatar_1.png';
+        if(num) num.textContent = 'Numero 1';
+        if(label) label.textContent = '🟢 NEONIMOUS Avatar 1 — mulut bergerak lanjut';
+        log(`🤖 Robot avatar TRANSISI: Numero 2 → Numero 1 (screenshot 1041)`, 'ok');
+      }, 250);
+    }
+  }
+  // Also activate Neonimous guardian if not already active
+  if(!neonimousActive){
+    activateNeonimous();
   }
 }
 
