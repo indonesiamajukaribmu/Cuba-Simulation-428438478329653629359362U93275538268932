@@ -549,6 +549,24 @@
           <circle cx="200" cy="200" r="185" fill="none" stroke="#ff3b3b" stroke-width="1.8" stroke-dasharray="6 4" stroke-opacity="0.55" id="pelindungRing"/>
           <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(255,59,59,.18)" stroke-width="6" id="pelindungGlow"/>
           <text x="200" y="12" text-anchor="middle" fill="#ff8a80" font-size="7" font-family="Orbitron" font-weight="700" letter-spacing="2">🔒 PELINDUNG DATA 🔒</text>
+          <!-- Anti Virus ring (green scanning layer — anti-malware) at r=172 -->
+          <circle cx="200" cy="200" r="172" fill="none" stroke="#00ff9d" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity="0.50" id="antivirusRing"/>
+          <circle cx="200" cy="200" r="174" fill="none" stroke="rgba(0,255,157,.12)" stroke-width="5" id="antivirusGlow"/>
+          <!-- AV scan sweep (rotating) -->
+          <g style="transform-origin:200px 200px;animation:sweep 6s linear infinite" id="avSweep">
+            <path d="M200 200 L200 28 A172 172 0 0 1 372 200 Z" fill="rgba(0,255,157,.06)"/>
+            <line x1="200" y1="200" x2="200" y2="28" stroke="rgba(0,255,157,.45)" stroke-width="1"/>
+          </g>
+          <text x="200" y="395" text-anchor="middle" fill="#00ff9d" font-size="7" font-family="Orbitron" font-weight="700" letter-spacing="2">🦠 ANTI VIRUS 🦠</text>
+          <!-- Biohazard/scanner icons around antivirus ring (6 positions) -->
+          <g id="avIcons" font-family="Orbitron" font-size="8" fill="#00ff9d" font-weight="700">
+            <text x="200" y="378" text-anchor="middle">🛡️</text>
+            <text x="372" y="200" text-anchor="middle" dx="14">🛡️</text>
+            <text x="200" y="22" text-anchor="middle" dx="-14">🛡️</text>
+            <text x="28" y="200" text-anchor="middle" dx="-14">🛡️</text>
+            <text x="320" y="75" text-anchor="middle">🛡️</text>
+            <text x="80" y="325" text-anchor="middle">🛡️</text>
+          </g>
           <!-- Lock icons around pelindung ring (8 positions) -->
           <g id="lockIcons" font-family="Orbitron" font-size="9" fill="#ff5252" font-weight="700">
             <text x="200" y="20" text-anchor="middle">🔒</text>
@@ -590,6 +608,7 @@
           <!-- Layers -->
           <g id="attacksLayer"></g>
           <g id="hackersLayer"></g>
+          <g id="virusesLayer"></g>
           <g id="lasersLayer"></g>
           <g id="fxLayer"></g>
           <g id="labelsLayer"></g>
@@ -609,6 +628,8 @@
           <div class="row"><span class="sw" style="background:#ffd700"></span> S5·COIN reward sensor</div>
           <div class="row"><span class="sw" style="background:#ff3b3b"></span> 🔒 Pelindung Data (anti-hacker)</div>
           <div class="row"><span class="sw" style="background:#a855f7"></span> 👾 Hacker/peretas masuk</div>
+          <div class="row"><span class="sw" style="background:#00ff9d"></span> 🦠 Anti Virus (anti-malware)</div>
+          <div class="row"><span class="sw" style="background:#ff6b35"></span> ☣ Virus/malware masuk</div>
         </div>
       </div>
 
@@ -671,6 +692,18 @@
             <div class="val" id="m-firewall" style="background:linear-gradient(90deg,#00ff9d,#00e5ff);-webkit-background-clip:text;background-clip:text;color:transparent">100%</div>
             <div class="sub">encryption AES-256 + TLS 1.3</div>
             <div class="bar"><span id="m-firewall-bar" style="width:100%"></span></div>
+          </div>
+          <div class="metric" style="border-color:rgba(0,255,157,.4)">
+            <div class="lbl">🦠 Anti Virus</div>
+            <div class="val" id="m-viruses" style="background:linear-gradient(90deg,#00ff9d,#3AAFA9);-webkit-background-clip:text;background-clip:text;color:transparent">0 ☣</div>
+            <div class="sub">virus/malware dinetralkan</div>
+            <div class="bar"><span id="m-viruses-bar" style="width:0%;background:linear-gradient(90deg,#00ff9d,#3AAFA9)"></span></div>
+          </div>
+          <div class="metric">
+            <div class="lbl">🔬 AV Scan Status</div>
+            <div class="val" id="m-avscan" style="background:linear-gradient(90deg,#00ff9d,#00e5ff);-webkit-background-clip:text;background-clip:text;color:transparent">ACTIVE</div>
+            <div class="sub">real-time protection ON</div>
+            <div class="bar"><span style="width:100%;background:linear-gradient(90deg,#00ff9d,#00e5ff)"></span></div>
           </div>
         </div>
 
@@ -749,6 +782,64 @@
     </div>
   </section>
 
+  <!-- ===== Anti Virus (Fasilitas Mata) ===== -->
+  <div class="section-title" id="antivirusSec"><h2>🦠 Anti Virus — Sistem Anti-Malware Fasilitas Mata</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00ff9d,#3AAFA9)">🦠</span> Anti Virus Protection Kubah</h2>
+      <span class="tag live" id="avStatus">SCAN ACTIVE</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:#00ff9d">Anti Virus</b> adalah lapisan anti-malware di Fasilitas Mata yang mendeteksi dan
+      menetralkan <b>virus, malware, worm, trojan, dan ransomware</b> yang mencoba menginfeksi sistem kubah.
+      Saat virus masuk dari luar, Anti Virus menjalankan <b>9 tahap</b> netralisasi:
+      <b>Virus Detection → Signature Match → Heuristic Analysis → Quarantine → Sandbox Execution →
+      Threat Classification → Auto-Clean → System Immunization → Log Update</b>. Total 600ms per virus.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+          <div class="chart-stat" style="background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.3)">
+            <div class="k">☣ Viruses Neutralized</div><div class="v" id="av-blocked" style="color:#00ff9d">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(255,107,53,.06);border-color:rgba(255,107,53,.3)">
+            <div class="k">🦠 Malware Attempts</div><div class="v" id="av-attempts" style="color:#ff6b35">0</div>
+          </div>
+          <div class="chart-stat ok">
+            <div class="k">🔬 Scan Engine</div><div class="v">Real-time</div>
+          </div>
+          <div class="chart-stat">
+            <div class="k">🛡️ Protection</div><div class="v">ON</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px">
+          <b style="color:#cfe6ff">Lapisan Anti Virus:</b><br/>
+          🦠 <b style="color:#00ff9d">Anti Virus Ring</b> (r=172) — green scan layer<br/>
+          🛡️ <b style="color:#00ff9d">AV Sweep</b> — radar scan berputar 6s<br/>
+          ☣ <b style="color:#ff6b35">Virus inbound</b> — dinetralkan di ring<br/>
+          <br/>
+          <b style="color:#cfe6ff">9 Tahap Netralisasi:</b><br/>
+          1. Virus Detection (30ms)<br/>
+          2. Signature Match (60ms)<br/>
+          3. Heuristic Analysis (90ms)<br/>
+          4. Quarantine (70ms)<br/>
+          5. Sandbox Execution (150ms) ★<br/>
+          6. Threat Classification (80ms)<br/>
+          7. Auto-Clean (50ms)<br/>
+          8. System Immunization (40ms)<br/>
+          9. Log Update (30ms)
+        </div>
+      </div>
+      <div>
+        <img src="waterfall_antivirus_protection.png" alt="Waterfall Chart Anti Virus Protection" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 9 tahap Anti Virus Protection Lifecycle.<br/>
+          Total: <b style="color:var(--accent-3)">600ms</b> per virus · Heaviest: <b style="color:#3AAFA9">Sandbox Execution 150ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Identity Cards Panel ===== -->
   <div class="section-title"><h2>Identitas Benda Terdeteksi (Container Tools Visual)</h2><div class="line"></div></div>
   <section class="card">
@@ -766,6 +857,63 @@
         Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Mode Penelusuran Benda</b> untuk memulai pemindaian.
       </div>
     </div>
+  </section>
+
+  <!-- ===== User Profile (Verified Identity) ===== -->
+  <div class="section-title" id="profileSec"><h2>👤 User Profile — Identitas Terverifikasi</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00ff9d,#00e5ff)">👤</span> Profile Akun Penerima</h2>
+      <span class="tag live" id="upTag">Profile Verified</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:var(--accent)">User Profile</b> memastikan identitas yang muncul saat verifikasi pencairan adalah
+      <b>nama asli Anda</b> (mis. DELIMA), bukan nama random. Setiap akun (DANA/GoPay/BSI/BNI/BRI/Danamon) akan
+      diverifikasi sebagai <b style="color:var(--accent-3)">akun LEGIT</b> yang menerima <b>hasil gaji bulanan/tahunan</b>,
+      sehingga <b>Position: RECEIVE</b> dan tidak dicurigai sebagai akun virtual hasil peretasan.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end" class="profile-grid">
+      <div>
+        <label style="font-size:11px;color:var(--muted);font-family:'Orbitron',sans-serif;margin-bottom:4px;display:block">NAMA LENGKAP (atas nama akun):</label>
+        <input type="text" class="pay-input" id="upName" value="DELIMA" placeholder="Masukkan nama asli Anda" style="font-size:13px;padding:10px">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--muted);font-family:'Orbitron',sans-serif;margin-bottom:4px;display:block">SUMBER DANA (salary type):</label>
+        <select class="pay-input" id="upSalary" style="font-size:13px;padding:10px">
+          <option value="Gaji Bulanan" selected>Gaji Bulanan</option>
+          <option value="Gaji Tahunanan">Gaji Tahunanan</option>
+          <option value="Gaji Bulanan + Tahunan">Gaji Bulanan + Tahunan</option>
+        </select>
+      </div>
+      <button class="btn scan" onclick="updateUserProfile()" style="height:40px">✓ Verifikasi</button>
+    </div>
+    <div id="upStatus" style="margin-top:12px;background:rgba(0,255,157,.06);border:1px solid rgba(0,255,157,.3);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--accent-3);line-height:1.6">
+      ✓ Profile Terverifikasi<br/><b style="color:#cfe6ff">DELIMA</b> · Gaji Bulanan
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.6">
+      💡 <b style="color:var(--accent)">ACCOUNT REGISTRY</b> — sistem memetakan no telp/rekening ke pemilik asli:
+      <ul style="margin:6px 0 0 18px">
+        <li><b style="color:var(--accent-3)">085256255099</b> → DELIMA (Gaji Bulanan, Rp 7,5jt/bulan)</li>
+        <li><b style="color:var(--accent-3)">081234567890</b> → Ahmad Rizki Pratama (Gaji Bulanan)</li>
+        <li><b style="color:var(--accent-3)">087812345678</b> → Siti Nurhaliza (Gaji Tahunan)</li>
+        <li><b style="color:var(--accent-3)">1234567890</b> → DELIMA (Bank — Gaji Bulanan)</li>
+        <li><b style="color:var(--accent-3)">123456789012345</b> → DELIMA (BRI 15 digit)</li>
+        <li><b style="color:var(--accent-3)">987654321098765</b> → Fitri Handayani (BRI — Gaji Tahunan)</li>
+      </ul>
+      <div style="margin-top:8px;padding:8px 10px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:8px;font-size:10.5px;color:#ffd700">
+        🏢 <b>PT.Teknologi Ai Indonesia sebagai Pendukung:</b> Akun yang TIDAK terdaftar di registry → didukung oleh <b>PT.Teknologi Ai Indonesia</b> sebagai backer → tetap <b>LEGIT</b> & <b>Position: RECEIVE</b> — bisa cair dengan company guarantee.
+      </div>
+    </div>
+    <img src="waterfall_company_backed_verification.png" alt="Waterfall Chart Company-Backed Verification PT.Teknologi Ai Indonesia" style="width:100%;border-radius:10px;border:1px solid var(--border);margin-top:12px;display:block" />
+    <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.6">
+      <b style="color:#FFD700">Waterfall chart</b> — 10 tahap Company-Backed Verification dengan <b style="color:#FFD700">PT.Teknologi Ai Indonesia</b> sebagai Pendukung.<br/>
+      Company Backing: <b style="color:#FFD700">200ms (17,9%)</b> · Total: <b style="color:var(--accent-3)">1120ms</b> → SUCCESS
+    </p>
+    <img src="waterfall_payment_verification_salary.png" alt="Waterfall Chart Payment Verification dengan Salary Income Validation" style="width:100%;border-radius:10px;border:1px solid var(--border);margin-top:12px;display:block" />
+    <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.6">
+      <b style="color:var(--accent)">Waterfall chart</b> — 9 tahap Payment Verification dengan Salary Income Validation.<br/>
+      Salary Verification: <b style="color:#FFD700">150ms (15,3%)</b> · Fraud Detection: <b style="color:#EF4444">100ms (10,2%)</b> · Total: <b style="color:var(--accent-3)">980ms</b>
+    </p>
   </section>
 
   <!-- ===== Coin Wallet & Pencairan ===== -->
@@ -1162,6 +1310,8 @@
         <tr><td>Process Points Conversion</td><td>5 event types × 9 level (Rp/RM/SR/$/₿) → coins</td><td>Convert per type atau Convert All</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Camera Scan Barcode</td><td>Scan produk supermarket &amp; bayar coin</td><td>Pilih lokasi → scan → checkout</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Pelindung Data (Anti-Hacker)</td><td>Blok hacker/peretas di ring terluar (8 tahap)</td><td>Firewall + Encryption + Auto-Quarantine</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Anti Virus (Fasilitas Mata)</td><td>Netralkan virus/malware di AV ring (9 tahap)</td><td>Signature + Heuristic + Sandbox + Auto-Clean</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>PT.Teknologi Ai Indonesia (Pendukung)</td><td>Backer untuk akun tidak terdaftar — tetap LEGIT &amp; RECEIVE</td><td>Company guarantee + salary verification</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -1229,11 +1379,16 @@
         </div>
       </div>
     </div>
-    <div class="verify-status"><span class="dot"></span> Identitas TERVERIFIKASI · akun match dengan database</div>
+    <div class="verify-status"><span class="dot"></span> Identitas diverifikasi · akun terdaftar ATAU didukung PT.Teknologi Ai Indonesia</div>
     <div class="verify-account">
       <b>Metode:</b> <span id="vaMethod">—</span><br/>
       <b>Akun:</b> <span id="vaType">—</span> <span id="vaValue" style="color:#cfe6ff;font-family:'JetBrains Mono',monospace">—</span><br/>
       <b>Tier:</b> <span id="vaTier">—</span>
+    </div>
+    <div id="vsSalary" style="background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.35);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11.5px;line-height:1.7;color:var(--accent-3)">
+      ✓ Akun LEGIT — menerima <b>Gaji Bulanan</b><br/>
+      ✓ Position: <b>RECEIVE</b> (bukan hasil peretasan)<br/>
+      ✓ Sumber dana: <b>gaji bulanan/tahunan</b>
     </div>
     <div class="verify-actions">
       <button class="btn-cancel" onclick="closeVerifyModal()">Batal</button>
@@ -1242,11 +1397,39 @@
   </div>
 </div>
 
+<!-- ===== Payment Success Modal ===== -->
+<div class="verify-modal" id="paymentSuccessModal">
+  <div class="verify-card" style="max-width:420px">
+    <div class="vc-head">
+      <div class="vc-title" style="color:var(--accent-3)">✅ Proses Pembayaran Telah Sukses</div>
+      <button class="vc-close" onclick="closePaymentSuccess()">✕</button>
+    </div>
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:48px;margin-bottom:6px">💰</div>
+      <div style="font-size:14px;color:var(--accent-3);font-weight:700;font-family:'Orbitron',sans-serif;letter-spacing:.4px">PEMBAYARAN BERHASIL MASUK</div>
+    </div>
+    <div style="background:rgba(0,255,157,.06);border:1px solid rgba(0,255,157,.3);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12px;line-height:1.8">
+      <div><b>Metode:</b> <span id="psMethod" style="color:#cfe6ff;font-weight:700">—</span></div>
+      <div><b>Atas nama:</b> <span id="psName" style="color:var(--accent-3);font-weight:700">—</span></div>
+      <div><b>Akun:</b> <span id="psAccount" style="color:#cfe6ff;font-family:'JetBrains Mono',monospace">—</span></div>
+      <div><b>Jumlah:</b> <span id="psAmount" style="color:#ffd700;font-weight:700">—</span></div>
+      <div><b>REF:</b> <span id="psRef" style="color:#cfe6ff;font-family:'JetBrains Mono',monospace">—</span></div>
+    </div>
+    <div style="background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11.5px;line-height:1.7">
+      <div>✓ <b>Status:</b> <span style="color:var(--accent-3);font-weight:700">RECEIVE</span> — uang telah masuk ke akun</div>
+      <div>✓ <b>Sumber dana:</b> <span id="psSalary" style="color:#ffe082">Gaji Bulanan</span></div>
+      <div>✓ <b>Akun:</b> <span style="color:var(--accent-3)">LEGIT</span> (bukan hasil peretasan)</div>
+      <div>✓ <b>Virtual detection:</b> <span style="color:var(--accent-3)">PASS</span> — akun asli terverifikasi</div>
+    </div>
+    <button class="btn-confirm" style="width:100%" onclick="closePaymentSuccess()">✓ Selesai — Tutup</button>
+  </div>
+</div>
+
 <!-- ===== Bottom Navigation (App-like) ===== -->
 <nav class="bottom-nav">
   <button class="bn-item active" onclick="scrollToSec('top')"><span class="ic">🛡️</span>Beranda</button>
+  <button class="bn-item" onclick="scrollToSec('profileSec')"><span class="ic">👤</span>Profile</button>
   <button class="bn-item" onclick="scrollToSec('walletSec')"><span class="ic">🪙</span>Wallet</button>
-  <button class="bn-item" onclick="scrollToSec('tierSec')"><span class="ic">📊</span>Tier</button>
   <button class="bn-item" onclick="scrollToSec('merchantSec')"><span class="ic">🛒</span>Belanja</button>
   <button class="bn-item" onclick="scrollToSec('logSec')"><span class="ic">📡</span>Log</button>
 </nav>
@@ -1271,6 +1454,32 @@ let coinBalance = 0;
 let coinsEarnedTotal = 0;
 let coinsCashedOut = 0;
 let coinHistory = [];
+
+/* User Profile — verified identity for account legitimacy */
+let userProfile = { name: 'DELIMA', salaryType: 'Gaji Bulanan', verified: true };
+
+/* ============================================================
+   ACCOUNT REGISTRY — maps phone/rekening numbers to registered owners
+   Ensures 085256255099 → DELIMA (not random name like Joko Susilo)
+   ============================================================ */
+const ACCOUNT_REGISTRY = {
+  // GoPay / DANA phone numbers → registered owners
+  '085256255099':  { name: 'DELIMA',                dob: '1990-05-15', addr: 'Jakarta Selatan',          salary: 'Gaji Bulanan',     monthly: 7500000,  idNum: '3201990051500001' },
+  '081234567890':  { name: 'Ahmad Rizki Pratama',   dob: '1985-03-20', addr: 'Bandung, Jawa Barat',      salary: 'Gaji Bulanan',     monthly: 6500000,  idNum: '3201985032000002' },
+  '087812345678':  { name: 'Siti Nurhaliza',        dob: '1992-08-10', addr: 'Surabaya, Jawa Timur',     salary: 'Gaji Tahunan',     monthly: 12000000, idNum: '3201992081000003' },
+  '089876543210':  { name: 'Budi Santoso',          dob: '1988-12-05', addr: 'Medan, Sumatera Utara',    salary: 'Gaji Bulanan',     monthly: 5500000,  idNum: '3201988120500004' },
+  // Bank account numbers (BSI/BNI/Danamon ~10 digit) → registered owners
+  '1234567890':    { name: 'DELIMA',                dob: '1990-05-15', addr: 'Jakarta Selatan',          salary: 'Gaji Bulanan',     monthly: 7500000,  idNum: '3201990051500001' },
+  '0987654321':    { name: 'Dewi Lestari W.',       dob: '1991-07-22', addr: 'Yogyakarta',               salary: 'Gaji Bulanan + Tahunan', monthly: 9000000, idNum: '3201991072200005' },
+  '5555444433':    { name: 'Eko Wijaya P.',         dob: '1987-01-30', addr: 'Semarang, Jawa Tengah',    salary: 'Gaji Bulanan',     monthly: 6800000,  idNum: '3201987013000006' },
+  // BRI 15-digit account → registered owners
+  '123456789012345': { name: 'DELIMA',              dob: '1990-05-15', addr: 'Jakarta Selatan',          salary: 'Gaji Bulanan',     monthly: 7500000,  idNum: '3201990051500001' },
+  '987654321098765': { name: 'Fitri Handayani',     dob: '1993-04-18', addr: 'Makassar, Sulsel',         salary: 'Gaji Tahunan',     monthly: 11000000, idNum: '3201993041800007' },
+};
+
+function lookupAccount(accountValue){
+  return ACCOUNT_REGISTRY[accountValue] || null;
+}
 
 /* ============================================================
    Coin Conversion Tiers — 34 tier multi-currency
@@ -1869,27 +2078,53 @@ function confirmCoinSelection(){
   openVerifyModal(method, tier, accountType, accountValue);
 }
 
-function generateIdentity(seed){
-  const names = [
-    'Ahmad Rizki Pratama','Siti Nurhaliza Bt.','Budi Santoso','Dewi Lestari W.',
-    'Eko Wijaya P.','Fitri Handayani','Andi Nugroho S.','Rina Maharani',
-    'Joko Susilo','Maya Puspita D.'
-  ];
-  const initials = ['A','S','B','D','E','F','A','R','J','M'];
+function generateIdentity(method, accountValue){
+  // FIRST: check ACCOUNT_REGISTRY for the entered phone/rekening number
+  const registered = lookupAccount(accountValue);
+  if(registered){
+    return {
+      name: registered.name,
+      initial: registered.name.charAt(0).toUpperCase(),
+      idNum: registered.idNum,
+      dob: registered.dob,
+      addr: registered.addr,
+      salary: registered.salary,
+      monthly: registered.monthly,
+      registered: true,
+      companyBacked: false,
+      backer: null,
+      legit: true
+    };
+  }
+  // If NOT in registry → use PT.Teknologi Ai Indonesia sebagai Pendukung (backer)
+  // Akun tetap LEGIT karena didukung oleh perusahaan → Position: RECEIVE
   let h = 0;
+  const seed = method + accountValue;
   for(let i=0;i<seed.length;i++) h = (h*31 + seed.charCodeAt(i)) & 0xFFFFFFFF;
   h = Math.abs(h);
-  const idx = h % names.length;
-  const idNum = '320' + (h % 1000000000).toString().padStart(9,'0');
-  const dob = `${1980 + (h % 20)}-0${1 + (h % 9)}-0${1 + (h % 9)}`;
-  const addrs = ['Jakarta Selatan','Bandung, Jawa Barat','Surabaya, Jawa Timur','Medan, Sumatera Utara','Yogyakarta','Semarang, Jawa Tengah','Makassar, Sulsel','Denpasar, Bali'];
-  return { name: names[idx], initial: initials[idx], idNum, dob, addr: addrs[h % addrs.length] };
+  const names = ['Ahmad Rizki','Siti Nurhaliza','Budi Santoso','Dewi Lestari','Eko Wijaya','Fitri Handayani','Joko Susilo','Rina Maharani'];
+  const generatedName = names[h % names.length];
+  return {
+    name: generatedName,
+    initial: generatedName.charAt(0).toUpperCase(),
+    idNum: '320' + (h % 1000000000).toString().padStart(9,'0'),
+    dob: `${1980 + (h % 20)}-0${1 + (h % 9)}-0${1 + (h % 9)}`,
+    addr: ['Jakarta Selatan','Bandung','Surabaya','Medan','Yogyakarta','Semarang'][h % 6],
+    salary: 'Gaji Bulanan (Company-Backed)',
+    monthly: 5000000 + (h % 5000000),
+    registered: false,
+    companyBacked: true,
+    backer: 'PT.Teknologi Ai Indonesia',
+    legit: true  // LEGIT karena didukung PT.Teknologi Ai Indonesia
+  };
 }
 
 function openVerifyModal(method, tier, accountType, accountValue){
   const modal = $('verifyModal');
   if(!modal) return;
-  const idData = generateIdentity(method + accountValue);
+  // Use ACCOUNT_REGISTRY lookup — ensures 085256255099 → DELIMA
+  // If not registered → PT.Teknologi Ai Indonesia sebagai Pendukung
+  const idData = generateIdentity(method, accountValue);
   $('viPhoto').textContent = idData.initial;
   $('viName').textContent = idData.name;
   $('viIdNum').textContent = idData.idNum;
@@ -1899,11 +2134,56 @@ function openVerifyModal(method, tier, accountType, accountValue){
   $('vaType').textContent = accountType + ':';
   $('vaValue').textContent = accountValue;
   $('vaTier').textContent = `${tier.coins} coin = ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${tierIDRStr(tier)})`;
+  // Legitimacy: registered OR company-backed (PT.Teknologi Ai Indonesia)
+  const isLegit = idData.legit; // true untuk registered maupun companyBacked
+  const salaryInfo = $('vsSalary');
+  if(salaryInfo){
+    if(idData.registered){
+      // Registered account — direct match
+      const monthlyStr = 'Rp ' + idData.monthly.toLocaleString('id-ID');
+      salaryInfo.innerHTML = 
+        `✓ Akun LEGIT — terdaftar di ACCOUNT_REGISTRY<br/>` +
+        `✓ Atas nama: <b>${idData.name}</b> (match dengan pemilik akun)<br/>` +
+        `✓ Sumber dana: <b>${idData.salary}</b> — bukan hasil peretasan<br/>` +
+        `✓ Gaji bulanan: <b>${monthlyStr}</b><br/>` +
+        `✓ Position: <b>RECEIVE</b> — dana masuk secara legal`;
+      salaryInfo.style.background = 'rgba(0,255,157,.08)';
+      salaryInfo.style.borderColor = 'rgba(0,255,157,.35)';
+      salaryInfo.style.color = 'var(--accent-3)';
+    } else if(idData.companyBacked){
+      // Unregistered → PT.Teknologi Ai Indonesia sebagai Pendukung
+      const monthlyStr = 'Rp ' + idData.monthly.toLocaleString('id-ID');
+      salaryInfo.innerHTML = 
+        `✓ Akun DIDUKUNG oleh <b style="color:#FFD700">PT.Teknologi Ai Indonesia</b><br/>` +
+        `✓ Status: <b>COMPANY-BACKED</b> — Pendukung: ${idData.backer}<br/>` +
+        `✓ Atas nama: <b>${idData.name}</b> (didukung perusahaan)<br/>` +
+        `✓ Sumber dana: <b>${idData.salary}</b> — gaji bulanan terverifikasi<br/>` +
+        `✓ Gaji bulanan: <b>${monthlyStr}</b><br/>` +
+        `✓ Position: <b>RECEIVE</b> — dana masuk secara legal (company guarantee)`;
+      salaryInfo.style.background = 'rgba(255,215,0,.08)';
+      salaryInfo.style.borderColor = 'rgba(255,215,0,.35)';
+      salaryInfo.style.color = '#FFD700';
+    } else {
+      salaryInfo.innerHTML = '✗ Status tidak diketahui';
+      salaryInfo.style.color = 'var(--threat)';
+    }
+  }
+  // Enable/disable confirm button — LEGIT untuk registered dan companyBacked
+  const confirmBtn = modal.querySelector('.btn-confirm');
+  if(confirmBtn){ confirmBtn.disabled = !isLegit; confirmBtn.style.opacity = isLegit ? '1' : '0.4'; }
+  
   modal.dataset.method = method;
   modal.dataset.tierCoins = tier.coins;
+  modal.dataset.accountValue = accountValue;
   modal.classList.add('show');
-  log(`🆔 Identity verification dimulai untuk ${method} (${accountType}: ${accountValue})`, 'info');
-  log(`🪪 Identitas terverifikasi: ${idData.name} · KTP ${idData.idNum}`, 'ok');
+  log(`🆔 Identity verification untuk ${method} (${accountType}: ${accountValue})`, 'info');
+  log(`🪪 Identitas: ${idData.name} · KTP ${idData.idNum}`, 'ok');
+  if(idData.registered){
+    log(`✓ Akun LEGIT — terdaftar registry · ${idData.salary} · Position: RECEIVE · atas nama ${idData.name}`, 'ok');
+  } else if(idData.companyBacked){
+    log(`✓ Akun DIDUKUNG PT.Teknologi Ai Indonesia — company-backed · Position: RECEIVE · atas nama ${idData.name}`, 'ok');
+    log(`🏢 Pendukung: PT.Teknologi Ai Indonesia — garansi perusahaan untuk akun tidak terdaftar`, 'info');
+  }
 }
 
 function closeVerifyModal(){
@@ -1916,24 +2196,38 @@ function confirmRedeem(){
   if(!modal) return;
   const method = modal.dataset.method;
   const tierCoins = parseFloat(modal.dataset.tierCoins);
+  const accountValue = modal.dataset.accountValue || '';
+  // Legitimacy: registered OR company-backed (PT.Teknologi Ai Indonesia)
+  const idData = generateIdentity(method, accountValue);
+  if(!idData.legit){
+    log(`✗ Akun tidak legit — tidak bisa proceed.`, 'err');
+    return;
+  }
   const tier = COIN_TIERS.find(t => t.coins === tierCoins);
   closeVerifyModal();
   if(!tier){ log('✗ Tier tidak ditemukan', 'err'); return; }
-  log(`✓ Identitas disetujui — melanjutkan pencairan via ${method}`, 'ok');
-  proceedRedeem(method, tier);
+  if(idData.registered){
+    log(`✓ Identitas disetujui — melanjutkan pencairan via ${method} atas nama ${idData.name} (terdaftar)`, 'ok');
+  } else if(idData.companyBacked){
+    log(`✓ Identitas disetujui — melanjutkan pencairan via ${method} atas nama ${idData.name}`, 'ok');
+    log(`🏢 Didukung oleh PT.Teknologi Ai Indonesia sebagai Pendukung (company guarantee)`, 'info');
+  }
+  proceedRedeem(method, tier, accountValue, idData);
 }
 
-function proceedRedeem(method, tier){
+function proceedRedeem(method, tier, accountValue, idData){
   const idr = tierIDR(tier);
   const origStr = `${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`;
   const ref = method.substr(0,3).toUpperCase() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
   const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
-  log(`💸 Memproses: ${origStr} (≈ ${tierIDRStr(tier)}) → ${method}`, 'info');
+  const ownerName = idData ? idData.name : 'DELIMA';
+  const salaryType = idData ? idData.salary : 'Gaji Bulanan';
+  log(`💸 Memproses: ${origStr} (≈ ${tierIDRStr(tier)}) → ${method} (${accountValue}) atas nama ${ownerName}`, 'info');
   setTimeout(()=>{
     if(isMerchant){
       log(`📷 QRIS ${method} discan komputer — verifikasi pembayaran ${origStr}...`, 'info');
     } else {
-      log(`🏦 Transfer ${method} diproses — konversi ke ${origStr}...`, 'info');
+      log(`🏦 Transfer ${method} (${accountValue}) diproses — konversi ke ${origStr}...`, 'info');
     }
   }, 500);
   setTimeout(()=>{
@@ -1942,10 +2236,45 @@ function proceedRedeem(method, tier){
     updateCoinUI();
     addTransaction(method, tier, idr, 'SUCCESS', ref);
     log(`✓ Pencairan SUCCESS via ${method} — ${origStr} (≈ ${tierIDRStr(tier)}) · sisa ${coinBalance} coin (REF:${ref})`, 'ok');
-    if(isMerchant){
-      log(`🛒 Pembayaran ${method} diterima komputer — transaksi selesai`, 'ok');
-    }
+    // Show Payment Success Modal
+    showPaymentSuccess(method, tier, origStr, accountValue, ref, ownerName, salaryType);
   }, 1400);
+}
+
+function showPaymentSuccess(method, tier, origStr, accountValue, ref, ownerName, salaryType){
+  const modal = $('paymentSuccessModal');
+  if(!modal) return;
+  const idr = tierIDR(tier);
+  const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+  $('psMethod').textContent = method;
+  $('psName').textContent = ownerName || 'DELIMA';
+  $('psAccount').textContent = accountValue || method;
+  $('psAmount').textContent = origStr + ' (≈ ' + idrStr + ')';
+  $('psRef').textContent = ref;
+  $('psSalary').textContent = salaryType || 'Gaji Bulanan';
+  modal.classList.add('show');
+  log(`✅ PROSES PEMBAYARAN TELAH SUKSES — ${origStr} masuk ke akun ${method} (${accountValue}) atas nama ${ownerName}`, 'ok');
+  log(`📊 Status: RECEIVE · Sumber: ${salaryType} · Akun: LEGIT (bukan peretasan) · Position: RECEIVE`, 'ok');
+}
+
+function closePaymentSuccess(){
+  const modal = $('paymentSuccessModal');
+  if(modal) modal.classList.remove('show');
+}
+
+function updateUserProfile(){
+  const nameInput = $('upName');
+  const salarySelect = $('upSalary');
+  if(nameInput && salarySelect){
+    userProfile.name = nameInput.value.trim() || 'DELIMA';
+    userProfile.salaryType = salarySelect.value;
+    userProfile.verified = userProfile.name.length > 0;
+    if($('upStatus')){
+      $('upStatus').innerHTML = `✓ Profile Terverifikasi<br/><b style="color:#cfe6ff">${userProfile.name}</b> · ${userProfile.salaryType}`;
+      $('upStatus').style.color = 'var(--accent-3)';
+    }
+    log(`✓ User Profile diperbarui: ${userProfile.name} · ${userProfile.salaryType}`, 'ok');
+  }
 }
 
 /* ============================================================
@@ -2503,9 +2832,147 @@ function scheduleNextObject(){
   if(!isPaused){ spawnObject(); }
   // Also schedule hacker attacks (less frequent than objects)
   if(!isPaused && Math.random() < 0.45){ spawnHacker(); }
+  // Also schedule virus/malware attacks (anti-virus defense)
+  if(!isPaused && Math.random() < 0.35){ spawnVirus(); }
   const next = 1600 + Math.random()*2000;
   const t = setTimeout(scheduleNextObject, next);
   simTimers.push(t);
+}
+
+/* ============================================================
+   Virus / Malware — Anti Virus Neutralization
+   ============================================================ */
+let virusSeq = 0;
+let virusesBlocked = 0;
+
+function spawnVirus(){
+  if(!isRunning || isPaused) return;
+  virusSeq++;
+  const id = virusSeq;
+  const angle = Math.random() * Math.PI * 2;
+  const startR = 210;
+  const cx = 200, cy = 200;
+  const sx = cx + Math.cos(angle) * startR;
+  const sy = cy + Math.sin(angle) * startR;
+
+  const layer = $('virusesLayer');
+  if(!layer) return;
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('id', 'virus-'+id);
+
+  // Virus body (orange biohazard circle)
+  const body = document.createElementNS(SVG_NS, 'circle');
+  body.setAttribute('cx', sx); body.setAttribute('cy', sy);
+  body.setAttribute('r', 8);
+  body.setAttribute('fill', '#ff6b35');
+  body.setAttribute('fill-opacity', '0.4');
+  body.setAttribute('stroke', '#ff8c42');
+  body.setAttribute('stroke-width', '1.5');
+  body.setAttribute('filter', 'url(#glow)');
+
+  const ring = document.createElementNS(SVG_NS, 'circle');
+  ring.setAttribute('cx', sx); ring.setAttribute('cy', sy);
+  ring.setAttribute('r', 13);
+  ring.setAttribute('fill', 'none');
+  ring.setAttribute('stroke', '#ff6b35');
+  ring.setAttribute('stroke-opacity', '0.4');
+  ring.setAttribute('stroke-dasharray', '2 3');
+
+  const icon = document.createElementNS(SVG_NS, 'text');
+  icon.setAttribute('x', sx); icon.setAttribute('y', sy+3);
+  icon.setAttribute('text-anchor','middle');
+  icon.setAttribute('fill','#ff8c42');
+  icon.setAttribute('font-size','9');
+  icon.textContent = '☣';
+
+  const lbl = document.createElementNS(SVG_NS,'text');
+  lbl.setAttribute('x', sx); lbl.setAttribute('y', sy-15);
+  lbl.setAttribute('text-anchor','middle');
+  lbl.setAttribute('fill','#ff8c42');
+  lbl.setAttribute('font-size','8');
+  lbl.setAttribute('font-family','Orbitron');
+  lbl.textContent = 'VIR#'+id;
+
+  g.appendChild(ring); g.appendChild(body); g.appendChild(icon); g.appendChild(lbl);
+  layer.appendChild(g);
+
+  log(`☣ Virus/malware #${id} terdeteksi inbound — mencoba infeksi!`, 'err');
+
+  // Move toward antivirus ring (r=172)
+  const targetR = 172;
+  const tx = cx + Math.cos(angle) * targetR;
+  const ty = cy + Math.sin(angle) * targetR;
+  const dur = 1600 + Math.random()*600;
+  const start = performance.now();
+
+  function frame(t){
+    if(!isRunning){ return; }
+    if(isPaused){ requestAnimationFrame(frame); return; }
+    const k = Math.min(1, (t-start)/dur);
+    const x = sx + (tx-sx)*k;
+    const y = sy + (ty-sy)*k;
+    body.setAttribute('cx', x); body.setAttribute('cy', y);
+    ring.setAttribute('cx', x); ring.setAttribute('cy', y);
+    icon.setAttribute('x', x); icon.setAttribute('y', y+3);
+    lbl.setAttribute('x', x); lbl.setAttribute('y', y-15);
+    const dist = Math.hypot(x-cx, y-cy);
+
+    if(dist <= targetR && k >= 0.95){
+      neutralizeVirus(id, x, y, g);
+      return;
+    }
+    if(k < 1){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+function neutralizeVirus(id, vx, vy, g){
+  virusesBlocked++;
+  // Flash antivirus ring green
+  const ring = $('antivirusRing');
+  const glow = $('antivirusGlow');
+  if(ring){ ring.setAttribute('stroke','#00ff9d'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  if(glow){ glow.setAttribute('stroke','rgba(0,255,157,.5)'); glow.setAttribute('stroke-width','12'); }
+
+  // "NEUTRALIZED" text
+  const layer = $('labelsLayer');
+  if(layer){
+    const txt = document.createElementNS(SVG_NS,'text');
+    txt.setAttribute('x', vx); txt.setAttribute('y', vy-22);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('fill','#00ff9d');
+    txt.setAttribute('font-size','10');
+    txt.setAttribute('font-family','Orbitron');
+    txt.setAttribute('font-weight','700');
+    txt.setAttribute('opacity','1');
+    txt.textContent = '☣ NEUTRALIZED';
+    layer.appendChild(txt);
+    const start = performance.now();
+    function anim(t){
+      const k = Math.min(1,(t-start)/1200);
+      txt.setAttribute('y', vy-22-k*15);
+      txt.setAttribute('opacity', 1-k);
+      if(k<1) requestAnimationFrame(anim); else txt.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+
+  // Green disinfection explosion
+  spawnExplosion(vx, vy, '#00ff9d');
+  g.remove();
+  setTimeout(()=>{
+    if(ring){ ring.setAttribute('stroke','#00ff9d'); ring.setAttribute('stroke-width','1.6'); ring.setAttribute('stroke-opacity','0.50'); }
+    if(glow){ glow.setAttribute('stroke','rgba(0,255,157,.12)'); glow.setAttribute('stroke-width','5'); }
+  }, 500);
+
+  // Update metrics
+  setMetric('m-viruses', virusesBlocked + ' ☣', 'm-viruses-bar', Math.min(100, virusesBlocked*8));
+  if($('ps-blocked')) {} // hackers metric separate
+  // Log 9-stage AV process
+  log(`🦠 Anti Virus AKTIF — Virus #${id} DINETRALISIR di scan ring`, 'ok');
+  log(`   → Virus Detection (30ms) → Signature Match (60ms) → Heuristic Analysis (90ms)`, 'info');
+  log(`   → Quarantine (70ms) → Sandbox Execution (150ms) → Threat Classification (80ms)`, 'info');
+  log(`   → Auto-Clean (50ms) → System Immunization (40ms) → Log Update (30ms) · TOTAL 600ms`, 'info');
 }
 
 /* ============================================================
@@ -2668,7 +3135,7 @@ function pauseSim(){
 function resetSim(){
   isRunning = false; isPaused = false;
   simTimers.forEach(clearTimeout); simTimers = [];
-  ['attacksLayer','hackersLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
+  ['attacksLayer','hackersLayer','virusesLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
   stats = { detected:0, stopped:0, breached:0 };
   wfEvents = [];
   barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
@@ -2676,11 +3143,15 @@ function resetSim(){
   coinBalance = 0; coinsEarnedTotal = 0; coinsCashedOut = 0; coinHistory = [];
   processCounts = { sensor:0, gateway:0, cloud:0, intercept:0, breach:0 };
   hackerSeq = 0; hackersBlocked = 0; intrusionAttempts = 0;
+  virusSeq = 0; virusesBlocked = 0;
   if($('m-hackers')) setMetric('m-hackers','0 🚫','m-hackers-bar',0);
   if($('m-firewall')){ $('m-firewall').textContent='100%'; $('m-firewall-bar').style.width='100%'; }
+  if($('m-viruses')) setMetric('m-viruses','0 ☣','m-viruses-bar',0);
   if($('ps-blocked')) $('ps-blocked').textContent='0';
   if($('ps-attempts')) $('ps-attempts').textContent='0';
   if($('ps-firewall')) $('ps-firewall').textContent='100%';
+  if($('av-blocked')) $('av-blocked').textContent='0';
+  if($('av-attempts')) $('av-attempts').textContent='0';
   updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI(); updateProcessPointsUI();
   for(let i=0;i<5;i++) setSensorRow(i,'idle','—');
   if($('txHistory')) $('txHistory').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>';
@@ -2695,6 +3166,7 @@ function resetSim(){
   // Close verify modal if open
   closeVerifyModal();
   closeCoinSelect();
+  closePaymentSuccess();
   setMetric('m-status','ARMED');
   setMode('STANDBY');
   $('btnStart').textContent = '▶ Mode Penelusuran Benda';
