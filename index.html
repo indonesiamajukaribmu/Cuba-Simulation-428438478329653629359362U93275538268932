@@ -462,6 +462,26 @@
   /* ===== Pelindung Data grid ===== */
   .pelindung-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:900px){.pelindung-grid{grid-template-columns:1fr}}
+
+  /* ===== Live Kurs ===== */
+  .kurs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:12px}
+  .kurs-card{background:rgba(10,16,32,.65);border:1px solid var(--border);border-radius:11px;padding:12px;position:relative;overflow:hidden;transition:all .25s}
+  .kurs-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,229,255,.15)}
+  .kurs-card .kc-pair{font-size:11px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.3px;display:flex;justify-content:space-between;align-items:center}
+  .kurs-card .kc-sym{font-size:18px}
+  .kurs-card .kc-rate{font-size:17px;font-weight:800;color:var(--accent);font-family:"JetBrains Mono",monospace;margin-top:6px}
+  .kurs-card .kc-change{font-size:11px;font-weight:600;margin-top:3px;display:flex;align-items:center;gap:4px}
+  .kurs-card .kc-change.up{color:var(--accent-3)}
+  .kurs-card .kc-change.down{color:var(--threat)}
+  .kurs-card .kc-spark{height:24px;margin-top:6px;display:flex;align-items:flex-end;gap:1px}
+  .kurs-card .kc-spark .bar{flex:1;background:var(--accent);opacity:.4;border-radius:1px;min-height:2px;transition:height .3s}
+  .kurs-card .kc-spark .bar.up{background:var(--accent-3);opacity:.7}
+  .kurs-card .kc-spark .bar.down{background:var(--threat);opacity:.7}
+  .kurs-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 12px;background:rgba(0,229,255,.04);border:1px solid var(--border);border-radius:10px}
+  @media(max-width:600px){.kurs-summary{grid-template-columns:repeat(2,1fr)}}
+  .ks-item{text-align:center}
+  .ks-lbl{font-size:10px;color:var(--muted);font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .ks-val{font-size:13px;font-weight:700;color:#cfe6ff;font-family:"JetBrains Mono",monospace;margin-top:2px}
 </style>
 </head>
 <body>
@@ -913,6 +933,35 @@
     <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.6">
       <b style="color:var(--accent)">Waterfall chart</b> — 9 tahap Payment Verification dengan Salary Income Validation.<br/>
       Salary Verification: <b style="color:#FFD700">150ms (15,3%)</b> · Fraud Detection: <b style="color:#EF4444">100ms (10,2%)</b> · Total: <b style="color:var(--accent-3)">980ms</b>
+    </p>
+  </section>
+
+  <!-- ===== Live Kurs (Exchange Rates) ===== -->
+  <div class="section-title" id="kursSec"><h2>📈 Live Kurs — Real-time Exchange Rates</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#00ff9d)">📈</span> Live Exchange Rates (Auto-update)</h2>
+      <span class="tag live" id="kursTag">LIVE · Update 4s</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:var(--accent)">Live Kurs</b> menampilkan nilai tukar real-time untuk 6 mata uang yang digunakan
+      di sistem pencairan (<b>$</b> USD, <b>RM</b> MYR, <b>SR</b> SAR, <b>¥</b> JPY, <b>₹</b> INR, <b>BTC</b>).
+      Rates auto-update setiap 4 detik dengan fluktuasi kecil. Perubahan rate langsung mempengaruhi konversi
+      <b>tier multi-currency</b> dan <b>process points</b> di seluruh sistem.
+    </p>
+    <div class="kurs-grid" id="kursGrid">
+      <!-- Currency cards populated by JS -->
+    </div>
+    <div class="kurs-summary" id="kursSummary">
+      <div class="ks-item"><div class="ks-lbl">Last Update</div><div class="ks-val" id="kursTime">—</div></div>
+      <div class="ks-item"><div class="ks-lbl">Base Portfolio</div><div class="ks-val">Rp 100.000.000</div></div>
+      <div class="ks-item"><div class="ks-lbl">Portfolio Change</div><div class="ks-val" id="kursChange" style="color:var(--accent-3)">+Rp 0</div></div>
+      <div class="ks-item"><div class="ks-lbl">Final Value</div><div class="ks-val" id="kursFinal" style="color:#ffd700">Rp 100.000.000</div></div>
+    </div>
+    <img src="waterfall_live_kurs_movements.png" alt="Waterfall Chart Live Kurs Movements" style="width:100%;border-radius:10px;border:1px solid var(--border);margin-top:12px;display:block" />
+    <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.6">
+      <b style="color:var(--accent)">Waterfall chart</b> — perubahan portfolio per currency pair (weekly).<br/>
+      Green ▲ = gain · Red ▼ = loss · Total: <b style="color:var(--accent-3)">+Rp 177K (+0,177%)</b>
     </p>
   </section>
 
@@ -1430,6 +1479,7 @@
   <button class="bn-item active" onclick="scrollToSec('top')"><span class="ic">🛡️</span>Beranda</button>
   <button class="bn-item" onclick="scrollToSec('profileSec')"><span class="ic">👤</span>Profile</button>
   <button class="bn-item" onclick="scrollToSec('walletSec')"><span class="ic">🪙</span>Wallet</button>
+  <button class="bn-item" onclick="scrollToSec('kursSec')"><span class="ic">📈</span>Kurs</button>
   <button class="bn-item" onclick="scrollToSec('merchantSec')"><span class="ic">🛒</span>Belanja</button>
   <button class="bn-item" onclick="scrollToSec('logSec')"><span class="ic">📡</span>Log</button>
 </nav>
@@ -3188,17 +3238,127 @@ generateQRIS('qris-Indomaret', 'Indomaret-KubahSimulasi-2026');
 generateQRIS('qris-Alfamidi', 'Alfamidi-KubahSimulasi-2026');
 generateQRIS('qris-Alfamart', 'Alfamart-KubahSimulasi-2026');
 
+/* ============================================================
+   Live Kurs — Real-time Exchange Rates (auto-update 4s)
+   ============================================================ */
+const KURS_DATA = [
+  { curr:'$',  sym:'USD', name:'US Dollar',      rate:15500, baseRate:15500, history:[], vol:0.8 },
+  { curr:'RM', sym:'MYR', name:'Malay Ringgit',  rate:3500,  baseRate:3500,  history:[], vol:0.5 },
+  { curr:'SR', sym:'SAR', name:'Saudi Riyal',    rate:4100,  baseRate:4100,  history:[], vol:0.4 },
+  { curr:'¥',  sym:'JPY', name:'Japanese Yen',   rate:105,   baseRate:105,   history:[], vol:1.2 },
+  { curr:'₹',  sym:'INR', name:'Indian Rupee',   rate:190,   baseRate:190,   history:[], vol:0.9 },
+  { curr:'₿',  sym:'BTC', name:'Bitcoin (Satoshi)', rate:15, baseRate:15,    history:[], vol:3.5 },
+];
+const KURS_PORTFOLIO_BASE = 100000000; // Rp 100 juta base portfolio
+// Portfolio positions per currency (for change calculation)
+const KURS_POSITIONS = { '$':1000, 'RM':500, 'SR':200, '¥':10000, '₹':5000, '₿':50 };
+
+function buildKursGrid(){
+  const grid = $('kursGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  KURS_DATA.forEach((k, i) => {
+    const card = document.createElement('div');
+    card.className = 'kurs-card';
+    card.id = 'kurs-card-' + k.curr;
+    card.innerHTML = `
+      <div class="kc-pair"><span>${k.sym}/IDR</span><span class="kc-sym">${k.curr}</span></div>
+      <div class="kc-rate" id="kc-rate-${k.curr}">Rp ${k.rate.toLocaleString('id-ID')}</div>
+      <div class="kc-change" id="kc-change-${k.curr}">— 0.0%</div>
+      <div class="kc-spark" id="kc-spark-${k.curr}"></div>
+    `;
+    grid.appendChild(card);
+    // Initialize history with 12 points
+    k.history = Array(12).fill(k.rate);
+  });
+  updateKursDisplay();
+}
+
+function updateKurs(){
+  // Simulate small random fluctuations for each currency
+  KURS_DATA.forEach(k => {
+    const fluctuation = (Math.random() - 0.5) * 2 * k.vol / 100;
+    k.rate = Math.max(k.baseRate * 0.5, k.rate * (1 + fluctuation));
+    k.history.push(k.rate);
+    if(k.history.length > 12) k.history.shift();
+    // Sync EXCH_RATE so conversions use live rates
+    EXCH_RATE[k.curr] = k.rate;
+  });
+  updateKursDisplay();
+  // Log significant changes
+  KURS_DATA.forEach(k => {
+    const pct = ((k.rate - k.baseRate) / k.baseRate * 100);
+    if(Math.abs(pct) > 2){
+      const arrow = pct > 0 ? '▲' : '▼';
+      const color = pct > 0 ? 'ok' : 'err';
+      log(`📈 ${k.sym}/IDR ${arrow} ${pct.toFixed(2)}% → Rp ${k.rate.toLocaleString('id-ID')}`, color);
+    }
+  });
+}
+
+function updateKursDisplay(){
+  KURS_DATA.forEach(k => {
+    const rateEl = $('kc-rate-' + k.curr);
+    const changeEl = $('kc-change-' + k.curr);
+    const sparkEl = $('kc-spark-' + k.curr);
+    if(rateEl) rateEl.textContent = 'Rp ' + k.rate.toLocaleString('id-ID', {maximumFractionDigits: k.rate < 100 ? 2 : 0});
+    const pct = ((k.rate - k.baseRate) / k.baseRate * 100);
+    if(changeEl){
+      const arrow = pct >= 0 ? '▲' : '▼';
+      changeEl.textContent = `${arrow} ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%`;
+      changeEl.className = 'kc-change ' + (pct >= 0 ? 'up' : 'down');
+    }
+    // Build sparkline
+    if(sparkEl){
+      sparkEl.innerHTML = '';
+      const min = Math.min(...k.history);
+      const max = Math.max(...k.history);
+      const range = max - min || 1;
+      k.history.forEach((v, idx) => {
+        const bar = document.createElement('div');
+        bar.className = 'bar' + (idx > 0 && v >= k.history[idx-1] ? ' up' : ' down');
+        const h = ((v - min) / range) * 100;
+        bar.style.height = Math.max(10, h) + '%';
+        sparkEl.appendChild(bar);
+      });
+    }
+  });
+  // Update summary
+  let totalChange = 0;
+  KURS_DATA.forEach(k => {
+    const pos = KURS_POSITIONS[k.curr] || 0;
+    const baseVal = pos * k.baseRate;
+    const curVal = pos * k.rate;
+    totalChange += (curVal - baseVal);
+  });
+  const finalVal = KURS_PORTFOLIO_BASE + totalChange;
+  if($('kursChange')){
+    const sign = totalChange >= 0 ? '+' : '';
+    $('kursChange').textContent = sign + 'Rp ' + Math.round(totalChange).toLocaleString('id-ID');
+    $('kursChange').style.color = totalChange >= 0 ? 'var(--accent-3)' : 'var(--threat)';
+  }
+  if($('kursFinal')) $('kursFinal').textContent = 'Rp ' + Math.round(finalVal).toLocaleString('id-ID');
+  if($('kursTime')){
+    const d = new Date();
+    $('kursTime').textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  }
+}
+
 /* Initial */
 log('Sistem Kubah Pertahanan siap.', 'ok');
 log('Klik [▶ Mode Penelusuran Benda] — semua benda masuk akan dipindai identitasnya.', 'info');
 log('🪙 S5·COIN sensor aktif — 34 tier multi-currency (Rp/$/RM/SR/¥/₹). Kumpulkan coin, sistem auto-pick tier tertinggi saat cairkan.', 'info');
+log('📈 Live Kurs aktif — 6 mata uang auto-update setiap 4 detik.', 'info');
 buildTierTable();
+buildKursGrid();
 updateWaterfallChart();
 updateBarChart();
 updateStats();
 updateCoinUI();
 updateProcessPointsUI();
 setMode('STANDBY');
+// Start live kurs auto-update
+setInterval(updateKurs, 4000);
 </script>
 
 </body>
