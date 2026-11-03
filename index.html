@@ -458,6 +458,10 @@
   .pp-total-bar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:10px 12px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:10px}
   .pp-total-bar .lbl{font-size:11px;color:var(--muted);font-family:"Orbitron",sans-serif}
   .pp-total-bar .val{font-size:18px;font-weight:800;color:#ffd700;font-family:"Orbitron",sans-serif}
+
+  /* ===== Pelindung Data grid ===== */
+  .pelindung-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:900px){.pelindung-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -541,6 +545,21 @@
           <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,229,255,.14)" stroke-dasharray="4 6"/>
           <!-- Shield ring -->
           <circle cx="200" cy="200" r="160" fill="url(#shieldGrad)" stroke="rgba(0,229,255,.5)" stroke-width="1.4" stroke-dasharray="2 8" id="shieldRing"/>
+          <!-- Pelindung Data ring (outer firewall/encryption layer — anti-hacker) -->
+          <circle cx="200" cy="200" r="185" fill="none" stroke="#ff3b3b" stroke-width="1.8" stroke-dasharray="6 4" stroke-opacity="0.55" id="pelindungRing"/>
+          <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(255,59,59,.18)" stroke-width="6" id="pelindungGlow"/>
+          <text x="200" y="12" text-anchor="middle" fill="#ff8a80" font-size="7" font-family="Orbitron" font-weight="700" letter-spacing="2">🔒 PELINDUNG DATA 🔒</text>
+          <!-- Lock icons around pelindung ring (8 positions) -->
+          <g id="lockIcons" font-family="Orbitron" font-size="9" fill="#ff5252" font-weight="700">
+            <text x="200" y="20" text-anchor="middle">🔒</text>
+            <text x="328" y="80" text-anchor="middle">🔒</text>
+            <text x="380" y="200" text-anchor="middle">🔒</text>
+            <text x="328" y="320" text-anchor="middle">🔒</text>
+            <text x="200" y="385" text-anchor="middle">🔒</text>
+            <text x="72" y="320" text-anchor="middle">🔒</text>
+            <text x="20" y="200" text-anchor="middle">🔒</text>
+            <text x="72" y="80" text-anchor="middle">🔒</text>
+          </g>
           <!-- Eye / facility center -->
           <ellipse cx="200" cy="200" rx="32" ry="18" fill="url(#eyeGrad)" stroke="rgba(0,229,255,.65)" stroke-width="1.2"/>
           <circle cx="200" cy="200" r="9" fill="#04060d" stroke="#00e5ff" stroke-width="1.5"/>
@@ -570,6 +589,7 @@
 
           <!-- Layers -->
           <g id="attacksLayer"></g>
+          <g id="hackersLayer"></g>
           <g id="lasersLayer"></g>
           <g id="fxLayer"></g>
           <g id="labelsLayer"></g>
@@ -587,6 +607,8 @@
           <div class="row"><span class="sw" style="background:#ffb74d"></span> Interceptor pertahanan</div>
           <div class="row"><span class="sw" style="background:#00e5ff"></span> Shield + Fasilitas Mata</div>
           <div class="row"><span class="sw" style="background:#ffd700"></span> S5·COIN reward sensor</div>
+          <div class="row"><span class="sw" style="background:#ff3b3b"></span> 🔒 Pelindung Data (anti-hacker)</div>
+          <div class="row"><span class="sw" style="background:#a855f7"></span> 👾 Hacker/peretas masuk</div>
         </div>
       </div>
 
@@ -638,6 +660,18 @@
             <div class="sub">20 coin = Rp 10.000 · siap ditukarkan</div>
             <div class="bar"><span id="m-coin-bar" style="width:0%;background:linear-gradient(90deg,#ffd700,#ffb74d)"></span></div>
           </div>
+          <div class="metric" style="border-color:rgba(255,59,59,.4)">
+            <div class="lbl">🔒 Pelindung Data</div>
+            <div class="val" id="m-hackers" style="background:linear-gradient(90deg,#ff3b3b,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent">0 🚫</div>
+            <div class="sub">hacker/peretas diblokir</div>
+            <div class="bar"><span id="m-hackers-bar" style="width:0%;background:linear-gradient(90deg,#ff3b3b,#a855f7)"></span></div>
+          </div>
+          <div class="metric">
+            <div class="lbl">🛡️ Firewall Integrity</div>
+            <div class="val" id="m-firewall" style="background:linear-gradient(90deg,#00ff9d,#00e5ff);-webkit-background-clip:text;background-clip:text;color:transparent">100%</div>
+            <div class="sub">encryption AES-256 + TLS 1.3</div>
+            <div class="bar"><span id="m-firewall-bar" style="width:100%"></span></div>
+          </div>
         </div>
 
         <div class="arch">
@@ -660,6 +694,60 @@
 
     </div>
   </div>
+
+  <!-- ===== Pelindung Data (Anti-Hacker) ===== -->
+  <div class="section-title" id="pelindungSec"><h2>🔒 Pelindung Data — Sistem Pengaman Anti-Hacker &amp; Anti-Peretas</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#ff3b3b,#a855f7)">🔒</span> Pelindung Data Kubah Simulasi</h2>
+      <span class="tag" style="color:var(--accent-3);border-color:rgba(0,255,157,.3)" id="pelindungStatus">PROTECTION ACTIVE</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:#ff3b3b">Pelindung Data</b> adalah lapisan pengaman terluar kubah simulasi yang mencegah
+      <b>hacker, peretas, dan serangan luar</b> masuk ke Fasilitas Mata. Saat hacker mencoba menerobos dari luar,
+      pelindung mendeteksi via <b style="color:var(--accent)">sinyal jaringan</b>, lalu memblokir melalui 8 tahap
+      pertahanan: <b>Hacker Detection → Firewall Block → Encryption Verify → Intrusion Prevention → Threat Analysis →
+      Auto-Quarantine → Log Archive → Alert Notification</b>. Setiap hacker yang diblokir menambah process points
+      <b style="color:#ff3b3b">Breaches</b> dan menjaga Firewall Integrity tetap 100%.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+          <div class="chart-stat" style="background:rgba(255,59,59,.06);border-color:rgba(255,59,59,.3)">
+            <div class="k">👾 Hackers Blocked</div><div class="v" id="ps-blocked" style="color:#ff3b3b">0</div>
+          </div>
+          <div class="chart-stat" style="background:rgba(168,85,247,.06);border-color:rgba(168,85,247,.3)">
+            <div class="k">🚫 Intrusion Attempts</div><div class="v" id="ps-attempts" style="color:#a855f7">0</div>
+          </div>
+          <div class="chart-stat ok">
+            <div class="k">🛡️ Firewall Integrity</div><div class="v" id="ps-firewall">100%</div>
+          </div>
+          <div class="chart-stat">
+            <div class="k">🔐 Encryption</div><div class="v" id="ps-encrypt">AES-256</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px">
+          <b style="color:#cfe6ff">Lapisan Pelindung:</b><br/>
+          🔒 <b style="color:#ff3b3b">Pelindung Data Ring</b> (r=185) — firewall outer layer<br/>
+          🛡️ <b style="color:var(--accent)">Shield Ring</b> (r=160) — detection shield<br/>
+          👁️ <b style="color:var(--accent-3)">Fasilitas Mata</b> (center) — protected core<br/>
+          <br/>
+          <b style="color:#cfe6ff">Proteksi Aktif:</b><br/>
+          ✓ MQTT over TLS 1.3 — transport encryption<br/>
+          ✓ AES-256 — data at rest<br/>
+          ✓ Auto-Quarantine — isolasi threat otomatis<br/>
+          ✓ Real-time IDS/IPS — intrusion detection
+        </div>
+      </div>
+      <div>
+        <img src="waterfall_pelindung_data_protection.png" alt="Waterfall Chart Pelindung Data Protection" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 8 tahap Pelindung Data Protection Lifecycle.<br/>
+          Total end-to-end: <b style="color:var(--accent-3)">500ms</b> · SLA &lt; 600ms: <b style="color:var(--accent-3)">PASS</b>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== Identity Cards Panel ===== -->
   <div class="section-title"><h2>Identitas Benda Terdeteksi (Container Tools Visual)</h2><div class="line"></div></div>
@@ -1073,6 +1161,7 @@
         <tr><td>Coin Selection</td><td>User pilih jumlah coin yang dikeluarkan (mis. 5 coin → Rp 5.000)</td><td>Modal pemilihan tier + preview sisa saldo</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Process Points Conversion</td><td>5 event types × 9 level (Rp/RM/SR/$/₿) → coins</td><td>Convert per type atau Convert All</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Camera Scan Barcode</td><td>Scan produk supermarket &amp; bayar coin</td><td>Pilih lokasi → scan → checkout</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Pelindung Data (Anti-Hacker)</td><td>Blok hacker/peretas di ring terluar (8 tahap)</td><td>Firewall + Encryption + Auto-Quarantine</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -2412,9 +2501,154 @@ function startSim(){
 function scheduleNextObject(){
   if(!isRunning) return;
   if(!isPaused){ spawnObject(); }
+  // Also schedule hacker attacks (less frequent than objects)
+  if(!isPaused && Math.random() < 0.45){ spawnHacker(); }
   const next = 1600 + Math.random()*2000;
   const t = setTimeout(scheduleNextObject, next);
   simTimers.push(t);
+}
+
+/* ============================================================
+   Hacker / Peretas — Pelindung Data Blocking
+   ============================================================ */
+let hackerSeq = 0;
+let hackersBlocked = 0;
+let intrusionAttempts = 0;
+
+function spawnHacker(){
+  if(!isRunning || isPaused) return;
+  hackerSeq++;
+  intrusionAttempts++;
+  const id = hackerSeq;
+  const angle = Math.random() * Math.PI * 2;
+  const startR = 210;
+  const cx = 200, cy = 200;
+  const sx = cx + Math.cos(angle) * startR;
+  const sy = cy + Math.sin(angle) * startR;
+
+  const layer = $('hackersLayer');
+  if(!layer) return;
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('id', 'hacker-'+id);
+
+  // Hacker body (purple diamond shape)
+  const body = document.createElementNS(SVG_NS, 'polygon');
+  const pts = `${sx},${sy-9} ${sx+9},${sy} ${sx},${sy+9} ${sx-9},${sy}`;
+  body.setAttribute('points', pts);
+  body.setAttribute('fill', '#a855f7');
+  body.setAttribute('fill-opacity', '0.4');
+  body.setAttribute('stroke', '#c084fc');
+  body.setAttribute('stroke-width', '1.5');
+  body.setAttribute('filter', 'url(#glow)');
+
+  // Hacker icon
+  const icon = document.createElementNS(SVG_NS, 'text');
+  icon.setAttribute('x', sx); icon.setAttribute('y', sy+3);
+  icon.setAttribute('text-anchor','middle');
+  icon.setAttribute('fill','#c084fc');
+  icon.setAttribute('font-size','10');
+  icon.textContent = '👾';
+
+  const lbl = document.createElementNS(SVG_NS,'text');
+  lbl.setAttribute('x', sx); lbl.setAttribute('y', sy-14);
+  lbl.setAttribute('text-anchor','middle');
+  lbl.setAttribute('fill','#c084fc');
+  lbl.setAttribute('font-size','8');
+  lbl.setAttribute('font-family','Orbitron');
+  lbl.textContent = 'HACK#'+id;
+
+  g.appendChild(body); g.appendChild(icon); g.appendChild(lbl);
+  layer.appendChild(g);
+
+  log(`👾 Hacker/peretas #${id} terdeteksi radar — mencoba menerobos!`, 'err');
+
+  // Move toward pelindung ring (r=185)
+  const targetR = 185;
+  const tx = cx + Math.cos(angle) * targetR;
+  const ty = cy + Math.sin(angle) * targetR;
+  const dur = 1400 + Math.random()*600;
+  const start = performance.now();
+
+  function frame(t){
+    if(!isRunning){ return; }
+    if(isPaused){ requestAnimationFrame(frame); return; }
+    const k = Math.min(1, (t-start)/dur);
+    const e = k;
+    const x = sx + (tx-sx)*e;
+    const y = sy + (ty-sy)*e;
+    // Update polygon points
+    const np = `${x},${y-9} ${x+9},${y} ${x},${y+9} ${x-9},${y}`;
+    body.setAttribute('points', np);
+    icon.setAttribute('x', x); icon.setAttribute('y', y+3);
+    lbl.setAttribute('x', x); lbl.setAttribute('y', y-14);
+    const dist = Math.hypot(x-cx, y-cy);
+
+    // Hacker reaches pelindung ring → BLOCKED
+    if(dist <= targetR && k >= 0.95){
+      blockHacker(id, x, y, cx, cy, g);
+      return;
+    }
+    if(k < 1){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+function blockHacker(id, hx, hy, cx, cy, g){
+  hackersBlocked++;
+  // Visual: flash pelindung ring
+  const ring = $('pelindungRing');
+  const glow = $('pelindungGlow');
+  if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  if(glow){ glow.setAttribute('stroke','rgba(255,59,59,.5)'); glow.setAttribute('stroke-width','12'); }
+
+  // "BLOCKED" text effect
+  const layer = $('labelsLayer');
+  if(layer){
+    const btxt = document.createElementNS(SVG_NS,'text');
+    btxt.setAttribute('x', hx); btxt.setAttribute('y', hy-20);
+    btxt.setAttribute('text-anchor','middle');
+    btxt.setAttribute('fill','#ff3b3b');
+    btxt.setAttribute('font-size','10');
+    btxt.setAttribute('font-family','Orbitron');
+    btxt.setAttribute('font-weight','700');
+    btxt.setAttribute('opacity','1');
+    btxt.textContent = '🚫 BLOCKED';
+    layer.appendChild(btxt);
+    const start = performance.now();
+    function anim(t){
+      const k = Math.min(1,(t-start)/1200);
+      btxt.setAttribute('y', hy-20-k*15);
+      btxt.setAttribute('opacity', 1-k);
+      if(k<1) requestAnimationFrame(anim); else btxt.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+
+  // Explosion at block point (red/purple)
+  spawnExplosion(hx, hy, '#a855f7');
+  // Remove hacker
+  g.remove();
+  // Reset pelindung ring
+  setTimeout(()=>{
+    if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','1.8'); ring.setAttribute('stroke-opacity','0.55'); }
+    if(glow){ glow.setAttribute('stroke','rgba(255,59,59,.18)'); glow.setAttribute('stroke-width','6'); }
+  }, 500);
+
+  // Update metrics
+  setMetric('m-hackers', hackersBlocked + ' 🚫', 'm-hackers-bar', Math.min(100, hackersBlocked*8));
+  if($('ps-blocked')) $('ps-blocked').textContent = hackersBlocked;
+  if($('ps-attempts')) $('ps-attempts').textContent = intrusionAttempts;
+  // Firewall integrity stays 100% (hacker blocked)
+  const integrity = Math.max(85, 100 - Math.floor(intrusionAttempts*0.3));
+  if($('m-firewall')) $('m-firewall').textContent = integrity + '%';
+  if($('m-firewall-bar')) $('m-firewall-bar').style.width = integrity + '%';
+  if($('ps-firewall')) $('ps-firewall').textContent = integrity + '%';
+
+  // Log the 8-stage blocking process
+  log(`🔒 Pelindung Data AKTIF — Hacker #${id} DIBLOKIR di ring terluar`, 'ok');
+  log(`   → Hacker Detection (25ms) → Firewall Block (45ms) → Encryption Verify (80ms)`, 'info');
+  log(`   → Intrusion Prevention (120ms) → Threat Analysis (95ms) → Auto-Quarantine (60ms)`, 'info');
+  log(`   → Log Archive (35ms) → Alert Notification (40ms) · TOTAL 500ms`, 'info');
 }
 function pauseSim(){
   if(!isRunning) return;
@@ -2434,13 +2668,19 @@ function pauseSim(){
 function resetSim(){
   isRunning = false; isPaused = false;
   simTimers.forEach(clearTimeout); simTimers = [];
-  ['attacksLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
+  ['attacksLayer','hackersLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
   stats = { detected:0, stopped:0, breached:0 };
   wfEvents = [];
   barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
   scannedObjects = [];
   coinBalance = 0; coinsEarnedTotal = 0; coinsCashedOut = 0; coinHistory = [];
   processCounts = { sensor:0, gateway:0, cloud:0, intercept:0, breach:0 };
+  hackerSeq = 0; hackersBlocked = 0; intrusionAttempts = 0;
+  if($('m-hackers')) setMetric('m-hackers','0 🚫','m-hackers-bar',0);
+  if($('m-firewall')){ $('m-firewall').textContent='100%'; $('m-firewall-bar').style.width='100%'; }
+  if($('ps-blocked')) $('ps-blocked').textContent='0';
+  if($('ps-attempts')) $('ps-attempts').textContent='0';
+  if($('ps-firewall')) $('ps-firewall').textContent='100%';
   updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI(); updateProcessPointsUI();
   for(let i=0;i<5;i++) setSensorRow(i,'idle','—');
   if($('txHistory')) $('txHistory').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>';
