@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sistem Kubah Simulasi Kuatro Sensor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg-0:#0a0e1a;
+    --bg-1:#0f1626;
+    --bg-2:#141d33;
+    --bg-3:#1b2748;
+    --accent:#00e5ff;
+    --accent-2:#7c4dff;
+    --accent-3:#00ff9d;
+    --warn:#ffb74d;
+    --danger:#ff5252;
+    --text:#e6f0ff;
+    --muted:#7e8db5;
+    --card:rgba(20,29,51,.72);
+    --border:rgba(124,77,255,.25);
+    --grid:rgba(0,229,255,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Segoe UI","Inter",system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 800px at 80% -10%, rgba(124,77,255,.18), transparent 60%),
+      radial-gradient(900px 600px at -10% 100%, rgba(0,229,255,.14), transparent 60%),
+      linear-gradient(180deg,var(--bg-0),var(--bg-1));
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  /* ===== Header ===== */
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,26,.78);
+    border-bottom:1px solid var(--border);
+    padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand .logo{
+    width:46px;height:46px;border-radius:12px;
+    background:conic-gradient(from 220deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));
+    box-shadow:0 0 24px rgba(0,229,255,.5),inset 0 0 12px rgba(255,255,255,.15);
+    position:relative;flex-shrink:0;
+  }
+  .brand .logo::after{
+    content:"";position:absolute;inset:6px;border-radius:8px;
+    background:var(--bg-0);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .brand .logo::before{
+    content:"K4";position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;color:var(--accent);z-index:1;
+    text-shadow:0 0 8px var(--accent);
+  }
+  .brand h1{font-size:18px;font-weight:700;letter-spacing:.3px}
+  .brand h1 span{color:var(--accent)}
+  .brand p{font-size:12px;color:var(--muted);margin-top:2px}
+  .status-pill{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(0,255,157,.08);
+    border:1px solid rgba(0,255,157,.35);
+    color:var(--accent-3);
+    padding:7px 14px;border-radius:999px;font-size:12px;font-weight:600;
+  }
+  .status-pill .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--accent-3);
+    box-shadow:0 0 10px var(--accent-3);
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+
+  /* ===== Layout ===== */
+  main{padding:24px 28px 60px;max-width:1600px;margin:0 auto}
+  .grid-main{
+    display:grid;
+    grid-template-columns:1.35fr 1fr;
+    gap:20px;
+  }
+  @media(max-width:1080px){.grid-main{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .card-head h2{
+    font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+    color:#cfe6ff;display:flex;align-items:center;gap:10px;
+  }
+  .card-head h2 .ic{
+    width:24px;height:24px;border-radius:7px;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;
+  }
+  .tag{
+    font-size:11px;color:var(--muted);
+    border:1px solid var(--border);padding:4px 10px;border-radius:999px;
+    background:rgba(0,229,255,.05);
+  }
+
+  /* ===== Dome Stage ===== */
+  .dome-stage{
+    position:relative;
+    aspect-ratio:1/1;
+    width:100%;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(0,229,255,.10), transparent 60%),
+      repeating-linear-gradient(0deg,transparent 0 39px, var(--grid) 39px 40px),
+      repeating-linear-gradient(90deg,transparent 0 39px, var(--grid) 39px 40px),
+      linear-gradient(180deg,#0c1426,#0a0f1e);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid rgba(0,229,255,.18);
+  }
+  .dome-stage svg{position:absolute;inset:0;width:100%;height:100%}
+  .legend{
+    position:absolute;left:12px;bottom:12px;
+    display:flex;flex-direction:column;gap:6px;
+    font-size:11px;color:var(--muted);
+    background:rgba(10,14,26,.7);
+    padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  }
+  .legend .row{display:flex;align-items:center;gap:8px}
+  .legend .sw{width:12px;height:12px;border-radius:3px}
+  .stage-ctrl{
+    position:absolute;right:12px;top:12px;display:flex;gap:8px;flex-wrap:wrap;
+  }
+  .btn{
+    background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    color:#fff;border:none;cursor:pointer;
+    padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;
+    box-shadow:0 4px 14px rgba(124,77,255,.4);
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,77,255,.6)}
+  .btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--border);box-shadow:none}
+  .btn.ghost:hover{background:rgba(255,255,255,.1)}
+
+  /* ===== Right Column ===== */
+  .col-right{display:flex;flex-direction:column;gap:20px}
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .metric{
+    background:linear-gradient(180deg,rgba(20,29,51,.6),rgba(15,22,38,.6));
+    border:1px solid var(--border);
+    border-radius:12px;padding:14px;
+    position:relative;overflow:hidden;
+  }
+  .metric .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .metric .val{font-size:24px;font-weight:800;margin-top:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-3));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .metric .sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .metric .bar{
+    height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden;
+  }
+  .metric .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));transition:width .4s ease}
+
+  /* ===== Architecture flow ===== */
+  .arch{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;margin-top:8px;
+  }
+  @media(max-width:720px){.arch{grid-template-columns:repeat(2,1fr)}}
+  .node{
+    background:linear-gradient(180deg,rgba(20,29,51,.6),rgba(15,22,38,.5));
+    border:1px solid var(--border);
+    border-radius:12px;padding:12px;text-align:center;position:relative;
+  }
+  .node .ic{
+    width:38px;height:38px;border-radius:10px;margin:0 auto 8px;
+    display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  }
+  .node h3{font-size:13px;font-weight:700;margin-bottom:2px}
+  .node p{font-size:11px;color:var(--muted)}
+  .node.live{border-color:rgba(0,255,157,.45);box-shadow:0 0 18px rgba(0,255,157,.18)}
+  .node.live .ic{background:linear-gradient(135deg,var(--accent-3),var(--accent))}
+
+  /* ===== Sensor table ===== */
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  td .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;
+  }
+  .chip.ok{background:rgba(0,255,157,.12);color:var(--accent-3);border:1px solid rgba(0,255,157,.3)}
+  .chip.warn{background:rgba(255,183,77,.12);color:var(--warn);border:1px solid rgba(255,183,77,.3)}
+  .chip.idle{background:rgba(126,141,181,.12);color:var(--muted);border:1px solid rgba(126,141,181,.3)}
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
+
+  /* ===== Waterfall section ===== */
+  .waterfall-wrap{position:relative;height:340px;margin-top:8px}
+  .wf-summary{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;
+  }
+  .wf-stat{
+    background:rgba(0,229,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px;
+  }
+  .wf-stat .k{font-size:11px;color:var(--muted)}
+  .wf-stat .v{font-size:16px;font-weight:700;color:var(--accent);margin-top:2px}
+
+  /* ===== Tech stack ===== */
+  .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+  @media(max-width:720px){.tech-grid{grid-template-columns:1fr}}
+  .tech{
+    background:linear-gradient(180deg,rgba(20,29,51,.55),rgba(15,22,38,.45));
+    border:1px solid var(--border);border-radius:12px;padding:14px;
+  }
+  .tech h4{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .tech h4 .em{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+  .tech p{font-size:12px;color:var(--muted);line-height:1.6}
+  .tech ul{margin-top:8px;padding-left:14px;font-size:12px;color:#b8c6e8}
+  .tech li{margin-bottom:3px}
+
+  /* ===== Event log ===== */
+  .log{
+    background:#080d18;border:1px solid var(--border);border-radius:10px;
+    padding:10px 12px;font-family:"JetBrains Mono","Consolas",monospace;font-size:11.5px;
+    height:180px;overflow-y:auto;
+    color:#9fd9ff;
+  }
+  .log .ln{padding:2px 0;border-bottom:1px dashed rgba(255,255,255,.04)}
+  .log .t{color:var(--muted);margin-right:8px}
+  .log .ok{color:var(--accent-3)}
+  .log .warn{color:var(--warn)}
+  .log .err{color:var(--danger)}
+  .log::-webkit-scrollbar{width:6px}
+  .log::-webkit-scrollbar-thumb{background:rgba(0,229,255,.25);border-radius:4px}
+
+  /* ===== Section title ===== */
+  .section-title{
+    display:flex;align-items:center;gap:12px;margin:30px 0 14px;
+  }
+  .section-title h2{font-size:18px;font-weight:700}
+  .section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+  footer{
+    text-align:center;color:var(--muted);font-size:12px;
+    padding:30px 20px;border-top:1px solid var(--border);margin-top:30px;
+  }
+  footer b{color:var(--accent)}
+
+  /* scan animation */
+  @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+  .scanline{
+    position:absolute;left:0;right:0;height:60%;
+    background:linear-gradient(180deg,transparent,rgba(0,229,255,.18),transparent);
+    animation:scan 3.5s linear infinite;pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1>Kuatro<span>·</span>Sensor Dome System</h1>
+      <p>Sistem Simulasi Kubah Deteksi Multi-Sensor — Gateway · Cloud · Dashboard</p>
+    </div>
+  </div>
+  <div class="status-pill"><span class="dot"></span> SISTEM AKTIF &amp; BERFUNGSI PENUH</div>
+</header>
+
+<main>
+
+  <div class="grid-main">
+
+    <!-- ===== Dome Simulation ===== -->
+    <section class="card">
+      <div class="card-head">
+        <h2><span class="ic">◉</span> Visualisasi Kubah Simulasi</h2>
+        <span class="tag">Real-time Detection</span>
+      </div>
+
+      <div class="dome-stage" id="stage">
+        <div class="scanline"></div>
+        <svg viewBox="0 0 400 400" id="dome-svg">
+          <defs>
+            <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.5"/>
+              <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="domeFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7c4dff" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#0a0e1a" stop-opacity="0.05"/>
+            </linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <!-- Dome outline -->
+          <path d="M60 220 Q200 -40 340 220 Z" fill="url(#domeFill)" stroke="rgba(124,77,255,.55)" stroke-width="1.5"/>
+          <!-- Dome base ellipse -->
+          <ellipse cx="200" cy="220" rx="140" ry="22" fill="none" stroke="rgba(0,229,255,.35)" stroke-width="1.2"/>
+          <!-- Concentric detection zones -->
+          <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(0,229,255,.08)" stroke-dasharray="4 6"/>
+          <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,229,255,.12)" stroke-dasharray="4 6"/>
+          <circle cx="200" cy="200" r="50" fill="url(#centerGrad)" stroke="rgba(0,229,255,.5)" stroke-width="1.2"/>
+
+          <!-- Center point marker -->
+          <circle cx="200" cy="200" r="4" fill="#00e5ff" filter="url(#glow)"/>
+          <text x="200" y="186" text-anchor="middle" fill="#7e8db5" font-size="9">PUSAT AREA</text>
+
+          <!-- Sensor beams (animated) -->
+          <line id="beam1" x1="200" y1="200" x2="70"  y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
+          <line id="beam2" x1="200" y1="200" x2="200" y2="70"  stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
+          <line id="beam3" x1="200" y1="200" x2="330" y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
+          <line id="beam4" x1="200" y1="200" x2="200" y2="330" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
+
+          <!-- Sensors (Kuatro = 4) -->
+          <g id="sensor1"><circle cx="70" cy="200" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="70" cy="200" r="4" fill="#00ff9d"/><text x="70" y="225" text-anchor="middle" fill="#9fd9ff" font-size="9">S1·PIR</text></g>
+          <g id="sensor2"><circle cx="200" cy="70" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="70" r="4" fill="#00ff9d"/><text x="200" y="60" text-anchor="middle" fill="#9fd9ff" font-size="9">S2·MMW</text></g>
+          <g id="sensor3"><circle cx="330" cy="200" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="330" cy="200" r="4" fill="#00ff9d"/><text x="330" y="225" text-anchor="middle" fill="#9fd9ff" font-size="9">S3·LIDAR</text></g>
+          <g id="sensor4"><circle cx="200" cy="330" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="330" r="4" fill="#00ff9d"/><text x="200" y="355" text-anchor="middle" fill="#9fd9ff" font-size="9">S4·CAM</text></g>
+
+          <!-- Moving object (intruder) -->
+          <g id="intruder" style="transition:none">
+            <circle cx="380" cy="380" r="9" fill="#ff5252" stroke="#fff" stroke-width="1.5" filter="url(#glow)"/>
+            <circle cx="380" cy="380" r="16" fill="none" stroke="#ff5252" stroke-opacity="0.4"/>
+            <text x="380" y="380" dy="22" text-anchor="middle" fill="#ff8a80" font-size="9">OBJEK</text>
+          </g>
+        </svg>
+
+        <div class="stage-ctrl">
+          <button class="btn" id="btnStart">▶ Jalankan Simulasi</button>
+          <button class="btn ghost" id="btnReset">↺ Reset</button>
+        </div>
+
+        <div class="legend">
+          <div class="row"><span class="sw" style="background:#00ff9d"></span> Sensor aktif (Kuatro × 4)</div>
+          <div class="row"><span class="sw" style="background:#ff5252"></span> Objek pendeteksian</div>
+          <div class="row"><span class="sw" style="background:#00e5ff"></span> Zona pusat terlindungi</div>
+          <div class="row"><span class="sw" style="background:#7c4dff"></span> Kubah (Dome)</div>
+        </div>
+      </div>
+
+      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.65">
+        Sistem <b style="color:var(--accent)">Kuatro Sensor Dome</b> memanfaatkan empat sensor (PIR, MMW radar, LIDAR, dan Camera IoT)
+        yang dipasang mengelilingi kubah. Begitu objek memasuki <b>pusat area</b>, sinyal deteksi dari sensor
+        diteruskan melalui <b>jaringan gateway</b> ke <b>cloud server</b>, lalu ditampilkan pada <b>dashboard pengguna</b>
+        secara real-time. Teknologi pendukung mencakup <b>sensor Android</b> (akselerometer/gyro) dan
+        <b>penyimpanan cloud data</b> untuk arsip kejadian.
+      </p>
+    </section>
+
+    <!-- ===== Right column: Dashboard + Metrics + Log ===== -->
+    <div class="col-right">
+
+      <section class="card">
+        <div class="card-head">
+          <h2><span class="ic">▦</span> Dashboard Pengguna</h2>
+          <span class="tag">Live Metrics</span>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="lbl">Status Kubah</div>
+            <div class="val" id="m-status">ARMED</div>
+            <div class="sub">Sistem pengaman aktif</div>
+            <div class="bar"><span style="width:96%"></span></div>
+          </div>
+          <div class="metric">
+            <div class="lbl">Objek Terdeteksi</div>
+            <div class="val" id="m-det">0</div>
+            <div class="sub">dalam 60 detik terakhir</div>
+            <div class="bar"><span id="m-det-bar" style="width:0%"></span></div>
+          </div>
+          <div class="metric">
+            <div class="lbl">Latensi Gateway</div>
+            <div class="val" id="m-lat">— ms</div>
+            <div class="sub">RTT ke cloud server</div>
+            <div class="bar"><span id="m-lat-bar" style="width:0%"></span></div>
+          </div>
+          <div class="metric">
+            <div class="lbl">Cloud Storage</div>
+            <div class="val" id="m-store">0%</div>
+            <div class="sub">kapasitas data terpakai</div>
+            <div class="bar"><span id="m-store-bar" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="arch" style="margin-top:16px">
+          <div class="node live" id="n-sensor">
+            <div class="ic">◉</div><h3>Kuatro Sensor</h3><p>4 × IoT sensor aktif</p>
+          </div>
+          <div class="node live" id="n-gateway">
+            <div class="ic">⇄</div><h3>Gateway</h3><p>Wi-Fi / LoRa · MQTT</p>
+          </div>
+          <div class="node live" id="n-cloud">
+            <div class="ic">☁</div><h3>Cloud Server</h3><p>Storage &amp; analitik</p>
+          </div>
+          <div class="node live" id="n-dash">
+            <div class="ic">▤</div><h3>User Dashboard</h3><p>Web &amp; Android</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2><span class="ic">≡</span> Event Log Sistem</h2>
+          <span class="tag">Sinkron cloud</span>
+        </div>
+        <div class="log" id="log">
+          <div class="ln"><span class="t">[--:--:--]</span> Menunggu simulasi...</div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ===== Sensor detail table ===== -->
+  <div class="section-title"><h2>Status Kuatro Sensor</h2><div class="line"></div></div>
+  <section class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Sensor</th><th>Tipe</th><th>Posisi</th><th>Jaringan</th>
+          <th>Sinyal</th><th>Status</th><th>Terakhir Deteksi</th>
+        </tr>
+      </thead>
+      <tbody id="sensorTable">
+        <tr><td>S1</td><td>PIR (Passive IR)</td><td>Barat kubah</td><td>Wi-Fi 6</td><td>-42 dBm</td>
+          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S2</td><td>MMW Radar 24GHz</td><td>Utara kubah</td><td>LoRa</td><td>-51 dBm</td>
+          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S3</td><td>LIDAR TOF</td><td>Timur kubah</td><td>Zigbee</td><td>-48 dBm</td>
+          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S4</td><td>Camera IoT 4K</td><td>Selatan kubah</td><td>Wi-Fi 6</td><td>-39 dBm</td>
+          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== Waterfall Chart ===== -->
+  <div class="section-title"><h2>Waterfall Chart — Alur Data Deteksi</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic">⇣</span> Tahapan Pemrosesan Sinyal (Data Lifecycle)</h2>
+      <span class="tag">Waterfall · ms</span>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">
+      Waterfall berikut menggambarkan urutan waktu pemrosesan sebuah kejadian deteksi:
+      dari tangkap <b style="color:var(--accent)">sensor</b>, agregasi <b style="color:var(--accent)">gateway</b>,
+      persistensi <b style="color:var(--accent)">cloud</b>, render <b style="color:var(--accent)">dashboard</b>,
+      hingga notifikasi ke <b style="color:var(--accent)">perangkat pengguna</b>.
+    </p>
+    <div class="waterfall-wrap">
+      <canvas id="wfChart"></canvas>
+    </div>
+    <div class="wf-summary">
+      <div class="wf-stat"><div class="k">Total Latensi End-to-End</div><div class="v" id="wf-total">— ms</div></div>
+      <div class="wf-stat"><div class="k">Bottleneck Terbesar</div><div class="v" id="wf-bottle">Cloud</div></div>
+      <div class="wf-stat"><div class="k">Throughput Gateway</div><div class="v" id="wf-tp">— pkt/s</div></div>
+      <div class="wf-stat"><div class="k">SLA Target &lt; 300ms</div><div class="v" id="wf-sla" style="color:var(--accent-3)">PASS</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Technology Stack ===== -->
+  <div class="section-title"><h2>Teknologi Pendukung</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="tech-grid">
+      <div class="tech">
+        <h4><span class="em"></span> Sensor Android</h4>
+        <p>Pemanfaatan sensor bawaan perangkat Android sebagai node deteksi tambahan (komplementer).</p>
+        <ul>
+          <li>Akselerometer — deteksi getaran/guncangan kubah</li>
+          <li>Gyroscope — orientasi &amp; kemiringan</li>
+          <li>Magnetometer — kompas arah objek</li>
+          <li>Proximity — jarak dekat pintu kubah</li>
+        </ul>
+      </div>
+      <div class="tech">
+        <h4><span class="em" style="background:#7c4dff;box-shadow:0 0 8px #7c4dff"></span> Cloud Data Storage</h4>
+        <p>Penyimpanan terdistribusi berbasis object storage untuk arsip kejadian dan analitik historis.</p>
+        <ul>
+          <li>Time-series DB (InfluxDB) — log deteksi</li>
+          <li>Object Storage (S3-compatible) — snapshot kamera</li>
+          <li>Hot cache Redis — dashboard real-time</li>
+          <li>Backup terenkripsi AES-256</li>
+        </ul>
+      </div>
+      <div class="tech">
+        <h4><span class="em" style="background:#00ff9d;box-shadow:0 0 8px #00ff9d"></span> Sinyal Jaringan</h4>
+        <p>Lapisan transport yang menghubungkan sensor → gateway → cloud secara andal dan aman.</p>
+        <ul>
+          <li>MQTT over TLS — pesan ringan async</li>
+          <li>Wi-Fi 6 / LoRaWAN — radio adaptif</li>
+          <li>WebSocket — push dashboard live</li>
+          <li>End-to-end encryption (TLS 1.3)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== System Validation ===== -->
+  <div class="section-title"><h2>Validasi Sistem Berfungsi Penuh</h2><div class="line"></div></div>
+  <section class="card">
+    <table>
+      <thead>
+        <tr><th>Komponen</th><th>Fungsi</th><th>Metode Validasi</th><th>Hasil</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kuatro Sensor (×4)</td><td>Deteksi objek pada pusat area kubah</td><td>Simulasi objek lintas zona + cek respons</td>
+          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput paket</td>
+          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Cloud Server</td><td>Penyimpanan &amp; analitik data</td><td>Verifikasi write time-series + object storage</td>
+          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>User Dashboard</td><td>Visualisasi real-time + notifikasi</td><td>WebSocket push &amp; render metric</td>
+          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Android Sensor Bridge</td><td>Input sensor mobile komplementer</td><td>Injeksi data aksel/gyro ke pipeline</td>
+          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>End-to-End SLA &lt; 300 ms</td><td>Garansi latensi deteksi</td><td>Sum waterfall tahapan</td>
+          <td><span class="chip ok"><span class="dot"></span> PASS</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  <b>Kuatro Sensor Dome System</b> — Simulasi visualisasi arsitektur IoT: Sensor → Gateway → Cloud → Dashboard.
+  <br/>File HTML mandiri · berjalan penuh di browser tanpa server tambahan.
+</footer>
+
+<script>
+/* ============================================================
+   Kuatro Sensor Dome — Simulation Logic
+   ============================================================ */
+
+const $ = (id) => document.getElementById(id);
+const logEl = $('log');
+const stage = $('stage');
+
+let runId = null;
+let detectCount = 0;
+
+function pad(n){return n<10?'0'+n:n}
+function now(){
+  const d = new Date();
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+function log(msg, type='ok'){
+  const div = document.createElement('div');
+  div.className = 'ln';
+  div.innerHTML = `<span class="t">[${now()}]</span><span class="${type}">${msg}</span>`;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+  // keep max 50 lines
+  while(logEl.children.length > 60) logEl.removeChild(logEl.firstChild);
+}
+
+/* ----- Status helpers ----- */
+function setMetric(id, val, barId, pct){
+  $(id).textContent = val;
+  if(barId) $(barId).style.width = pct + '%';
+}
+function setSensorRow(idx, status, lastTime){
+  const rows = $('sensorTable').children;
+  const r = rows[idx]; if(!r) return;
+  const chip = r.children[5].firstElementChild;
+  chip.className = 'chip ' + (status==='ok'?'ok':status==='warn'?'warn':'idle');
+  chip.innerHTML = `<span class="dot"></span> ${status==='ok'?'Aktif':status==='warn'?'Probing':'Standby'}`;
+  if(lastTime) r.children[6].textContent = lastTime;
+}
+
+/* ----- Intruder animation ----- */
+function moveIntruder(fromX, fromY, toX, toY, dur, cb){
+  const g = $('intruder');
+  const circle = g.querySelector('circle');
+  const text = g.querySelector('text');
+  const start = performance.now();
+  function frame(t){
+    const k = Math.min(1, (t-start)/dur);
+    // ease-in-out
+    const e = k<0.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2;
+    const x = fromX + (toX-fromX)*e;
+    const y = fromY + (toY-fromY)*e;
+    circle.setAttribute('cx', x); circle.setAttribute('cy', y);
+    text.setAttribute('x', x); text.setAttribute('y', y);
+    // dynamic beam opacity based on distance to center (200,200)
+    const dist = Math.hypot(x-200, y-200);
+    const intensity = Math.max(0, 1 - dist/180);
+    document.querySelectorAll('#beam1,#beam2,#beam3,#beam4').forEach(b=>b.setAttribute('stroke-opacity', 0.15 + intensity*0.5));
+    if(k<1) runId = requestAnimationFrame(frame);
+    else if(cb) cb();
+  }
+  runId = requestAnimationFrame(frame);
+}
+
+function flashSensor(idx){
+  const ids = ['sensor1','sensor2','sensor3','sensor4'];
+  const g = $(ids[idx]);
+  const c = g.querySelector('circle:first-child');
+  c.setAttribute('stroke','#ffb74d');
+  c.setAttribute('stroke-width','3');
+  setTimeout(()=>{ c.setAttribute('stroke','#00ff9d'); c.setAttribute('stroke-width','2'); }, 350);
+}
+
+function triggerDetection(sensorIdx, sensorName){
+  detectCount++;
+  log(`▶ Objek memasuki pusat area → ${sensorName} terpicu`, 'ok');
+  flashSensor(sensorIdx);
+  setSensorRow(sensorIdx, 'ok', now());
+
+  // cascade node pulses
+  pulseNode('n-sensor'); setTimeout(()=>pulseNode('n-gateway'),250);
+  setTimeout(()=>pulseNode('n-cloud'),550); setTimeout(()=>pulseNode('n-dash'),900);
+
+  // metrics
+  setMetric('m-det', detectCount, 'm-det-bar', Math.min(100, detectCount*15));
+  const lat = (18 + Math.random()*22).toFixed(0);
+  setMetric('m-lat', lat+' ms', 'm-lat-bar', Math.min(100, lat/0.9));
+  const store = (12 + detectCount*2.1).toFixed(1);
+  setMetric('m-store', store+'%', 'm-store-bar', store);
+  setMetric('m-status', 'ALERT');
+
+  log(`⇄ Gateway: paket diteruskan ke cloud via MQTT/TLS`, 'ok');
+  setTimeout(()=> log(`☁ Cloud: data disimpan (time-series + snapshot)`, 'ok'), 300);
+  setTimeout(()=> log(`▤ Dashboard: push WebSocket — UI diperbarui`, 'ok'), 550);
+  setTimeout(()=> log(`🔔 Notifikasi pengguna terkirim ke Android`, 'ok'), 800);
+  setTimeout(()=>{ setMetric('m-status','ARMED'); }, 1600);
+}
+function pulseNode(id){
+  const n = $(id);
+  n.style.boxShadow = '0 0 28px rgba(0,255,157,.45)';
+  n.style.borderColor = 'rgba(0,255,157,.7)';
+  setTimeout(()=>{ n.style.boxShadow=''; n.style.borderColor=''; }, 600);
+}
+
+/* ----- Simulation sequence ----- */
+function runSim(){
+  if(runId) cancelAnimationFrame(runId);
+  detectCount = 0;
+  setMetric('m-det',0,'m-det-bar',0);
+  log('▶ Simulasi dimulai — Kuatro Sensor Dome AKTIF', 'ok');
+
+  // path: enter from corner, traverse through center, exit opposite corner
+  // S1 (left, west) — S2 (top, north) — S3 (right, east) — S4 (bottom, south)
+  const path = [
+    {x:380, y:380}, {x:200, y:200, dur:2200, sensor:1, name:'S2·MMW Radar (Utara)'},
+    {x:70,  y:200, dur:1800, sensor:0, name:'S1·PIR (Barat)'},
+    {x:200, y:330, dur:1600, sensor:3, name:'S4·Camera IoT (Selatan)'},
+    {x:330, y:200, dur:1600, sensor:2, name:'S3·LIDAR (Timur)'},
+    {x:380, y:380, dur:1800}
+  ];
+
+  let i = 0;
+  function step(){
+    if(i >= path.length-1){ finishSim(); return; }
+    const from = path[i], to = path[i+1];
+    // when entering center area (around 200,200), trigger detection
+    if(to.sensor !== undefined){
+      // Trigger detection when crossing through center
+      setTimeout(()=> triggerDetection(to.sensor, to.name), to.dur*0.5);
+    }
+    moveIntruder(from.x, from.y, to.x, to.y, to.dur, step);
+    i++;
+  }
+  step();
+}
+function finishSim(){
+  log(`✓ Simulasi selesai — ${detectCount} deteksi tercatat di cloud`, 'ok');
+  log(`✓ Semua komponen berfungsi penuh (sensor → gateway → cloud → dashboard)`, 'ok');
+}
+
+$('btnStart').onclick = runSim;
+$('btnReset').onclick = ()=>{
+  if(runId) cancelAnimationFrame(runId);
+  const g = $('intruder');
+  const c = g.querySelector('circle'), t = g.querySelector('text');
+  c.setAttribute('cx',380); c.setAttribute('cy',380);
+  t.setAttribute('x',380); t.setAttribute('y',380);
+  detectCount = 0;
+  setMetric('m-det',0,'m-det-bar',0);
+  setMetric('m-lat','— ms','m-lat-bar',0);
+  setMetric('m-store','0%','m-store-bar',0);
+  setMetric('m-status','ARMED');
+  for(let i=0;i<4;i++) setSensorRow(i,'idle','—');
+  log('↺ Sistem direset', 'warn');
+};
+
+/* ============================================================
+   Waterfall Chart — Data Lifecycle Latency
+   ============================================================ */
+const wfCtx = $('wfChart').getContext('2d');
+const stages = [
+  'Sensor Capture',
+  'Gateway Aggregation',
+  'Network Transport',
+  'Cloud Processing',
+  'Cloud Storage Write',
+  'Dashboard WebSocket Push',
+  'User Notification'
+];
+// latency values in ms (increment/decrement relative to running total)
+const deltas = [22, 35, 28, 95, 48, 12, 18];
+
+// Build waterfall data: start, change, end
+let running = 0;
+const dataPoints = [];
+const colors = [];
+deltas.forEach((d,i)=>{
+  const start = running;
+  running += d;
+  dataPoints.push([start, d]);
+  colors.push(i === deltas.length-1 ? 'rgba(0,255,157,.85)' : 'rgba(0,229,255,.75)');
+});
+const total = running;
+
+// Chart.js floating bar chart
+const wf = new Chart(wfCtx, {
+  type:'bar',
+  data:{
+    labels: stages,
+    datasets:[{
+      label:'Latensi (ms)',
+      data: dataPoints,
+      backgroundColor: colors,
+      borderColor: 'rgba(124,77,255,.6)',
+      borderWidth:1,
+      borderRadius:6,
+      barThickness: 38
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{color:'#cfe6ff'}},
+      tooltip:{
+        backgroundColor:'#0a0e1a', borderColor:'rgba(0,229,255,.4)', borderWidth:1,
+        titleColor:'#00e5ff', bodyColor:'#e6f0ff',
+        callbacks:{
+          label:(ctx)=>{
+            const [s,d] = ctx.raw;
+            return [`Δ +${d} ms`, `Mulai: ${s} ms · Akhir: ${s+d} ms`];
+          }
+        }
+      },
+      title:{
+        display:true, text:'Alur Latensi End-to-End (Waterfall)',
+        color:'#cfe6ff', font:{size:14, weight:'700'}
+      }
+    },
+    scales:{
+      x:{
+        ticks:{color:'#9fd9ff', font:{size:10}, maxRotation:30, minRotation:0},
+        grid:{color:'rgba(255,255,255,.04)'}
+      },
+      y:{
+        beginAtZero:true,
+        ticks:{color:'#9fd9ff', callback:(v)=>v+' ms'},
+        grid:{color:'rgba(255,255,255,.06)'},
+        title:{display:true, text:'Waktu pemrosesan (ms)', color:'#7e8db5'}
+      }
+    }
+  }
+});
+
+// Waterfall summary
+$('wf-total').textContent = total + ' ms';
+$('wf-tp').textContent = (1000/ (deltas[1]+deltas[2]) ).toFixed(0) + ' pkt/s';
+$('wf-sla').textContent = total < 300 ? 'PASS' : 'CHECK';
+$('wf-sla').style.color = total < 300 ? 'var(--accent-3)' : 'var(--warn)';
+// bottleneck = max delta
+const maxIdx = deltas.indexOf(Math.max(...deltas));
+$('wf-bottle').textContent = stages[maxIdx].split(' ')[0];
+
+/* ----- Initial log + auto start hint ----- */
+log('Sistem Kuatro Sensor Dome siap digunakan.', 'ok');
+log('Klik [Jalankan Simulasi] untuk memulai deteksi objek di pusat area kubah.', 'warn');
+</script>
+
+</body>
+</html>
