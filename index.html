@@ -3,476 +3,934 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sistem Kubah Simulasi Kuatro Sensor</title>
+<title>Kubah Simulasi Menghalau Serangan — Mode Penelusuran Benda | Kuatro Sensor Defense System</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
-    --bg-0:#0a0e1a;
-    --bg-1:#0f1626;
-    --bg-2:#141d33;
-    --bg-3:#1b2748;
+    --bg-0:#04060d;
+    --bg-1:#070b16;
+    --bg-2:#0a1020;
+    --bg-3:#101a30;
     --accent:#00e5ff;
     --accent-2:#7c4dff;
     --accent-3:#00ff9d;
     --warn:#ffb74d;
-    --danger:#ff5252;
+    --danger:#ff3b3b;
+    --threat:#ff5252;
     --text:#e6f0ff;
     --muted:#7e8db5;
-    --card:rgba(20,29,51,.72);
-    --border:rgba(124,77,255,.25);
-    --grid:rgba(0,229,255,.08);
+    --card:rgba(10,16,32,.72);
+    --card-2:rgba(16,26,48,.65);
+    --border:rgba(124,77,255,.30);
+    --border-2:rgba(0,229,255,.22);
+    --grid:rgba(0,229,255,.07);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
-    font-family:"Segoe UI","Inter",system-ui,sans-serif;
+    font-family:"Segoe UI","Inter","Orbitron",system-ui,sans-serif;
     background:
-      radial-gradient(1200px 800px at 80% -10%, rgba(124,77,255,.18), transparent 60%),
-      radial-gradient(900px 600px at -10% 100%, rgba(0,229,255,.14), transparent 60%),
+      radial-gradient(1200px 800px at 85% -10%, rgba(124,77,255,.22), transparent 60%),
+      radial-gradient(900px 600px at -10% 100%, rgba(0,229,255,.18), transparent 60%),
+      radial-gradient(700px 500px at 50% 120%, rgba(255,59,59,.10), transparent 60%),
       linear-gradient(180deg,var(--bg-0),var(--bg-1));
     color:var(--text);
     min-height:100vh;
     overflow-x:hidden;
     line-height:1.5;
   }
+
   /* ===== Header ===== */
   header.top{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(14px);
-    background:rgba(10,14,26,.78);
+    position:sticky;top:0;z-index:60;
+    backdrop-filter:blur(16px);
+    background:rgba(4,6,13,.85);
     border-bottom:1px solid var(--border);
-    padding:14px 28px;
-    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    padding:11px 22px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
   }
-  .brand{display:flex;align-items:center;gap:14px}
+  .brand{display:flex;align-items:center;gap:13px}
   .brand .logo{
-    width:46px;height:46px;border-radius:12px;
-    background:conic-gradient(from 220deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));
-    box-shadow:0 0 24px rgba(0,229,255,.5),inset 0 0 12px rgba(255,255,255,.15);
+    width:50px;height:50px;border-radius:13px;
+    background:conic-gradient(from 220deg,var(--accent),var(--accent-2),var(--threat),var(--accent));
+    box-shadow:0 0 28px rgba(0,229,255,.55),inset 0 0 12px rgba(255,255,255,.15);
     position:relative;flex-shrink:0;
   }
-  .brand .logo::after{
-    content:"";position:absolute;inset:6px;border-radius:8px;
-    background:var(--bg-0);
-    display:flex;align-items:center;justify-content:center;
-  }
+  .brand .logo::after{content:"";position:absolute;inset:6px;border-radius:9px;background:var(--bg-0);}
   .brand .logo::before{
-    content:"K4";position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:14px;color:var(--accent);z-index:1;
-    text-shadow:0 0 8px var(--accent);
+    content:"K4";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:16px;color:var(--accent);z-index:1;text-shadow:0 0 10px var(--accent);
+    font-family:"Orbitron","Segoe UI",sans-serif;letter-spacing:.5px;
   }
-  .brand h1{font-size:18px;font-weight:700;letter-spacing:.3px}
+  .brand h1{font-size:18px;font-weight:700;letter-spacing:.4px;font-family:"Orbitron","Segoe UI",sans-serif}
   .brand h1 span{color:var(--accent)}
-  .brand p{font-size:12px;color:var(--muted);margin-top:2px}
+  .brand p{font-size:11.5px;color:var(--muted);margin-top:2px;letter-spacing:.3px}
+  .top-status{display:flex;gap:9px;flex-wrap:wrap}
   .status-pill{
     display:flex;align-items:center;gap:8px;
-    background:rgba(0,255,157,.08);
-    border:1px solid rgba(0,255,157,.35);
-    color:var(--accent-3);
-    padding:7px 14px;border-radius:999px;font-size:12px;font-weight:600;
+    padding:7px 14px;border-radius:999px;font-size:11.5px;font-weight:600;
+    font-family:"Orbitron","Segoe UI",sans-serif;letter-spacing:.5px;
   }
-  .status-pill .dot{
-    width:8px;height:8px;border-radius:50%;background:var(--accent-3);
-    box-shadow:0 0 10px var(--accent-3);
-    animation:pulse 1.6s infinite;
-  }
+  .status-pill.live{background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.35);color:var(--accent-3)}
+  .status-pill.threat{background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.35);color:var(--threat)}
+  .status-pill.info{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);color:var(--accent)}
+  .status-pill .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:pulse 1.6s infinite}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
 
   /* ===== Layout ===== */
-  main{padding:24px 28px 60px;max-width:1600px;margin:0 auto}
-  .grid-main{
-    display:grid;
-    grid-template-columns:1.35fr 1fr;
-    gap:20px;
-  }
+  main{padding:20px 22px 50px;max-width:1760px;margin:0 auto}
+  .grid-main{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
   @media(max-width:1080px){.grid-main{grid-template-columns:1fr}}
 
   .card{
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:18px;
-    padding:20px;
-    backdrop-filter:blur(10px);
-    box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+    border-radius:16px;
+    padding:18px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 12px 36px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05);
+    position:relative;
   }
-  .card-head{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    margin-bottom:14px;
+  .card::before{
+    content:"";position:absolute;top:0;left:14px;right:14px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.4;
   }
-  .card-head h2{
-    font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
-    color:#cfe6ff;display:flex;align-items:center;gap:10px;
-  }
+  .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .card-head h2{font-size:13.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#cfe6ff;display:flex;align-items:center;gap:10px;font-family:"Orbitron","Segoe UI",sans-serif}
   .card-head h2 .ic{
-    width:24px;height:24px;border-radius:7px;
+    width:26px;height:26px;border-radius:7px;
     background:linear-gradient(135deg,var(--accent-2),var(--accent));
-    display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;
+    box-shadow:0 0 12px rgba(124,77,255,.4);
   }
-  .tag{
-    font-size:11px;color:var(--muted);
-    border:1px solid var(--border);padding:4px 10px;border-radius:999px;
-    background:rgba(0,229,255,.05);
-  }
+  .tag{font-size:10.5px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:999px;background:rgba(0,229,255,.05);font-family:"Orbitron","Segoe UI",sans-serif;letter-spacing:.4px}
+  .tag.live{color:var(--accent-3);border-color:rgba(0,255,157,.3);background:rgba(0,255,157,.05)}
 
   /* ===== Dome Stage ===== */
   .dome-stage{
-    position:relative;
-    aspect-ratio:1/1;
-    width:100%;
+    position:relative;aspect-ratio:1/1;width:100%;
     background:
-      radial-gradient(circle at 50% 50%, rgba(0,229,255,.10), transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(0,229,255,.14), transparent 60%),
       repeating-linear-gradient(0deg,transparent 0 39px, var(--grid) 39px 40px),
       repeating-linear-gradient(90deg,transparent 0 39px, var(--grid) 39px 40px),
-      linear-gradient(180deg,#0c1426,#0a0f1e);
-    border-radius:14px;
-    overflow:hidden;
-    border:1px solid rgba(0,229,255,.18);
+      linear-gradient(180deg,#070d1c,#04070f);
+    border-radius:14px;overflow:hidden;border:1px solid rgba(0,229,255,.25);
   }
   .dome-stage svg{position:absolute;inset:0;width:100%;height:100%}
+  /* HUD corners */
+  .hud-corner{position:absolute;width:24px;height:24px;border:2px solid var(--accent);pointer-events:none;opacity:.7}
+  .hud-corner.tl{top:10px;left:10px;border-right:none;border-bottom:none}
+  .hud-corner.tr{top:10px;right:10px;border-left:none;border-bottom:none}
+  .hud-corner.bl{bottom:10px;left:10px;border-right:none;border-top:none}
+  .hud-corner.br{bottom:10px;right:10px;border-left:none;border-top:none}
   .legend{
-    position:absolute;left:12px;bottom:12px;
-    display:flex;flex-direction:column;gap:6px;
-    font-size:11px;color:var(--muted);
-    background:rgba(10,14,26,.7);
-    padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+    position:absolute;left:12px;bottom:12px;display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--muted);
+    background:rgba(4,6,13,.82);padding:10px 12px;border-radius:10px;border:1px solid var(--border);max-width:210px;
   }
   .legend .row{display:flex;align-items:center;gap:8px}
-  .legend .sw{width:12px;height:12px;border-radius:3px}
-  .stage-ctrl{
-    position:absolute;right:12px;top:12px;display:flex;gap:8px;flex-wrap:wrap;
-  }
+  .legend .sw{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .legend .sw.box{width:14px;height:9px;border-radius:1px}
+  .stage-ctrl{position:absolute;right:12px;top:12px;display:flex;gap:8px;flex-wrap:wrap}
   .btn{
     background:linear-gradient(135deg,var(--accent-2),var(--accent));
-    color:#fff;border:none;cursor:pointer;
-    padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;
-    box-shadow:0 4px 14px rgba(124,77,255,.4);
-    transition:transform .15s ease,box-shadow .15s ease;
+    color:#fff;border:none;cursor:pointer;padding:8px 14px;border-radius:10px;font-size:11.5px;font-weight:600;
+    box-shadow:0 4px 16px rgba(124,77,255,.45);transition:transform .15s ease,box-shadow .15s ease;
+    font-family:"Orbitron","Segoe UI",sans-serif;letter-spacing:.4px;
   }
-  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,77,255,.6)}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(124,77,255,.65)}
+  .btn:active{transform:translateY(0)}
   .btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--border);box-shadow:none}
   .btn.ghost:hover{background:rgba(255,255,255,.1)}
+  .btn.warn{background:linear-gradient(135deg,#ff8f00,#ffb74d);box-shadow:0 4px 16px rgba(255,183,77,.45)}
+  .btn.scan{background:linear-gradient(135deg,#00bfa5,#00e5ff);box-shadow:0 4px 16px rgba(0,229,255,.55);color:#04060d;font-weight:700}
 
   /* ===== Right Column ===== */
-  .col-right{display:flex;flex-direction:column;gap:20px}
-  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .col-right{display:flex;flex-direction:column;gap:16px}
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   .metric{
-    background:linear-gradient(180deg,rgba(20,29,51,.6),rgba(15,22,38,.6));
-    border:1px solid var(--border);
-    border-radius:12px;padding:14px;
-    position:relative;overflow:hidden;
+    background:linear-gradient(180deg,rgba(16,26,48,.7),rgba(10,16,32,.6));
+    border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden;
   }
-  .metric .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-  .metric .val{font-size:24px;font-weight:800;margin-top:4px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-3));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .metric .sub{font-size:11px;color:var(--muted);margin-top:2px}
-  .metric .bar{
-    height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden;
-  }
+  .metric .lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-family:"Orbitron",sans-serif}
+  .metric .val{font-size:22px;font-weight:800;margin-top:3px;background:linear-gradient(90deg,var(--accent),var(--accent-3));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Orbitron",sans-serif}
+  .metric.threat .val{background:linear-gradient(90deg,var(--threat),var(--warn));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .metric.warn .val{background:linear-gradient(90deg,var(--warn),#fff176);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .metric .sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .metric .bar{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:8px;overflow:hidden}
   .metric .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));transition:width .4s ease}
+  .metric.threat .bar > span{background:linear-gradient(90deg,var(--threat),var(--warn))}
+  .metric.warn .bar > span{background:linear-gradient(90deg,var(--warn),#fff176)}
 
   /* ===== Architecture flow ===== */
-  .arch{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;margin-top:8px;
-  }
+  .arch{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
   @media(max-width:720px){.arch{grid-template-columns:repeat(2,1fr)}}
   .node{
-    background:linear-gradient(180deg,rgba(20,29,51,.6),rgba(15,22,38,.5));
-    border:1px solid var(--border);
-    border-radius:12px;padding:12px;text-align:center;position:relative;
+    background:linear-gradient(180deg,rgba(16,26,48,.65),rgba(10,16,32,.55));
+    border:1px solid var(--border);border-radius:11px;padding:11px;text-align:center;position:relative;
+    transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease;
   }
-  .node .ic{
-    width:38px;height:38px;border-radius:10px;margin:0 auto 8px;
-    display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;
-    background:linear-gradient(135deg,var(--accent-2),var(--accent));
-  }
-  .node h3{font-size:13px;font-weight:700;margin-bottom:2px}
-  .node p{font-size:11px;color:var(--muted)}
+  .node .ic{width:34px;height:34px;border-radius:9px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;background:linear-gradient(135deg,var(--accent-2),var(--accent));transition:background .25s}
+  .node h3{font-size:11.5px;font-weight:700;margin-bottom:2px;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .node p{font-size:10px;color:var(--muted)}
   .node.live{border-color:rgba(0,255,157,.45);box-shadow:0 0 18px rgba(0,255,157,.18)}
   .node.live .ic{background:linear-gradient(135deg,var(--accent-3),var(--accent))}
+  .node.alert{border-color:rgba(255,82,82,.55);box-shadow:0 0 24px rgba(255,82,82,.32);transform:translateY(-1px)}
+  .node.alert .ic{background:linear-gradient(135deg,var(--threat),var(--warn))}
 
-  /* ===== Sensor table ===== */
-  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
-  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
-  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
-  td .chip{
-    display:inline-flex;align-items:center;gap:6px;
-    padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;
-  }
+  /* ===== Tables ===== */
+  table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+  th{color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;font-family:"Orbitron",sans-serif}
+  td .chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:600}
   .chip.ok{background:rgba(0,255,157,.12);color:var(--accent-3);border:1px solid rgba(0,255,157,.3)}
   .chip.warn{background:rgba(255,183,77,.12);color:var(--warn);border:1px solid rgba(255,183,77,.3)}
+  .chip.threat{background:rgba(255,82,82,.12);color:var(--threat);border:1px solid rgba(255,82,82,.35)}
+  .chip.info{background:rgba(0,229,255,.12);color:var(--accent);border:1px solid rgba(0,229,255,.3)}
   .chip.idle{background:rgba(126,141,181,.12);color:var(--muted);border:1px solid rgba(126,141,181,.3)}
   .chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
 
-  /* ===== Waterfall section ===== */
-  .waterfall-wrap{position:relative;height:340px;margin-top:8px}
-  .wf-summary{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;
-  }
-  .wf-stat{
-    background:rgba(0,229,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px;
-  }
-  .wf-stat .k{font-size:11px;color:var(--muted)}
-  .wf-stat .v{font-size:16px;font-weight:700;color:var(--accent);margin-top:2px}
+  /* ===== Charts ===== */
+  .chart-wrap{position:relative;height:300px;margin-top:6px}
+  .chart-wrap.tall{height:340px}
+  .chart-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:12px}
+  @media(max-width:720px){.chart-stats{grid-template-columns:repeat(2,1fr)}}
+  .chart-stat{background:rgba(0,229,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .chart-stat .k{font-size:10px;color:var(--muted);font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .chart-stat .v{font-size:15px;font-weight:700;color:var(--accent);margin-top:2px;font-family:"Orbitron",sans-serif}
+  .chart-stat.threat .v{color:var(--threat)}
+  .chart-stat.ok .v{color:var(--accent-3)}
+  .chart-stat.warn .v{color:var(--warn)}
 
   /* ===== Tech stack ===== */
-  .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+  .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
   @media(max-width:720px){.tech-grid{grid-template-columns:1fr}}
-  .tech{
-    background:linear-gradient(180deg,rgba(20,29,51,.55),rgba(15,22,38,.45));
-    border:1px solid var(--border);border-radius:12px;padding:14px;
-  }
-  .tech h4{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .tech{background:linear-gradient(180deg,rgba(16,26,48,.6),rgba(10,16,32,.5));border:1px solid var(--border);border-radius:12px;padding:14px}
+  .tech h4{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
   .tech h4 .em{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
-  .tech p{font-size:12px;color:var(--muted);line-height:1.6}
-  .tech ul{margin-top:8px;padding-left:14px;font-size:12px;color:#b8c6e8}
+  .tech p{font-size:11.5px;color:var(--muted);line-height:1.6}
+  .tech ul{margin-top:8px;padding-left:14px;font-size:11.5px;color:#b8c6e8}
   .tech li{margin-bottom:3px}
 
   /* ===== Event log ===== */
-  .log{
-    background:#080d18;border:1px solid var(--border);border-radius:10px;
-    padding:10px 12px;font-family:"JetBrains Mono","Consolas",monospace;font-size:11.5px;
-    height:180px;overflow-y:auto;
-    color:#9fd9ff;
-  }
+  .log{background:#03060e;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-family:"JetBrains Mono","Consolas",monospace;font-size:11.5px;height:200px;overflow-y:auto;color:#9fd9ff}
   .log .ln{padding:2px 0;border-bottom:1px dashed rgba(255,255,255,.04)}
   .log .t{color:var(--muted);margin-right:8px}
   .log .ok{color:var(--accent-3)}
   .log .warn{color:var(--warn)}
   .log .err{color:var(--danger)}
+  .log .threat{color:var(--threat)}
+  .log .info{color:var(--accent)}
   .log::-webkit-scrollbar{width:6px}
   .log::-webkit-scrollbar-thumb{background:rgba(0,229,255,.25);border-radius:4px}
 
   /* ===== Section title ===== */
-  .section-title{
-    display:flex;align-items:center;gap:12px;margin:30px 0 14px;
-  }
-  .section-title h2{font-size:18px;font-weight:700}
+  .section-title{display:flex;align-items:center;gap:12px;margin:24px 0 12px}
+  .section-title h2{font-size:16px;font-weight:700;font-family:"Orbitron",sans-serif;letter-spacing:.4px}
   .section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
-  footer{
-    text-align:center;color:var(--muted);font-size:12px;
-    padding:30px 20px;border-top:1px solid var(--border);margin-top:30px;
+  /* ===== Site link banner ===== */
+  .site-banner{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(124,77,255,.12),rgba(0,229,255,.10));
+    border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:16px;
+    position:relative;overflow:hidden;
   }
+  .site-banner::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,229,255,.06),transparent);animation:shimmer 4s linear infinite}
+  @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+  .site-banner .ic{font-size:24px;z-index:1}
+  .site-banner .txt{flex:1;min-width:200px;z-index:1}
+  .site-banner .txt b{color:var(--accent)}
+  .site-banner .txt p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .site-banner a{color:var(--accent);text-decoration:none;font-size:11.5px;font-weight:600;border:1px solid var(--border);padding:7px 12px;border-radius:8px;background:rgba(0,229,255,.06);z-index:1;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .site-banner a:hover{background:rgba(0,229,255,.14)}
+
+  /* ===== Object identity card panel ===== */
+  .scan-panel{
+    background:linear-gradient(180deg,rgba(16,26,48,.7),rgba(10,16,32,.6));
+    border:1px solid var(--border-2);border-radius:12px;padding:14px;
+  }
+  .scan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px;max-height:280px;overflow-y:auto}
+  .id-card{
+    background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.06));
+    border:1px solid var(--border-2);border-radius:10px;padding:10px;position:relative;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .id-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,229,255,.18)}
+  .id-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .id-card .oid{font-size:10px;color:var(--accent);font-family:"JetBrains Mono",monospace;font-weight:700;letter-spacing:.3px}
+  .id-card .otype{font-size:18px}
+  .id-card .name{font-size:12px;font-weight:700;color:#cfe6ff;margin-bottom:4px;font-family:"Orbitron",sans-serif}
+  .id-card .meta{font-size:10px;color:var(--muted);line-height:1.5}
+  .id-card .meta b{color:#b8c6e8}
+  .id-card .footer{margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+  .id-card.threat{border-color:rgba(255,82,82,.4);background:linear-gradient(135deg,rgba(255,82,82,.10),rgba(255,183,77,.06))}
+  .id-card.threat .oid{color:var(--threat)}
+
+  /* ===== Mini container visual in scan grid ===== */
+  .container-viz{
+    width:100%;height:38px;border-radius:4px;margin:6px 0;position:relative;
+    background:
+      repeating-linear-gradient(90deg,rgba(0,229,255,.18) 0 6px, transparent 6px 12px),
+      linear-gradient(180deg,#1a2440,#0a1020);
+    border:1px solid var(--border-2);
+  }
+  .container-viz.threat{
+    background:
+      repeating-linear-gradient(90deg,rgba(255,82,82,.22) 0 6px, transparent 6px 12px),
+      linear-gradient(180deg,#2a1414,#1a0a0a);
+    border-color:rgba(255,82,82,.4);
+  }
+  .container-viz::before{
+    content:"";position:absolute;left:2px;right:2px;top:2px;bottom:2px;
+    border:1px dashed rgba(255,255,255,.08);border-radius:2px;
+  }
+
+  footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 20px;border-top:1px solid var(--border);margin-top:24px}
   footer b{color:var(--accent)}
 
   /* scan animation */
-  @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
-  .scanline{
-    position:absolute;left:0;right:0;height:60%;
-    background:linear-gradient(180deg,transparent,rgba(0,229,255,.18),transparent);
-    animation:scan 3.5s linear infinite;pointer-events:none;
+  @keyframes scan{0%{transform:translateY(-110%)}100%{transform:translateY(110%)}}
+  .scanline{position:absolute;left:0;right:0;height:55%;background:linear-gradient(180deg,transparent,rgba(0,229,255,.18),transparent);animation:scan 3.8s linear infinite;pointer-events:none}
+
+  /* radar sweep */
+  @keyframes sweep{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+  /* flash alert */
+  @keyframes alertFlash{0%,100%{box-shadow:0 0 0 rgba(255,82,82,0)}50%{box-shadow:0 0 35px rgba(255,82,82,.45)}}
+  .alert-flash{animation:alertFlash .6s ease-out}
+
+  /* Glitch text */
+  @keyframes flicker{0%,100%{opacity:1}50%{opacity:.85}}
+  .flicker{animation:flicker 2s infinite}
+
+  /* Mode indicator */
+  .mode-indicator{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(0,229,255,.08);border:1px solid var(--border-2);
+    padding:6px 12px;border-radius:8px;font-size:11px;color:var(--accent);
+    font-family:"Orbitron",sans-serif;letter-spacing:.5px;
   }
+  .mode-indicator .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.6s infinite}
+
+  /* Scrollbar for scan grid */
+  .scan-grid::-webkit-scrollbar{width:5px}
+  .scan-grid::-webkit-scrollbar-thumb{background:rgba(0,229,255,.25);border-radius:3px}
+
+  /* ===== Coin Wallet ===== */
+  .wallet-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:900px){.wallet-grid{grid-template-columns:1fr}}
+  .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:900px){.tier-grid{grid-template-columns:1fr}}
+  .wallet-box{background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,183,77,.04));border:1px solid rgba(255,215,0,.30);border-radius:12px;padding:14px}
+  .wallet-box .wb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .wallet-box .wb-bal{font-size:28px;font-weight:800;color:#ffd700;font-family:"Orbitron",sans-serif;text-shadow:0 0 12px rgba(255,215,0,.4)}
+  .wallet-box .wb-rp{font-size:13px;color:var(--warn);margin-top:2px;font-family:"Orbitron",sans-serif}
+  .wallet-box .wb-progress{height:8px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:10px}
+  .wallet-box .wb-progress > span{display:block;height:100%;background:linear-gradient(90deg,#ffd700,#ffb74d);transition:width .4s ease}
+  .wallet-box .wb-ptxt{font-size:11px;color:var(--muted);margin-top:6px}
+  .pay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:8px;margin-top:10px}
+  .pay-method{background:rgba(10,16,32,.6);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;transition:all .2s;position:relative}
+  .pay-method:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 6px 18px rgba(0,229,255,.18)}
+  .pay-method .pm-logo{font-size:22px;margin-bottom:4px}
+  .pay-method .pm-name{font-size:11px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.3px}
+  .pay-method .pm-desc{font-size:10px;color:var(--muted);margin-top:2px}
+  .redeem-btn{width:100%;margin-top:8px;background:linear-gradient(135deg,#ff8f00,#ffd700);color:#04060d;border:none;padding:7px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:"Orbitron",sans-serif;letter-spacing:.4px;box-shadow:0 3px 10px rgba(255,215,0,.3);transition:transform .15s}
+  .redeem-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 5px 14px rgba(255,215,0,.5)}
+  .redeem-btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .merchant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px}
+  .merchant-card{background:rgba(10,16,32,.6);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+  .merchant-card .mc-name{font-size:12px;font-weight:700;color:#cfe6ff;margin-top:4px;font-family:"Orbitron",sans-serif}
+  .merchant-card .mc-desc{font-size:10px;color:var(--muted);margin-top:2px}
+  .qris-box{background:#fff;border-radius:8px;padding:6px;margin:6px auto;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+  .qris-box svg{width:100%;height:100%}
+  .tx-log{background:#03060e;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:"JetBrains Mono",monospace;font-size:11px;max-height:140px;overflow-y:auto;color:#ffe082}
+  .tx-log .ln{padding:2px 0;border-bottom:1px dashed rgba(255,255,255,.04)}
+  .tx-log .t{color:var(--muted);margin-right:6px}
+  .tx-log .ok{color:var(--accent-3)}
+  .tx-log .err{color:var(--danger)}
+  .tx-log .info{color:var(--accent)}
+  .tx-log::-webkit-scrollbar{width:5px}
+  .tx-log::-webkit-scrollbar-thumb{background:rgba(255,215,0,.25);border-radius:3px}
+
+  /* ===== Tier Table ===== */
+  tr.tier-best td{background:rgba(0,255,157,.10) !important;border-left:3px solid var(--accent-3)}
+  tr.tier-avail td{background:rgba(0,229,255,.06) !important}
+  tr.tier-locked td{opacity:.5}
+  tr.tier-locked td b{color:var(--muted) !important}
+  .tier-table-wrap{max-height:420px;overflow-y:auto;border:1px solid var(--border);border-radius:10px}
+  .tier-table-wrap table{font-size:11.5px}
+  .tier-table-wrap th{position:sticky;top:0;background:#0a1020;z-index:2}
+  .tier-table-wrap::-webkit-scrollbar{width:6px}
+  .tier-table-wrap::-webkit-scrollbar-thumb{background:rgba(255,215,0,.25);border-radius:4px}
+
+  /* ===== Payment input fields ===== */
+  .pay-input{
+    width:100%;background:rgba(4,6,13,.65);border:1px solid var(--border);border-radius:8px;
+    padding:7px 10px;font-size:11px;color:#cfe6ff;font-family:"JetBrains Mono",monospace;
+    margin-top:6px;outline:none;transition:border-color .2s,box-shadow .2s;
+  }
+  .pay-input:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(0,229,255,.25)}
+  .pay-input::placeholder{color:var(--muted);font-size:10.5px}
+
+  /* ===== Identity Verification Modal ===== */
+  .verify-modal{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(4,6,13,.85);backdrop-filter:blur(8px);
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .verify-modal.show{display:flex}
+  .verify-card{
+    background:linear-gradient(180deg,#0f1626,#070b16);
+    border:1px solid var(--border-2);border-radius:18px;
+    max-width:400px;width:100%;padding:22px;position:relative;
+    box-shadow:0 20px 60px rgba(0,229,255,.25),inset 0 1px 0 rgba(255,255,255,.05);
+    animation:slideUp .35s ease-out;
+  }
+  @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .verify-card .vc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .verify-card .vc-title{font-size:14px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+  .verify-card .vc-close{background:rgba(255,82,82,.15);border:1px solid rgba(255,82,82,.35);color:var(--threat);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .verify-id{background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(124,77,255,.06));border:1px solid var(--border-2);border-radius:12px;padding:14px;margin-bottom:14px}
+  .verify-id .vi-row{display:flex;gap:12px;align-items:center}
+  .verify-id .vi-photo{width:72px;height:72px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,#1a2440,#0a1020);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--accent);font-weight:700;font-family:"Orbitron",sans-serif;position:relative;overflow:hidden}
+  .verify-id .vi-photo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,229,255,.08) 3px 4px)}
+  .verify-id .vi-info{flex:1;font-size:12px}
+  .verify-id .vi-name{font-size:15px;font-weight:700;color:#cfe6ff;font-family:"Orbitron",sans-serif;margin-bottom:3px}
+  .verify-id .vi-detail{color:var(--muted);line-height:1.7}
+  .verify-id .vi-detail b{color:#b8c6e8}
+  .verify-status{display:flex;align-items:center;gap:8px;background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.3);padding:9px 12px;border-radius:10px;color:var(--accent-3);font-size:12px;font-weight:600;margin-bottom:14px}
+  .verify-status .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-3);box-shadow:0 0 8px var(--accent-3);animation:pulse 1.6s infinite}
+  .verify-account{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12px;line-height:1.7}
+  .verify-account b{color:#ffe082}
+  .verify-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
+  .verify-actions .btn-cancel{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);padding:10px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:600;font-family:"Orbitron",sans-serif}
+  .verify-actions .btn-cancel:hover{background:rgba(255,255,255,.1)}
+  .verify-actions .btn-confirm{background:linear-gradient(135deg,var(--accent-3),var(--accent));color:#04060d;border:none;padding:10px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;font-family:"Orbitron",sans-serif;box-shadow:0 4px 14px rgba(0,255,157,.35)}
+  .verify-actions .btn-confirm:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,255,157,.5)}
+
+  /* ===== Camera Scan Barcode ===== */
+  .cam-section{background:linear-gradient(135deg,rgba(124,77,255,.10),rgba(0,229,255,.06));border:1px solid var(--border-2);border-radius:14px;padding:14px;margin-top:12px}
+  .cam-viewport{background:#000;border:2px solid var(--accent);border-radius:12px;aspect-ratio:4/3;width:100%;max-width:280px;margin:10px auto;position:relative;overflow:hidden}
+  .cam-viewport::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,229,255,.06) 3px 4px),radial-gradient(circle at 50% 50%,rgba(0,229,255,.10),transparent 60%)}
+  .cam-target{position:absolute;left:10%;right:10%;height:2px;background:var(--accent-3);box-shadow:0 0 12px var(--accent-3);animation:scanLine 2s ease-in-out infinite}
+  @keyframes scanLine{0%,100%{top:30%}50%{top:70%}}
+  .cam-corners{position:absolute;inset:18%}
+  .cam-corners::before,.cam-corners::after{content:"";position:absolute;width:24px;height:24px;border:3px solid var(--accent-3)}
+  .cam-corners::before{top:0;left:0;border-right:none;border-bottom:none}
+  .cam-corners::after{bottom:0;right:0;border-left:none;border-top:none}
+  .cam-status{position:absolute;bottom:8px;left:8px;right:8px;text-align:center;font-size:10.5px;color:var(--accent-3);font-family:"Orbitron",sans-serif;letter-spacing:.3px;text-shadow:0 0 6px rgba(0,255,157,.5)}
+  .cam-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .cam-cart{background:rgba(4,6,13,.6);border:1px solid var(--border);border-radius:10px;padding:10px;margin-top:10px;font-size:11.5px;max-height:180px;overflow-y:auto}
+  .cam-cart .ci{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(255,255,255,.05)}
+  .cam-cart .ci:last-child{border-bottom:none}
+  .cam-cart .ci .pn{color:#cfe6ff}
+  .cam-cart .ci .pp{color:var(--accent-3);font-weight:600}
+  .cam-cart .total{display:flex;justify-content:space-between;margin-top:8px;padding-top:6px;border-top:1px solid var(--border);font-weight:700;color:#ffd700;font-family:"Orbitron",sans-serif}
+  .cam-cart::-webkit-scrollbar{width:5px}
+  .cam-cart::-webkit-scrollbar-thumb{background:rgba(0,229,255,.25);border-radius:3px}
+
+  /* ===== Supermarket selector ===== */
+  .market-select{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+  .market-opt{background:rgba(10,16,32,.6);border:1px solid var(--border);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;color:var(--muted);font-family:"Orbitron",sans-serif;transition:all .2s}
+  .market-opt:hover{border-color:var(--accent);color:#cfe6ff}
+  .market-opt.active{background:rgba(0,229,255,.12);border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(0,229,255,.2)}
+
+  /* ===== Bottom Navigation (App-like) ===== */
+  .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:90;background:rgba(4,6,13,.94);backdrop-filter:blur(14px);border-top:1px solid var(--border);border-left:1px solid var(--border);border-right:1px solid var(--border);border-radius:18px 18px 0 0;display:flex;justify-content:space-around;align-items:center;padding:8px 6px;width:100%;max-width:540px}
+  .bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:10px;font-family:"Orbitron",sans-serif;letter-spacing:.3px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:color .2s,background .2s;text-decoration:none;background:none;border:none}
+  .bn-item:hover{color:#cfe6ff;background:rgba(255,255,255,.04)}
+  .bn-item.active{color:var(--accent)}
+  .bn-item .ic{font-size:18px}
+  body{padding-bottom:72px}
 </style>
 </head>
 <body>
 
-<header class="top">
+<header class="top" id="top">
   <div class="brand">
     <div class="logo"></div>
     <div>
-      <h1>Kuatro<span>·</span>Sensor Dome System</h1>
-      <p>Sistem Simulasi Kubah Deteksi Multi-Sensor — Gateway · Cloud · Dashboard</p>
+      <h1>Kubah Simulasi <span>·</span> Menghalau Serangan Masuk</h1>
+      <p>Mode Penelusuran Benda · Kuatro Sensor Defense System · Cloud Data Real-time</p>
     </div>
   </div>
-  <div class="status-pill"><span class="dot"></span> SISTEM AKTIF &amp; BERFUNGSI PENUH</div>
+  <div class="top-status">
+    <div class="status-pill info" id="topMode"><span class="dot"></span> <span id="topModeTxt">MODE: STANDBY</span></div>
+    <div class="status-pill threat" id="topThreat"><span class="dot"></span> <span id="topThreatTxt">DEFCON: NORMAL</span></div>
+    <div class="status-pill live"><span class="dot"></span> SISTEM ONLINE</div>
+  </div>
 </header>
 
 <main>
+
+  <!-- Site link banner -->
+  <div class="site-banner">
+    <div class="ic">🛡️</div>
+    <div class="txt">
+      <b>Situs Web Kubah Simulasi:</b> indonesiamajukaribmu.github.io/kuba-simutret/
+      <p>Sistem pertahanan kubah simulasi — Mode Penelusuran Benda mendeteksi benda apa saja yang memasuki fasilitas mata kubah. Tampilan modern canggih, sinkron dengan cloud data.</p>
+    </div>
+    <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener">Buka Website ↗</a>
+  </div>
 
   <div class="grid-main">
 
     <!-- ===== Dome Simulation ===== -->
     <section class="card">
       <div class="card-head">
-        <h2><span class="ic">◉</span> Visualisasi Kubah Simulasi</h2>
-        <span class="tag">Real-time Detection</span>
+        <h2><span class="ic">🛡</span> Visualisasi Kubah Pertahanan — Fasilitas Mata</h2>
+        <span class="tag live" id="stageTag">STANDBY</span>
       </div>
 
       <div class="dome-stage" id="stage">
         <div class="scanline"></div>
+        <div class="hud-corner tl"></div>
+        <div class="hud-corner tr"></div>
+        <div class="hud-corner bl"></div>
+        <div class="hud-corner br"></div>
+
         <svg viewBox="0 0 400 400" id="dome-svg">
           <defs>
             <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.5"/>
-              <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.12"/>
+              <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6"/>
+              <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.15"/>
               <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
             </radialGradient>
             <linearGradient id="domeFill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#7c4dff" stop-opacity="0.35"/>
               <stop offset="100%" stop-color="#0a0e1a" stop-opacity="0.05"/>
             </linearGradient>
+            <radialGradient id="shieldGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="60%" stop-color="#00e5ff" stop-opacity="0"/>
+              <stop offset="95%" stop-color="#00e5ff" stop-opacity="0.38"/>
+              <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="eyeGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+            </radialGradient>
             <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glowRed"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glowCyan"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glowGold"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
           <!-- Dome outline -->
-          <path d="M60 220 Q200 -40 340 220 Z" fill="url(#domeFill)" stroke="rgba(124,77,255,.55)" stroke-width="1.5"/>
+          <path d="M60 220 Q200 -40 340 220 Z" fill="url(#domeFill)" stroke="rgba(124,77,255,.6)" stroke-width="1.5"/>
           <!-- Dome base ellipse -->
-          <ellipse cx="200" cy="220" rx="140" ry="22" fill="none" stroke="rgba(0,229,255,.35)" stroke-width="1.2"/>
+          <ellipse cx="200" cy="220" rx="140" ry="22" fill="none" stroke="rgba(0,229,255,.4)" stroke-width="1.2"/>
           <!-- Concentric detection zones -->
-          <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(0,229,255,.08)" stroke-dasharray="4 6"/>
-          <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,229,255,.12)" stroke-dasharray="4 6"/>
-          <circle cx="200" cy="200" r="50" fill="url(#centerGrad)" stroke="rgba(0,229,255,.5)" stroke-width="1.2"/>
+          <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(0,229,255,.10)" stroke-dasharray="4 6"/>
+          <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,229,255,.14)" stroke-dasharray="4 6"/>
+          <!-- Shield ring -->
+          <circle cx="200" cy="200" r="160" fill="url(#shieldGrad)" stroke="rgba(0,229,255,.5)" stroke-width="1.4" stroke-dasharray="2 8" id="shieldRing"/>
+          <!-- Eye / facility center -->
+          <ellipse cx="200" cy="200" rx="32" ry="18" fill="url(#eyeGrad)" stroke="rgba(0,229,255,.65)" stroke-width="1.2"/>
+          <circle cx="200" cy="200" r="9" fill="#04060d" stroke="#00e5ff" stroke-width="1.5"/>
+          <circle cx="200" cy="200" r="4" fill="#00e5ff" filter="url(#glowCyan)"/>
+          <circle cx="202" cy="198" r="1.5" fill="#fff"/>
+          <text x="200" y="240" text-anchor="middle" fill="#7e8db5" font-size="8" font-family="Orbitron">FASILITAS MATA</text>
 
-          <!-- Center point marker -->
-          <circle cx="200" cy="200" r="4" fill="#00e5ff" filter="url(#glow)"/>
-          <text x="200" y="186" text-anchor="middle" fill="#7e8db5" font-size="9">PUSAT AREA</text>
-
-          <!-- Sensor beams (animated) -->
-          <line id="beam1" x1="200" y1="200" x2="70"  y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
-          <line id="beam2" x1="200" y1="200" x2="200" y2="70"  stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
-          <line id="beam3" x1="200" y1="200" x2="330" y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
-          <line id="beam4" x1="200" y1="200" x2="200" y2="330" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.35"/>
-
-          <!-- Sensors (Kuatro = 4) -->
-          <g id="sensor1"><circle cx="70" cy="200" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="70" cy="200" r="4" fill="#00ff9d"/><text x="70" y="225" text-anchor="middle" fill="#9fd9ff" font-size="9">S1·PIR</text></g>
-          <g id="sensor2"><circle cx="200" cy="70" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="70" r="4" fill="#00ff9d"/><text x="200" y="60" text-anchor="middle" fill="#9fd9ff" font-size="9">S2·MMW</text></g>
-          <g id="sensor3"><circle cx="330" cy="200" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="330" cy="200" r="4" fill="#00ff9d"/><text x="330" y="225" text-anchor="middle" fill="#9fd9ff" font-size="9">S3·LIDAR</text></g>
-          <g id="sensor4"><circle cx="200" cy="330" r="12" fill="#0f1626" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="330" r="4" fill="#00ff9d"/><text x="200" y="355" text-anchor="middle" fill="#9fd9ff" font-size="9">S4·CAM</text></g>
-
-          <!-- Moving object (intruder) -->
-          <g id="intruder" style="transition:none">
-            <circle cx="380" cy="380" r="9" fill="#ff5252" stroke="#fff" stroke-width="1.5" filter="url(#glow)"/>
-            <circle cx="380" cy="380" r="16" fill="none" stroke="#ff5252" stroke-opacity="0.4"/>
-            <text x="380" y="380" dy="22" text-anchor="middle" fill="#ff8a80" font-size="9">OBJEK</text>
+          <!-- Radar sweep -->
+          <g style="transform-origin:200px 200px;animation:sweep 4s linear infinite">
+            <path d="M200 200 L200 60 A140 140 0 0 1 330 200 Z" fill="rgba(0,229,255,.10)"/>
+            <line x1="200" y1="200" x2="200" y2="60" stroke="rgba(0,229,255,.55)" stroke-width="1"/>
           </g>
+
+          <!-- Sensor beams (5 directions) -->
+          <line id="beam1" x1="200" y1="200" x2="70"  y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.25"/>
+          <line id="beam2" x1="200" y1="200" x2="200" y2="70"  stroke="#00ff9d" stroke-width="1" stroke-opacity="0.25"/>
+          <line id="beam3" x1="200" y1="200" x2="330" y2="200" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.25"/>
+          <line id="beam4" x1="200" y1="200" x2="200" y2="330" stroke="#00ff9d" stroke-width="1" stroke-opacity="0.25"/>
+          <line id="beam5" x1="200" y1="200" x2="300" y2="100" stroke="#ffd700" stroke-width="1" stroke-opacity="0.30"/>
+
+          <!-- Sensors (Kuatro + S5·COIN = 5) -->
+          <g id="sensor1"><circle cx="70" cy="200" r="14" fill="#04060d" stroke="#00ff9d" stroke-width="2"/><circle cx="70" cy="200" r="6" fill="#00ff9d" filter="url(#glow)"/><text x="70" y="228" text-anchor="middle" fill="#9fd9ff" font-size="9" font-family="Orbitron">S1·PIR</text></g>
+          <g id="sensor2"><circle cx="200" cy="70" r="14" fill="#04060d" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="70" r="6" fill="#00ff9d" filter="url(#glow)"/><text x="200" y="56" text-anchor="middle" fill="#9fd9ff" font-size="9" font-family="Orbitron">S2·MMW</text></g>
+          <g id="sensor3"><circle cx="330" cy="200" r="14" fill="#04060d" stroke="#00ff9d" stroke-width="2"/><circle cx="330" cy="200" r="6" fill="#00ff9d" filter="url(#glow)"/><text x="330" y="228" text-anchor="middle" fill="#9fd9ff" font-size="9" font-family="Orbitron">S3·LIDAR</text></g>
+          <g id="sensor4"><circle cx="200" cy="330" r="14" fill="#04060d" stroke="#00ff9d" stroke-width="2"/><circle cx="200" cy="330" r="6" fill="#00ff9d" filter="url(#glow)"/><text x="200" y="358" text-anchor="middle" fill="#9fd9ff" font-size="9" font-family="Orbitron">S4·CAM</text></g>
+          <g id="sensor5"><circle cx="300" cy="100" r="15" fill="#04060d" stroke="#ffd700" stroke-width="2.5"/><circle cx="300" cy="100" r="7" fill="#ffd700" filter="url(#glowGold)"/><text x="300" y="84" text-anchor="middle" fill="#ffe082" font-size="9" font-family="Orbitron" font-weight="700">S5·COIN</text></g>
+
+          <!-- Layers -->
+          <g id="attacksLayer"></g>
+          <g id="lasersLayer"></g>
+          <g id="fxLayer"></g>
+          <g id="labelsLayer"></g>
         </svg>
 
         <div class="stage-ctrl">
-          <button class="btn" id="btnStart">▶ Jalankan Simulasi</button>
+          <button class="btn scan" id="btnStart">▶ Mode Penelusuran Benda</button>
+          <button class="btn warn" id="btnPause">⏸ Jeda</button>
           <button class="btn ghost" id="btnReset">↺ Reset</button>
         </div>
 
         <div class="legend">
-          <div class="row"><span class="sw" style="background:#00ff9d"></span> Sensor aktif (Kuatro × 4)</div>
-          <div class="row"><span class="sw" style="background:#ff5252"></span> Objek pendeteksian</div>
-          <div class="row"><span class="sw" style="background:#00e5ff"></span> Zona pusat terlindungi</div>
-          <div class="row"><span class="sw" style="background:#7c4dff"></span> Kubah (Dome)</div>
+          <div class="row"><span class="sw" style="background:#00ff9d"></span> Kuatro Sensor aktif (×4)</div>
+          <div class="row"><span class="sw box" style="background:#ff5252"></span> Benda/Container masuk</div>
+          <div class="row"><span class="sw" style="background:#ffb74d"></span> Interceptor pertahanan</div>
+          <div class="row"><span class="sw" style="background:#00e5ff"></span> Shield + Fasilitas Mata</div>
+          <div class="row"><span class="sw" style="background:#ffd700"></span> S5·COIN reward sensor</div>
         </div>
       </div>
 
-      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.65">
-        Sistem <b style="color:var(--accent)">Kuatro Sensor Dome</b> memanfaatkan empat sensor (PIR, MMW radar, LIDAR, dan Camera IoT)
-        yang dipasang mengelilingi kubah. Begitu objek memasuki <b>pusat area</b>, sinyal deteksi dari sensor
-        diteruskan melalui <b>jaringan gateway</b> ke <b>cloud server</b>, lalu ditampilkan pada <b>dashboard pengguna</b>
-        secara real-time. Teknologi pendukung mencakup <b>sensor Android</b> (akselerometer/gyro) dan
-        <b>penyimpanan cloud data</b> untuk arsip kejadian.
+      <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.65">
+        <b style="color:var(--accent)">Mode Penelusuran Benda</b>: kubah mendeteksi <b>benda apa saja</b> (container, tools, drone, paket)
+        yang memasuki <b>fasilitas mata</b> di pusat area. Saat benda melewati zona sensor Kuatro, identitasnya dipindai
+        (ID, tipe, dimensi, tingkat ancaman) dan ditampilkan pada panel <b>Identitas Benda Terdeteksi</b>.
+        Serangan berbahaya dihalau oleh interceptor via cascade Sensor → Gateway → Cloud → Dashboard.
       </p>
     </section>
 
-    <!-- ===== Right column: Dashboard + Metrics + Log ===== -->
+    <!-- ===== Right column ===== -->
     <div class="col-right">
 
       <section class="card">
         <div class="card-head">
-          <h2><span class="ic">▦</span> Dashboard Pengguna</h2>
-          <span class="tag">Live Metrics</span>
+          <h2><span class="ic">📊</span> Dashboard Pertahanan</h2>
+          <span class="tag live">Cloud-synced</span>
         </div>
 
         <div class="metric-grid">
           <div class="metric">
             <div class="lbl">Status Kubah</div>
             <div class="val" id="m-status">ARMED</div>
-            <div class="sub">Sistem pengaman aktif</div>
+            <div class="sub">Sistem pertahanan aktif</div>
             <div class="bar"><span style="width:96%"></span></div>
           </div>
-          <div class="metric">
-            <div class="lbl">Objek Terdeteksi</div>
+          <div class="metric warn">
+            <div class="lbl">Benda Dipindai</div>
             <div class="val" id="m-det">0</div>
-            <div class="sub">dalam 60 detik terakhir</div>
+            <div class="sub">total benda masuk fasilitas</div>
             <div class="bar"><span id="m-det-bar" style="width:0%"></span></div>
           </div>
           <div class="metric">
-            <div class="lbl">Latensi Gateway</div>
-            <div class="val" id="m-lat">— ms</div>
-            <div class="sub">RTT ke cloud server</div>
-            <div class="bar"><span id="m-lat-bar" style="width:0%"></span></div>
+            <div class="lbl">Dihalau</div>
+            <div class="val" id="m-stop">0</div>
+            <div class="sub">benda berbahaya dinetralisir</div>
+            <div class="bar"><span id="m-stop-bar" style="width:0%"></span></div>
           </div>
-          <div class="metric">
-            <div class="lbl">Cloud Storage</div>
-            <div class="val" id="m-store">0%</div>
-            <div class="sub">kapasitas data terpakai</div>
-            <div class="bar"><span id="m-store-bar" style="width:0%"></span></div>
+          <div class="metric threat">
+            <div class="lbl">Tembus Shield</div>
+            <div class="val" id="m-breach">0</div>
+            <div class="sub">benda mencapai fasilitas mata</div>
+            <div class="bar"><span id="m-breach-bar" style="width:0%"></span></div>
+          </div>
+          <div class="metric" style="grid-column:span 2;border-color:rgba(255,215,0,.35)">
+            <div class="lbl">🪙 Coin Reward (S5·COIN)</div>
+            <div class="val" id="m-coin" style="background:linear-gradient(90deg,#ffd700,#ffb74d);-webkit-background-clip:text;background-clip:text;color:transparent">0 🪙</div>
+            <div class="sub">20 coin = Rp 10.000 · siap ditukarkan</div>
+            <div class="bar"><span id="m-coin-bar" style="width:0%;background:linear-gradient(90deg,#ffd700,#ffb74d)"></span></div>
           </div>
         </div>
 
-        <div class="arch" style="margin-top:16px">
-          <div class="node live" id="n-sensor">
-            <div class="ic">◉</div><h3>Kuatro Sensor</h3><p>4 × IoT sensor aktif</p>
-          </div>
-          <div class="node live" id="n-gateway">
-            <div class="ic">⇄</div><h3>Gateway</h3><p>Wi-Fi / LoRa · MQTT</p>
-          </div>
-          <div class="node live" id="n-cloud">
-            <div class="ic">☁</div><h3>Cloud Server</h3><p>Storage &amp; analitik</p>
-          </div>
-          <div class="node live" id="n-dash">
-            <div class="ic">▤</div><h3>User Dashboard</h3><p>Web &amp; Android</p>
-          </div>
+        <div class="arch">
+          <div class="node live" id="n-sensor"><div class="ic">◉</div><h3>Sensor</h3><p>5 × IoT</p></div>
+          <div class="node live" id="n-gateway"><div class="ic">⇄</div><h3>Gateway</h3><p>MQTT/TLS</p></div>
+          <div class="node live" id="n-cloud"><div class="ic">☁</div><h3>Cloud</h3><p>Storage</p></div>
+          <div class="node live" id="n-dash"><div class="ic">▤</div><h3>Dash</h3><p>Live</p></div>
         </div>
       </section>
 
       <section class="card">
         <div class="card-head">
-          <h2><span class="ic">≡</span> Event Log Sistem</h2>
-          <span class="tag">Sinkron cloud</span>
+          <h2><span class="ic">📡</span> Event Log Penelusuran</h2>
+          <span class="tag">Cloud archive</span>
         </div>
         <div class="log" id="log">
-          <div class="ln"><span class="t">[--:--:--]</span> Menunggu simulasi...</div>
+          <div class="ln"><span class="t">[--:--:--]</span> Sistem menunggu Mode Penelusuran diaktifkan...</div>
         </div>
       </section>
 
     </div>
   </div>
 
+  <!-- ===== Identity Cards Panel ===== -->
+  <div class="section-title"><h2>Identitas Benda Terdeteksi (Container Tools Visual)</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic">🧱</span> Hasil Pemindaian Benda di Fasilitas Mata</h2>
+      <span class="tag" id="scanTag">0 benda dipindai</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:6px">
+      Setiap benda yang memasuki zona pemindaian pusat mendapat <b style="color:var(--accent)">identitas digital</b>:
+      ID unik, tipe benda, dimensi, asal arah, dan tingkat ancaman. Visual container mengikuti bentuk fisik benda
+      yang ditangkap sensor camera IoT.
+    </p>
+    <div class="scan-grid" id="scanGrid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:24px">
+        Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Mode Penelusuran Benda</b> untuk memulai pemindaian.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Coin Wallet & Pencairan ===== -->
+  <div class="section-title" id="walletSec"><h2>🪙 Coin Reward Wallet &amp; Pencairan</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#ff8f00,#ffd700)">🪙</span> S5·COIN — Reward Sensor</h2>
+      <span class="tag" id="walletTag" style="color:#ffd700;border-color:rgba(255,215,0,.3)">Saldo: 0 coin</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:6px">
+      Sensor <b style="color:#ffd700">S5·COIN</b> mengumpulkan coin otomatis setiap benda/serangan masuk:
+      <b style="color:var(--accent-3)">benda terdeteksi = +1 coin</b>, <b style="color:var(--warn)">serangan dihalau = +2 bonus coin</b>.
+      Sistem pencairan menggunakan <b style="color:#ffd700">34 tier multi-currency</b> (Rp / $ / RM / SR / ¥ / ₹) —
+      saldo coin otomatis dicairkan pada <b>tier dengan nilai tertinggi</b> yang tercapai.
+      Pencairan via <b>e-wallet (Dana, Gopay)</b>, <b>Bank Indonesia (BSI, BNI, BRI, Danamon)</b>, atau
+      <b>scan QRIS di Indomaret, Alfamidi, Alfamart</b>.
+    </p>
+
+    <div class="wallet-grid">
+      <!-- Wallet balance -->
+      <div class="wallet-box">
+        <div class="wb-top">
+          <div>
+            <div style="font-size:11px;color:var(--muted);font-family:'Orbitron',sans-serif">SALDO COIN</div>
+            <div class="wb-bal" id="walletBalance">0 🪙</div>
+            <div class="wb-rp" id="walletRP">Rp 0</div>
+          </div>
+          <div style="font-size:34px">💰</div>
+        </div>
+        <div class="wb-progress"><span id="walletProgress" style="width:0%"></span></div>
+        <div class="wb-ptxt">Progress menuju 20 coin: <span id="walletProgressTxt">0 / 20 coin</span></div>
+        <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">
+          <div>🪙 Total terkumpul: <b id="walletTotal" style="color:#ffd700">0</b> coin</div>
+          <div>💸 Total dicairkan: <b id="walletCashout" style="color:var(--warn)">Rp 0</b></div>
+          <div>📊 Rate: <b style="color:#cfe6ff">+1 coin/deteksi</b> · <b style="color:var(--warn)">+2 coin/intercept</b></div>
+          <div>💱 Tier: <b style="color:#ffd700">34 multi-currency</b> (Rp/$/RM/SR/¥/₹)</div>
+        </div>
+      </div>
+
+      <!-- E-wallet & Bank withdrawal -->
+      <div class="wallet-box" style="background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.04));border-color:var(--border-2)">
+        <div class="wb-top">
+          <div style="font-size:12px;font-weight:700;color:#cfe6ff;font-family:'Orbitron',sans-serif">PENCAIRAN KE AKUN</div>
+          <div style="font-size:11px;color:var(--muted)">Auto-pick best tier · Identity verified</div>
+        </div>
+        <p style="font-size:10.5px;color:var(--muted);margin:6px 0 8px;line-height:1.5">
+          📱 <b style="color:var(--accent)">DANA &amp; GoPay</b>: isi <b>No. Telp</b> (08xxx) · 
+          🏦 <b style="color:#ffe082)">BSI/BNI/BRI/Danamon</b>: isi <b>No. Rekening</b>.
+          Setiap pencairan diverifikasi via identitas sebelum diproses.
+        </p>
+        <div class="pay-grid">
+          <div class="pay-method">
+            <div class="pm-logo">💳</div>
+            <div class="pm-name">DANA</div>
+            <div class="pm-desc">e-wallet · No. Telp</div>
+            <input type="tel" class="pay-input" id="phone-DANA" placeholder="08xxxxxxxxxx" maxlength="14" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('DANA')">Cairkan</button>
+          </div>
+          <div class="pay-method">
+            <div class="pm-logo">📱</div>
+            <div class="pm-name">GoPay</div>
+            <div class="pm-desc">e-wallet · No. Telp</div>
+            <input type="tel" class="pay-input" id="phone-GoPay" placeholder="08xxxxxxxxxx" maxlength="14" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('GoPay')">Cairkan</button>
+          </div>
+          <div class="pay-method">
+            <div class="pm-logo">🏦</div>
+            <div class="pm-name">BSI</div>
+            <div class="pm-desc">Bank Syariah · No. Rek</div>
+            <input type="text" class="pay-input" id="rek-BSI" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('BSI')">Cairkan</button>
+          </div>
+          <div class="pay-method">
+            <div class="pm-logo">🏛️</div>
+            <div class="pm-name">BNI</div>
+            <div class="pm-desc">Bank Negara · No. Rek</div>
+            <input type="text" class="pay-input" id="rek-BNI" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('BNI')">Cairkan</button>
+          </div>
+          <div class="pay-method">
+            <div class="pm-logo">🏦</div>
+            <div class="pm-name">BRI</div>
+            <div class="pm-desc">Bank Rakyat · No. Rek</div>
+            <input type="text" class="pay-input" id="rek-BRI" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('BRI')">Cairkan</button>
+          </div>
+          <div class="pay-method">
+            <div class="pm-logo">🏦</div>
+            <div class="pm-name">Danamon</div>
+            <div class="pm-desc">Bank Danamon · No. Rek</div>
+            <input type="text" class="pay-input" id="rek-Danamon" placeholder="10 digit rekening" maxlength="12" oninput="updateRedeemButtons()">
+            <button class="redeem-btn" disabled onclick="startRedeem('Danamon')">Cairkan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merchant QRIS section -->
+    <div style="margin-top:14px;background:linear-gradient(135deg,rgba(0,255,157,.06),rgba(0,229,255,.04));border:1px solid var(--border-2);border-radius:12px;padding:14px" id="merchantSec">
+      <div class="wb-top" style="margin-bottom:6px">
+        <div style="font-size:12px;font-weight:700;color:#cfe6ff;font-family:'Orbitron',sans-serif">BAYAR BARANG VIA QRIS MERCHANT</div>
+        <div style="font-size:11px;color:var(--muted)">Scan barcode → komputer proses pembayaran</div>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-bottom:8px">
+        Tukarkan coin langsung untuk membeli barang di merchant: <b>Indomaret</b>, <b>Alfamidi</b>, <b>Alfamart</b>.
+        Cukup scan <b style="color:var(--accent)">barcode QRIS</b> di bawah — sistem komputer akan memproses pembayaran otomatis dari saldo coin.
+      </p>
+      <div class="merchant-grid">
+        <div class="merchant-card">
+          <div class="qris-box" id="qris-Indomaret"></div>
+          <div class="mc-name">Indomaret</div>
+          <div class="mc-desc">Convenience store</div>
+          <button class="redeem-btn" disabled onclick="startRedeem('Indomaret')">Scan &amp; Bayar</button>
+        </div>
+        <div class="merchant-card">
+          <div class="qris-box" id="qris-Alfamidi"></div>
+          <div class="mc-name">Alfamidi</div>
+          <div class="mc-desc">Supermarket</div>
+          <button class="redeem-btn" disabled onclick="startRedeem('Alfamidi')">Scan &amp; Bayar</button>
+        </div>
+        <div class="merchant-card">
+          <div class="qris-box" id="qris-Alfamart"></div>
+          <div class="mc-name">Alfamart</div>
+          <div class="mc-desc">Convenience store</div>
+          <button class="redeem-btn" disabled onclick="startRedeem('Alfamart')">Scan &amp; Bayar</button>
+        </div>
+      </div>
+
+      <!-- Camera Scan Barcode Section -->
+      <div class="cam-section">
+        <div class="wb-top" style="margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#cfe6ff;font-family:'Orbitron',sans-serif">📷 CAMERA SCAN BARCODE PRODUK</div>
+          <div style="font-size:11px;color:var(--muted)">Pilih lokasi → scan produk → bayar coin</div>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:8px">
+          Pilih <b style="color:var(--accent)">lokasi supermarket</b> tempat Anda belanja, lalu scan barcode produk satu per satu.
+          Keranjang akan terisi otomatis dan total dibayar dari saldo coin S5·COIN.
+        </p>
+        <!-- Supermarket location selector -->
+        <div style="font-size:11px;color:var(--muted);margin-bottom:5px;font-family:'Orbitron',sans-serif">📍 PILIH LOKASI SUPERMARKET:</div>
+        <div class="market-select">
+          <div class="market-opt" data-market="Indomaret" onclick="selectMarket('Indomaret')">🏪 Indomaret</div>
+          <div class="market-opt" data-market="Alfamart" onclick="selectMarket('Alfamart')">🏪 Alfamart</div>
+          <div class="market-opt" data-market="Alfamidi" onclick="selectMarket('Alfamidi')">🏬 Alfamidi</div>
+        </div>
+        <!-- Camera viewport -->
+        <div class="cam-viewport">
+          <div class="cam-corners"></div>
+          <div class="cam-target"></div>
+          <div class="cam-status" id="camStatus">📍 Pilih lokasi supermarket dulu</div>
+        </div>
+        <!-- Camera controls -->
+        <div class="cam-ctrl">
+          <button class="btn ghost" onclick="scanBarcode()">📷 Scan Produk</button>
+          <button class="btn danger" onclick="clearCart()">🗑️ Kosongkan</button>
+        </div>
+        <!-- Cart -->
+        <div class="cam-cart" id="camCart">
+          <div style="text-align:center;color:var(--muted);padding:10px">Keranjang kosong — scan produk untuk mulai</div>
+        </div>
+        <button class="redeem-btn" id="camCheckout" disabled onclick="checkoutCam()" style="margin-top:8px">🛒 Bayar dengan Coin</button>
+      </div>
+    </div>
+
+    <!-- Transaction log -->
+    <div style="margin-top:14px" id="logSec">
+      <div style="font-size:12px;font-weight:700;color:#cfe6ff;margin-bottom:6px;font-family:'Orbitron',sans-serif">📋 Riwayat Transaksi Pencairan</div>
+      <div class="tx-log" id="txHistory">
+        <div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tier Table & Waterfall Chart Image ===== -->
+  <div class="section-title" id="tierSec"><h2>📋 Tabel Tier Pencairan &amp; Waterfall Chart</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#ff8f00,#ffd700)">📊</span> 34 Tier Multi-Currency Conversion</h2>
+      <span class="tag" style="color:#ffd700;border-color:rgba(255,215,0,.3)">Rp / $ / RM / SR / ¥ / ₹</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
+      Tabel lengkap konversi <b style="color:#ffd700">coin → nilai tunai</b> dalam 6 mata uang.
+      Saat klik <b>Cairkan</b> atau <b>Scan &amp; Bayar</b>, sistem otomatis memilih <b>tier dengan nilai IDR tertinggi</b>
+      yang tercapai oleh saldo coin Anda. Baris berwarna <b style="color:var(--accent-3)">hijau</b> = best tier saat ini,
+      <b style="color:var(--accent)">biru</b> = tersedia, <b style="color:var(--muted)">abu-abu</b> = terkunci.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="tier-grid">
+      <div class="tier-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Coin</th><th>Cur</th><th>Amount</th><th>IDR Eq</th><th>Status</th></tr>
+          </thead>
+          <tbody id="tierTableBody"></tbody>
+        </table>
+      </div>
+      <div>
+        <img src="waterfall_coin_redemption_tiers.png" alt="Waterfall Chart Coin Redemption Tiers" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart 1</b> — nilai kumulatif maksimum yang dapat dicairkan seiring bertambahnya coin.<br/>
+          Total max redeemable: <b style="color:var(--accent-3)">Rp 697,5 Juta</b> (24 coin = $45.000)
+        </p>
+        <img src="waterfall_redemption_process_with_identity.png" alt="Waterfall Chart Redemption Process with Identity Verification" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;margin-top:10px" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart 2</b> — proses pencairan 8 tahap dengan <b style="color:#EE7733">identity verification</b>.<br/>
+          Identity verification: <b style="color:#EE7733">180ms (22,1%)</b> · Total end-to-end: <b style="color:var(--accent-3)">815ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Bar Chart: Active Defense Process ===== -->
+  <div class="section-title"><h2>Diagram Batang — Proses Data Kubah Pertahanan Aktif</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic">📈</span> Proses Data Real-time (Live Bar Chart)</h2>
+      <span class="tag live" id="barTag">0 events</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">
+      Diagram batang menampilkan <b style="color:var(--accent)">proses data kubah pertahanan saat aktif</b>:
+      jumlah event per kategori (Sensor Triggers, Gateway Relays, Cloud Writes, Dashboard Push, Intercepts, Breaches, Notifikasi).
+      Update live mengikuti setiap penelusuran benda.
+    </p>
+    <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+    <div class="chart-stats">
+      <div class="chart-stat"><div class="k">Sensor Triggers</div><div class="v" id="bs-sensor">0</div></div>
+      <div class="chart-stat"><div class="k">Gateway Relays</div><div class="v" id="bs-gateway">0</div></div>
+      <div class="chart-stat ok"><div class="k">Cloud Writes</div><div class="v" id="bs-cloud">0</div></div>
+      <div class="chart-stat warn"><div class="k">Intercepts</div><div class="v" id="bs-intercept">0</div></div>
+      <div class="chart-stat threat"><div class="k">Breaches</div><div class="v" id="bs-breach">0</div></div>
+      <div class="chart-stat" style="background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.3)"><div class="k">🪙 Coins</div><div class="v" id="bs-coin" style="color:#ffd700">0</div></div>
+    </div>
+  </section>
+
   <!-- ===== Sensor detail table ===== -->
-  <div class="section-title"><h2>Status Kuatro Sensor</h2><div class="line"></div></div>
+  <div class="section-title"><h2>Status Lima Sensor (Kuatro + S5·COIN)</h2><div class="line"></div></div>
   <section class="card">
     <table>
       <thead>
-        <tr>
-          <th>Sensor</th><th>Tipe</th><th>Posisi</th><th>Jaringan</th>
-          <th>Sinyal</th><th>Status</th><th>Terakhir Deteksi</th>
-        </tr>
+        <tr><th>Sensor</th><th>Tipe</th><th>Posisi</th><th>Jaringan</th><th>Sinyal</th><th>Status</th><th>Terakhir Deteksi</th></tr>
       </thead>
       <tbody id="sensorTable">
-        <tr><td>S1</td><td>PIR (Passive IR)</td><td>Barat kubah</td><td>Wi-Fi 6</td><td>-42 dBm</td>
-          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
-        <tr><td>S2</td><td>MMW Radar 24GHz</td><td>Utara kubah</td><td>LoRa</td><td>-51 dBm</td>
-          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
-        <tr><td>S3</td><td>LIDAR TOF</td><td>Timur kubah</td><td>Zigbee</td><td>-48 dBm</td>
-          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
-        <tr><td>S4</td><td>Camera IoT 4K</td><td>Selatan kubah</td><td>Wi-Fi 6</td><td>-39 dBm</td>
-          <td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S1</td><td>PIR (Passive IR)</td><td>Barat kubah</td><td>Wi-Fi 6</td><td>-42 dBm</td><td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S2</td><td>MMW Radar 24GHz</td><td>Utara kubah</td><td>LoRa</td><td>-51 dBm</td><td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S3</td><td>LIDAR TOF</td><td>Timur kubah</td><td>Zigbee</td><td>-48 dBm</td><td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S4</td><td>Camera IoT 4K</td><td>Selatan kubah</td><td>Wi-Fi 6</td><td>-39 dBm</td><td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
+        <tr><td>S5</td><td>COIN Reward Sensor</td><td>Timur Laut kubah</td><td>Wi-Fi 6</td><td>-36 dBm</td><td><span class="chip idle"><span class="dot"></span> Standby</span></td><td>—</td></tr>
       </tbody>
     </table>
   </section>
 
   <!-- ===== Waterfall Chart ===== -->
-  <div class="section-title"><h2>Waterfall Chart — Alur Data Deteksi</h2><div class="line"></div></div>
+  <div class="section-title"><h2>Tahapan Pemrosesan Sinyal (Data Lifecycle) — Sinkron Visualisasi</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
-      <h2><span class="ic">⇣</span> Tahapan Pemrosesan Sinyal (Data Lifecycle)</h2>
-      <span class="tag">Waterfall · ms</span>
+      <h2><span class="ic">⇣</span> Waterfall Chart — Alur Deteksi Benda</h2>
+      <span class="tag" id="wfTag">Live sync · 0 events</span>
     </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">
-      Waterfall berikut menggambarkan urutan waktu pemrosesan sebuah kejadian deteksi:
-      dari tangkap <b style="color:var(--accent)">sensor</b>, agregasi <b style="color:var(--accent)">gateway</b>,
-      persistensi <b style="color:var(--accent)">cloud</b>, render <b style="color:var(--accent)">dashboard</b>,
-      hingga notifikasi ke <b style="color:var(--accent)">perangkat pengguna</b>.
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">
+      Waterfall berjalan <b style="color:var(--accent)">sinkron</b> dengan visualisasi kubah: setiap benda yang dipindai
+      memicu cascade <b style="color:var(--accent)">Sensor → Gateway → Network → Cloud Proc → Cloud Store → Dash Push → Notif</b>.
+      Chart memperbarui diri live setiap interceptor dilepaskan.
     </p>
-    <div class="waterfall-wrap">
-      <canvas id="wfChart"></canvas>
-    </div>
-    <div class="wf-summary">
-      <div class="wf-stat"><div class="k">Total Latensi End-to-End</div><div class="v" id="wf-total">— ms</div></div>
-      <div class="wf-stat"><div class="k">Bottleneck Terbesar</div><div class="v" id="wf-bottle">Cloud</div></div>
-      <div class="wf-stat"><div class="k">Throughput Gateway</div><div class="v" id="wf-tp">— pkt/s</div></div>
-      <div class="wf-stat"><div class="k">SLA Target &lt; 300ms</div><div class="v" id="wf-sla" style="color:var(--accent-3)">PASS</div></div>
+    <div class="chart-wrap tall"><canvas id="wfChart"></canvas></div>
+    <div class="chart-stats">
+      <div class="chart-stat"><div class="k">Events Diproses</div><div class="v" id="wf-events">0</div></div>
+      <div class="chart-stat ok"><div class="k">Avg End-to-End</div><div class="v" id="wf-avg">— ms</div></div>
+      <div class="chart-stat"><div class="k">Total Kumulatif</div><div class="v" id="wf-total">0 ms</div></div>
+      <div class="chart-stat threat"><div class="k">Bottleneck</div><div class="v" id="wf-bottle">—</div></div>
+      <div class="chart-stat ok"><div class="k">SLA &lt; 300ms</div><div class="v" id="wf-sla">PASS</div></div>
     </div>
   </section>
 
@@ -482,32 +940,32 @@
     <div class="tech-grid">
       <div class="tech">
         <h4><span class="em"></span> Sensor Android</h4>
-        <p>Pemanfaatan sensor bawaan perangkat Android sebagai node deteksi tambahan (komplementer).</p>
+        <p>Perangkat Android sebagai node deteksi komplementer untuk verifikasi multi-sumber.</p>
         <ul>
-          <li>Akselerometer — deteksi getaran/guncangan kubah</li>
-          <li>Gyroscope — orientasi &amp; kemiringan</li>
-          <li>Magnetometer — kompas arah objek</li>
-          <li>Proximity — jarak dekat pintu kubah</li>
+          <li>Akselerometer — getaran akibat benda masuk</li>
+          <li>Gyroscope — orientasi &amp; kemiringan kubah</li>
+          <li>Magnetometer — kompas arah benda</li>
+          <li>Proximity — jarak dekat perimeter</li>
         </ul>
       </div>
       <div class="tech">
         <h4><span class="em" style="background:#7c4dff;box-shadow:0 0 8px #7c4dff"></span> Cloud Data Storage</h4>
-        <p>Penyimpanan terdistribusi berbasis object storage untuk arsip kejadian dan analitik historis.</p>
+        <p>Penyimpanan terdistribusi untuk arsip identitas benda dan analitik pola historis.</p>
         <ul>
           <li>Time-series DB (InfluxDB) — log deteksi</li>
-          <li>Object Storage (S3-compatible) — snapshot kamera</li>
-          <li>Hot cache Redis — dashboard real-time</li>
+          <li>Object Storage (S3) — snapshot container</li>
+          <li>Hot cache Redis — dashboard live</li>
           <li>Backup terenkripsi AES-256</li>
         </ul>
       </div>
       <div class="tech">
         <h4><span class="em" style="background:#00ff9d;box-shadow:0 0 8px #00ff9d"></span> Sinyal Jaringan</h4>
-        <p>Lapisan transport yang menghubungkan sensor → gateway → cloud secara andal dan aman.</p>
+        <p>Lapisan transport andal yang menghubungkan sensor → gateway → cloud → dashboard.</p>
         <ul>
-          <li>MQTT over TLS — pesan ringan async</li>
+          <li>MQTT over TLS — pesan async ringan</li>
           <li>Wi-Fi 6 / LoRaWAN — radio adaptif</li>
           <li>WebSocket — push dashboard live</li>
-          <li>End-to-end encryption (TLS 1.3)</li>
+          <li>End-to-end TLS 1.3</li>
         </ul>
       </div>
     </div>
@@ -521,18 +979,19 @@
         <tr><th>Komponen</th><th>Fungsi</th><th>Metode Validasi</th><th>Hasil</th></tr>
       </thead>
       <tbody>
-        <tr><td>Kuatro Sensor (×4)</td><td>Deteksi objek pada pusat area kubah</td><td>Simulasi objek lintas zona + cek respons</td>
-          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput paket</td>
-          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>Cloud Server</td><td>Penyimpanan &amp; analitik data</td><td>Verifikasi write time-series + object storage</td>
-          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>User Dashboard</td><td>Visualisasi real-time + notifikasi</td><td>WebSocket push &amp; render metric</td>
-          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>Android Sensor Bridge</td><td>Input sensor mobile komplementer</td><td>Injeksi data aksel/gyro ke pipeline</td>
-          <td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>End-to-End SLA &lt; 300 ms</td><td>Garansi latensi deteksi</td><td>Sum waterfall tahapan</td>
-          <td><span class="chip ok"><span class="dot"></span> PASS</span></td></tr>
+        <tr><td>Kuatro Sensor (×4)</td><td>Pemindaian benda memasuki fasilitas mata</td><td>Simulasi benda lintas zona + respons sensor</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Mode Penelusuran Benda</td><td>Identifikasi benda (container/tools) di pusat</td><td>Identity card generation per scan</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>S5·COIN Reward Sensor</td><td>Kumpul coin per deteksi (+1) &amp; intercept (+2)</td><td>Akumulasi coin &amp; wallet tracking</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Redeem Wallet (Dana/Gopay/Bank)</td><td>Tukar 20 coin → Rp 10.000 ke e-wallet/bank</td><td>BSI, BNI, BRI, Danamon, Dana, Gopay</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>QRIS Merchant Scan</td><td>Bayar barang di Indomaret/Alfamidi/Alfamart</td><td>QRIS barcode scan via komputer</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Identity Verification</td><td>Verifikasi identitas sebelum pencairan (No. Telp/Rekening)</td><td>Modal identitas + account matching</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Camera Scan Barcode</td><td>Scan produk supermarket &amp; bayar coin</td><td>Pilih lokasi → scan → checkout</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Diagram Batang Live</td><td>Proses data pertahanan aktif</td><td>Update per kategori tiap event</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Waterfall Sync</td><td>Chart update live per deteksi</td><td>Korelasi timestamp event ↔ chart</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>End-to-End SLA &lt; 300 ms</td><td>Garansi latensi pemindaian</td><td>Sum waterfall tahapan kumulatif</td><td><span class="chip ok"><span class="dot"></span> PASS</span></td></tr>
       </tbody>
     </table>
   </section>
@@ -540,256 +999,1123 @@
 </main>
 
 <footer>
-  <b>Kuatro Sensor Dome System</b> — Simulasi visualisasi arsitektur IoT: Sensor → Gateway → Cloud → Dashboard.
-  <br/>File HTML mandiri · berjalan penuh di browser tanpa server tambahan.
+  <b>Kubah Simulasi Menghalau Serangan Masuk — Mode Penelusuran Benda</b> · Kuatro Sensor Defense System
+  <br/>Sinkron dengan <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener" style="color:var(--accent)">indonesiamajukaribmu.github.io/kuba-simutret/</a> · berjalan penuh menggunakan cloud data.
 </footer>
+
+<!-- ===== Identity Verification Modal ===== -->
+<div class="verify-modal" id="verifyModal">
+  <div class="verify-card">
+    <div class="vc-head">
+      <div class="vc-title">🆔 Verifikasi Identitas Pencairan</div>
+      <button class="vc-close" onclick="closeVerifyModal()">✕</button>
+    </div>
+    <div class="verify-id">
+      <div class="vi-row">
+        <div class="vi-photo" id="viPhoto">A</div>
+        <div class="vi-info">
+          <div class="vi-name" id="viName">—</div>
+          <div class="vi-detail">
+            <b>KTP/NIK:</b> <span id="viIdNum">—</span><br/>
+            <b>Tgl Lahir:</b> <span id="viDob">—</span><br/>
+            <b>Alamat:</b> <span id="viAddr">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="verify-status"><span class="dot"></span> Identitas TERVERIFIKASI · akun match dengan database</div>
+    <div class="verify-account">
+      <b>Metode:</b> <span id="vaMethod">—</span><br/>
+      <b>Akun:</b> <span id="vaType">—</span> <span id="vaValue" style="color:#cfe6ff;font-family:'JetBrains Mono',monospace">—</span><br/>
+      <b>Tier:</b> <span id="vaTier">—</span>
+    </div>
+    <div class="verify-actions">
+      <button class="btn-cancel" onclick="closeVerifyModal()">Batal</button>
+      <button class="btn-confirm" onclick="confirmRedeem()">✓ Setujui &amp; Lanjutkan Pencairan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Bottom Navigation (App-like) ===== -->
+<nav class="bottom-nav">
+  <button class="bn-item active" onclick="scrollToSec('top')"><span class="ic">🛡️</span>Beranda</button>
+  <button class="bn-item" onclick="scrollToSec('walletSec')"><span class="ic">🪙</span>Wallet</button>
+  <button class="bn-item" onclick="scrollToSec('tierSec')"><span class="ic">📊</span>Tier</button>
+  <button class="bn-item" onclick="scrollToSec('merchantSec')"><span class="ic">🛒</span>Belanja</button>
+  <button class="bn-item" onclick="scrollToSec('logSec')"><span class="ic">📡</span>Log</button>
+</nav>
 
 <script>
 /* ============================================================
-   Kuatro Sensor Dome — Simulation Logic
+   Kubah Simulasi — Mode Penelusuran Benda
    ============================================================ */
-
 const $ = (id) => document.getElementById(id);
+const SVG_NS = "http://www.w3.org/2000/svg";
 const logEl = $('log');
-const stage = $('stage');
 
-let runId = null;
-let detectCount = 0;
+let isRunning = false;
+let isPaused  = false;
+let simTimers = [];
+let attackSeq = 0;
+let stats = { detected:0, stopped:0, breached:0 };
+let wfEvents = [];
+let barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
+let scannedObjects = []; // identity records
+let coinBalance = 0;
+let coinsEarnedTotal = 0;
+let coinsCashedOut = 0;
+let coinHistory = [];
 
-function pad(n){return n<10?'0'+n:n}
-function now(){
-  const d = new Date();
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+/* ============================================================
+   Coin Conversion Tiers — 34 tier multi-currency
+   ============================================================ */
+const COIN_TIERS = [
+  { coins: 1,    curr:'Rp', amount: 200000 },
+  { coins: 2,    curr:'Rp', amount: 2000 },
+  { coins: 3,    curr:'$',  amount: 300 },
+  { coins: 3.5,  curr:'RM', amount: 1000 },
+  { coins: 4,    curr:'$',  amount: 400 },
+  { coins: 4.5,  curr:'SR', amount: 9000 },
+  { coins: 5,    curr:'Rp', amount: 5000 },
+  { coins: 5.6,  curr:'¥',  amount: 500 },
+  { coins: 6,    curr:'$',  amount: 60 },
+  { coins: 6.7,  curr:'RM', amount: 2000 },
+  { coins: 7,    curr:'$',  amount: 7 },
+  { coins: 8,    curr:'Rp', amount: 8000 },
+  { coins: 9,    curr:'$',  amount: 900 },
+  { coins: 9.5,  curr:'RM', amount: 3000 },
+  { coins: 10,   curr:'Rp', amount: 10000 },
+  { coins: 10.5, curr:'₹',  amount: 78 },
+  { coins: 11,   curr:'Rp', amount: 20000 },
+  { coins: 12,   curr:'Rp', amount: 25000 },
+  { coins: 13,   curr:'Rp', amount: 50000 },
+  { coins: 14,   curr:'Rp', amount: 100000 },
+  { coins: 15,   curr:'Rp', amount: 150000 },
+  { coins: 16,   curr:'$',  amount: 1000 },
+  { coins: 17,   curr:'SR', amount: 9000 },
+  { coins: 18,   curr:'¥',  amount: 9000 },
+  { coins: 19,   curr:'₹',  amount: 800 },
+  { coins: 20,   curr:'RM', amount: 78 },
+  { coins: 21,   curr:'RM', amount: 1000 },
+  { coins: 22,   curr:'$',  amount: 2000 },
+  { coins: 23,   curr:'RM', amount: 3000 },
+  { coins: 24,   curr:'$',  amount: 45000 },
+  { coins: 25,   curr:'RM', amount: 93876 },
+  { coins: 26,   curr:'$',  amount: 2753 },
+  { coins: 27,   curr:'RM', amount: 35663 },
+  { coins: 28,   curr:'$',  amount: 28939 },
+];
+const EXCH_RATE = { 'Rp':1, '$':15500, 'RM':3500, 'SR':4100, '¥':105, '₹':190 };
+const CURR_SYM  = { 'Rp':'Rp', '$':'$', 'RM':'RM', 'SR':'SR', '¥':'¥', '₹':'₹' };
+
+function tierIDR(t){ return t.amount * EXCH_RATE[t.curr]; }
+function tierIDRStr(t){ const idr = tierIDR(t); return 'Rp ' + (idr >= 1e6 ? (idr/1e6).toFixed(2)+'M' : idr >= 1e3 ? (idr/1e3).toFixed(0)+'K' : idr); }
+function bestTierForBalance(bal){
+  let best = null;
+  for(const t of COIN_TIERS){
+    if(t.coins <= bal){ if(!best || tierIDR(t) > tierIDR(best)) best = t; }
+  }
+  return best;
 }
+function nextTierForBalance(bal){
+  let next = null;
+  for(const t of COIN_TIERS){
+    if(t.coins > bal){ if(!next || t.coins < next.coins) next = t; }
+  }
+  return next;
+}
+
+/* Object type catalog — container/tools style */
+const OBJECT_TYPES = [
+  { type:'Container Kargo', icon:'📦', threat:false, dim:[120,90,80], wt:'2.4 t' },
+  { type:'Container Tool Kit', icon:'🧰', threat:false, dim:[60,40,30], wt:'18 kg' },
+  { type:'Drone Pengintai', icon:'🛸', threat:true,  dim:[80,80,20], wt:'1.2 kg' },
+  { type:'Paket Logistik', icon:'📬', threat:false, dim:[40,30,20], wt:'3.5 kg' },
+  { type:'Container Berbahaya', icon:'☣️', threat:true, dim:[100,80,60], wt:'450 kg' },
+  { type:'Robot Tools', icon:'🤖', threat:false, dim:[50,60,40], wt:'25 kg' },
+  { type:'Missile Threat', icon:'🚀', threat:true, dim:[180,30,30], wt:'85 kg' },
+  { type:'Container Tanker', icon:'🛢️', threat:false, dim:[150,90,70], wt:'8.5 t' },
+  { type:'Tools Box Industrial', icon:'🧱', threat:false, dim:[70,40,35], wt:'42 kg' },
+  { type:'EMP Device', icon:'⚡', threat:true, dim:[40,40,40], wt:'12 kg' },
+];
+const ORIGINS = ['Utara','Timur Laut','Timur','Tenggara','Selatan','Barat Daya','Barat','Barat Laut'];
+
+function pad(n){return n<10?'0'+n:''+n}
+function now(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;}
 function log(msg, type='ok'){
   const div = document.createElement('div');
   div.className = 'ln';
   div.innerHTML = `<span class="t">[${now()}]</span><span class="${type}">${msg}</span>`;
   logEl.appendChild(div);
   logEl.scrollTop = logEl.scrollHeight;
-  // keep max 50 lines
-  while(logEl.children.length > 60) logEl.removeChild(logEl.firstChild);
+  while(logEl.children.length > 90) logEl.removeChild(logEl.firstChild);
 }
 
-/* ----- Status helpers ----- */
 function setMetric(id, val, barId, pct){
   $(id).textContent = val;
-  if(barId) $(barId).style.width = pct + '%';
+  if(barId) $(barId).style.width = Math.min(100,pct) + '%';
 }
 function setSensorRow(idx, status, lastTime){
   const rows = $('sensorTable').children;
   const r = rows[idx]; if(!r) return;
   const chip = r.children[5].firstElementChild;
-  chip.className = 'chip ' + (status==='ok'?'ok':status==='warn'?'warn':'idle');
-  chip.innerHTML = `<span class="dot"></span> ${status==='ok'?'Aktif':status==='warn'?'Probing':'Standby'}`;
+  const map = {ok:['ok','Aktif'],warn:['warn','Probing'],threat:['threat','ALERT'],idle:['idle','Standby']};
+  const [cls,txt] = map[status] || ['idle','Standby'];
+  chip.className = 'chip ' + cls;
+  chip.innerHTML = `<span class="dot"></span> ${txt}`;
   if(lastTime) r.children[6].textContent = lastTime;
 }
 
-/* ----- Intruder animation ----- */
-function moveIntruder(fromX, fromY, toX, toY, dur, cb){
-  const g = $('intruder');
-  const circle = g.querySelector('circle');
-  const text = g.querySelector('text');
-  const start = performance.now();
-  function frame(t){
-    const k = Math.min(1, (t-start)/dur);
-    // ease-in-out
-    const e = k<0.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2;
-    const x = fromX + (toX-fromX)*e;
-    const y = fromY + (toY-fromY)*e;
-    circle.setAttribute('cx', x); circle.setAttribute('cy', y);
-    text.setAttribute('x', x); text.setAttribute('y', y);
-    // dynamic beam opacity based on distance to center (200,200)
-    const dist = Math.hypot(x-200, y-200);
-    const intensity = Math.max(0, 1 - dist/180);
-    document.querySelectorAll('#beam1,#beam2,#beam3,#beam4').forEach(b=>b.setAttribute('stroke-opacity', 0.15 + intensity*0.5));
-    if(k<1) runId = requestAnimationFrame(frame);
-    else if(cb) cb();
+/* ============================================================
+   Object spawn — container/tools shape
+   Each object is a rectangular container (not circle) with identity label.
+   ============================================================ */
+function spawnObject(){
+  if(!isRunning || isPaused) return;
+  attackSeq++;
+  const id = attackSeq;
+  const objType = OBJECT_TYPES[Math.floor(Math.random()*OBJECT_TYPES.length)];
+  const origin = ORIGINS[Math.floor(Math.random()*ORIGINS.length)];
+
+  const angle = Math.random() * Math.PI * 2;
+  const startR = 195;
+  const cx = 200, cy = 200;
+  const sx = cx + Math.cos(angle) * startR;
+  const sy = cy + Math.sin(angle) * startR;
+
+  const layer = $('attacksLayer');
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('id', 'obj-'+id);
+
+  // Container box (rectangular — like shipping container)
+  const boxW = 22, boxH = 14;
+  const box = document.createElementNS(SVG_NS, 'rect');
+  box.setAttribute('x', sx - boxW/2);
+  box.setAttribute('y', sy - boxH/2);
+  box.setAttribute('width', boxW);
+  box.setAttribute('height', boxH);
+  box.setAttribute('rx', 2);
+  const fillCol = objType.threat ? '#ff3b3b' : '#00e5ff';
+  const strokeCol = objType.threat ? '#ff8a80' : '#7cffff';
+  box.setAttribute('fill', fillCol);
+  box.setAttribute('fill-opacity', '0.35');
+  box.setAttribute('stroke', strokeCol);
+  box.setAttribute('stroke-width', '1.5');
+  box.setAttribute('filter', objType.threat ? 'url(#glowRed)' : 'url(#glow)');
+
+  // Container ridges (lines)
+  const ridges = document.createElementNS(SVG_NS, 'g');
+  for(let i=1;i<4;i++){
+    const ln = document.createElementNS(SVG_NS,'line');
+    ln.setAttribute('x1', sx - boxW/2 + (boxW/4)*i);
+    ln.setAttribute('y1', sy - boxH/2 + 2);
+    ln.setAttribute('x2', sx - boxW/2 + (boxW/4)*i);
+    ln.setAttribute('y2', sy + boxH/2 - 2);
+    ln.setAttribute('stroke', strokeCol);
+    ln.setAttribute('stroke-opacity','0.6');
+    ln.setAttribute('stroke-width','0.6');
+    ridges.appendChild(ln);
   }
-  runId = requestAnimationFrame(frame);
+
+  // outer ring (detection halo)
+  const halo = document.createElementNS(SVG_NS,'circle');
+  halo.setAttribute('cx', sx); halo.setAttribute('cy', sy);
+  halo.setAttribute('r', 14);
+  halo.setAttribute('fill','none');
+  halo.setAttribute('stroke', fillCol);
+  halo.setAttribute('stroke-opacity','0.4');
+
+  const lbl = document.createElementNS(SVG_NS,'text');
+  lbl.setAttribute('x', sx); lbl.setAttribute('y', sy - 18);
+  lbl.setAttribute('text-anchor','middle');
+  lbl.setAttribute('fill', objType.threat ? '#ff8a80' : '#9fd9ff');
+  lbl.setAttribute('font-size','8');
+  lbl.setAttribute('font-family','Orbitron');
+  lbl.textContent = '#' + id + ' ' + objType.icon;
+
+  g.appendChild(halo); g.appendChild(box); g.appendChild(ridges); g.appendChild(lbl);
+  layer.appendChild(g);
+
+  log(`📦 Benda #${id} masuk perimeter — ${objType.type} (${origin})`, objType.threat?'threat':'info');
+
+  // Move toward center
+  const dur = 2800 + Math.random()*1400;
+  const start = performance.now();
+  let detectionTriggered = false;
+  let interceptLaunched = false;
+  let neutralized = false;
+
+  function frame(t){
+    if(!isRunning) return;
+    if(isPaused){ requestAnimationFrame(frame); return; }
+    const k = Math.min(1, (t-start)/dur);
+    const e = k;
+    const x = sx + (cx-sx)*e;
+    const y = sy + (cy-sy)*e;
+    const tx = x - boxW/2, ty = y - boxH/2;
+    box.setAttribute('x', tx); box.setAttribute('y', ty);
+    halo.setAttribute('cx', x); halo.setAttribute('cy', y);
+    // reposition ridges
+    for(let i=0;i<ridges.children.length;i++){
+      const ln = ridges.children[i];
+      ln.setAttribute('x1', tx + (boxW/4)*(i+1));
+      ln.setAttribute('x2', tx + (boxW/4)*(i+1));
+      ln.setAttribute('y1', ty + 2);
+      ln.setAttribute('y2', ty + boxH - 2);
+    }
+    lbl.setAttribute('x', x); lbl.setAttribute('y', y - 18);
+
+    const dist = Math.hypot(x-cx, y-cy);
+
+    if(!detectionTriggered && dist < 130){
+      detectionTriggered = true;
+      const sensorIdx = sensorForAngle(angle);
+      triggerDetectionCascade(id, sensorIdx, objType, origin);
+    }
+
+    if(!interceptLaunched && dist < 95){
+      interceptLaunched = true;
+      // only threats get intercepted; non-threats pass through and get scanned at center
+      if(objType.threat){
+        launchInterceptor(id, x, y, cx, cy, () => {
+          neutralized = true;
+          g.remove();
+          stats.stopped++;
+          barCounts.intercept++;
+          updateStats();
+          updateBarChart();
+          log(`✓ Benda #${id} (${objType.type}) DINEUTRALISIR interceptor`, 'ok');
+          spawnExplosion(x, y, '#ffb74d');
+          awardCoin(2, `bonus intercept Benda #${id} (${objType.type})`);
+        });
+      }
+    }
+
+    // Object reaches facility eye (center)
+    if(!neutralized && dist < 30){
+      // Scan identity at facility eye
+      if(!objType.scanned){
+        objType.scanned = true;
+        addIdentityCard(id, objType, origin);
+        log(`🔍 Benda #${id} dipindai di Fasilitas Mata — identitas tersimpan cloud`, 'info');
+      }
+      if(objType.threat){
+        stats.breached++; barCounts.breach++;
+        updateStats(); updateBarChart();
+        log(`✗ Benda #${id} (${objType.type}) TEMBUS fasilitas mata!`, 'err');
+        spawnExplosion(x, y, '#ff3b3b');
+        $('shieldRing').setAttribute('stroke','rgba(255,59,59,.75)');
+        $('stage').classList.add('alert-flash');
+        setTimeout(()=>{ $('shieldRing').setAttribute('stroke','rgba(0,229,255,.5)'); $('stage').classList.remove('alert-flash'); }, 600);
+      } else {
+        log(`✓ Benda #${id} (${objType.type}) aman — lolos verifikasi`, 'ok');
+        spawnExplosion(x, y, '#00e5ff');
+      }
+      g.remove();
+      return;
+    }
+
+    if(k < 1 && !neutralized){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+function sensorForAngle(angle){
+  const deg = ((angle * 180/Math.PI) + 360) % 360;
+  if(deg >= 45 && deg < 135) return 3;
+  if(deg >= 135 && deg < 225) return 0;
+  if(deg >= 225 && deg < 315) return 1;
+  return 2;
 }
 
 function flashSensor(idx){
   const ids = ['sensor1','sensor2','sensor3','sensor4'];
-  const g = $(ids[idx]);
+  const g = $(ids[idx]); if(!g) return;
   const c = g.querySelector('circle:first-child');
-  c.setAttribute('stroke','#ffb74d');
-  c.setAttribute('stroke-width','3');
-  setTimeout(()=>{ c.setAttribute('stroke','#00ff9d'); c.setAttribute('stroke-width','2'); }, 350);
+  c.setAttribute('stroke','#ffb74d'); c.setAttribute('stroke-width','3');
+  setTimeout(()=>{ c.setAttribute('stroke','#00ff9d'); c.setAttribute('stroke-width','2'); }, 400);
 }
-
-function triggerDetection(sensorIdx, sensorName){
-  detectCount++;
-  log(`▶ Objek memasuki pusat area → ${sensorName} terpicu`, 'ok');
-  flashSensor(sensorIdx);
-  setSensorRow(sensorIdx, 'ok', now());
-
-  // cascade node pulses
-  pulseNode('n-sensor'); setTimeout(()=>pulseNode('n-gateway'),250);
-  setTimeout(()=>pulseNode('n-cloud'),550); setTimeout(()=>pulseNode('n-dash'),900);
-
-  // metrics
-  setMetric('m-det', detectCount, 'm-det-bar', Math.min(100, detectCount*15));
-  const lat = (18 + Math.random()*22).toFixed(0);
-  setMetric('m-lat', lat+' ms', 'm-lat-bar', Math.min(100, lat/0.9));
-  const store = (12 + detectCount*2.1).toFixed(1);
-  setMetric('m-store', store+'%', 'm-store-bar', store);
-  setMetric('m-status', 'ALERT');
-
-  log(`⇄ Gateway: paket diteruskan ke cloud via MQTT/TLS`, 'ok');
-  setTimeout(()=> log(`☁ Cloud: data disimpan (time-series + snapshot)`, 'ok'), 300);
-  setTimeout(()=> log(`▤ Dashboard: push WebSocket — UI diperbarui`, 'ok'), 550);
-  setTimeout(()=> log(`🔔 Notifikasi pengguna terkirim ke Android`, 'ok'), 800);
-  setTimeout(()=>{ setMetric('m-status','ARMED'); }, 1600);
-}
-function pulseNode(id){
-  const n = $(id);
-  n.style.boxShadow = '0 0 28px rgba(0,255,157,.45)';
-  n.style.borderColor = 'rgba(0,255,157,.7)';
-  setTimeout(()=>{ n.style.boxShadow=''; n.style.borderColor=''; }, 600);
-}
-
-/* ----- Simulation sequence ----- */
-function runSim(){
-  if(runId) cancelAnimationFrame(runId);
-  detectCount = 0;
-  setMetric('m-det',0,'m-det-bar',0);
-  log('▶ Simulasi dimulai — Kuatro Sensor Dome AKTIF', 'ok');
-
-  // path: enter from corner, traverse through center, exit opposite corner
-  // S1 (left, west) — S2 (top, north) — S3 (right, east) — S4 (bottom, south)
-  const path = [
-    {x:380, y:380}, {x:200, y:200, dur:2200, sensor:1, name:'S2·MMW Radar (Utara)'},
-    {x:70,  y:200, dur:1800, sensor:0, name:'S1·PIR (Barat)'},
-    {x:200, y:330, dur:1600, sensor:3, name:'S4·Camera IoT (Selatan)'},
-    {x:330, y:200, dur:1600, sensor:2, name:'S3·LIDAR (Timur)'},
-    {x:380, y:380, dur:1800}
-  ];
-
-  let i = 0;
-  function step(){
-    if(i >= path.length-1){ finishSim(); return; }
-    const from = path[i], to = path[i+1];
-    // when entering center area (around 200,200), trigger detection
-    if(to.sensor !== undefined){
-      // Trigger detection when crossing through center
-      setTimeout(()=> triggerDetection(to.sensor, to.name), to.dur*0.5);
-    }
-    moveIntruder(from.x, from.y, to.x, to.y, to.dur, step);
-    i++;
-  }
-  step();
-}
-function finishSim(){
-  log(`✓ Simulasi selesai — ${detectCount} deteksi tercatat di cloud`, 'ok');
-  log(`✓ Semua komponen berfungsi penuh (sensor → gateway → cloud → dashboard)`, 'ok');
-}
-
-$('btnStart').onclick = runSim;
-$('btnReset').onclick = ()=>{
-  if(runId) cancelAnimationFrame(runId);
-  const g = $('intruder');
-  const c = g.querySelector('circle'), t = g.querySelector('text');
-  c.setAttribute('cx',380); c.setAttribute('cy',380);
-  t.setAttribute('x',380); t.setAttribute('y',380);
-  detectCount = 0;
-  setMetric('m-det',0,'m-det-bar',0);
-  setMetric('m-lat','— ms','m-lat-bar',0);
-  setMetric('m-store','0%','m-store-bar',0);
-  setMetric('m-status','ARMED');
-  for(let i=0;i<4;i++) setSensorRow(i,'idle','—');
-  log('↺ Sistem direset', 'warn');
-};
 
 /* ============================================================
-   Waterfall Chart — Data Lifecycle Latency
+   Detection Cascade — sync with bar chart + waterfall chart
    ============================================================ */
-const wfCtx = $('wfChart').getContext('2d');
-const stages = [
-  'Sensor Capture',
-  'Gateway Aggregation',
-  'Network Transport',
-  'Cloud Processing',
-  'Cloud Storage Write',
-  'Dashboard WebSocket Push',
-  'User Notification'
-];
-// latency values in ms (increment/decrement relative to running total)
-const deltas = [22, 35, 28, 95, 48, 12, 18];
+const STAGE_NAMES = ['Sensor','Gateway','Network','Cloud Proc','Cloud Store','Dash Push','Notif User'];
+const STAGE_BASE  = [22, 35, 28, 95, 48, 12, 18];
+const STAGE_JITTER= [8, 12, 14, 40, 18, 6, 8];
 
-// Build waterfall data: start, change, end
-let running = 0;
-const dataPoints = [];
-const colors = [];
-deltas.forEach((d,i)=>{
-  const start = running;
-  running += d;
-  dataPoints.push([start, d]);
-  colors.push(i === deltas.length-1 ? 'rgba(0,255,157,.85)' : 'rgba(0,229,255,.75)');
-});
-const total = running;
+function triggerDetectionCascade(objId, sensorIdx, objType, origin){
+  stats.detected++;
+  barCounts.sensor++;
+  updateStats();
+  const sensorNames = ['S1·PIR','S2·MMW Radar','S3·LIDAR','S4·Camera IoT','S5·COIN'];
+  const sensorName = sensorNames[sensorIdx];
+  log(`▶ ${sensorName} terpicu oleh Benda #${objId}`, 'warn');
+  flashSensor(sensorIdx);
+  setSensorRow(sensorIdx, 'threat', now());
+  // Award base coin from S5·COIN sensor (every object detected earns 1 coin)
+  awardCoin(1, `deteksi Benda #${objId} (${objType.type}) oleh S5·COIN`);
+  setSensorRow(4, 'ok', now());
 
-// Chart.js floating bar chart
-const wf = new Chart(wfCtx, {
+  pulseNode('n-sensor','alert'); setTimeout(()=>pulseNode('n-sensor','live'), 700);
+  setTimeout(()=>{ pulseNode('n-gateway','alert'); barCounts.gateway++; updateBarChart();
+    setTimeout(()=>pulseNode('n-gateway','live'),700);
+    log(`⇄ Gateway relay Benda #${objId} → MQTT/TLS`, 'ok'); }, 220);
+  setTimeout(()=>{ pulseNode('n-cloud','alert'); barCounts.cloud++; updateBarChart();
+    setTimeout(()=>pulseNode('n-cloud','live'),700);
+    log(`☁ Cloud: time-series write + snapshot ${objType.icon} #${objId}`, 'ok'); }, 520);
+  setTimeout(()=>{ pulseNode('n-dash','alert'); barCounts.dash++; updateBarChart();
+    setTimeout(()=>pulseNode('n-dash','live'),700);
+    log(`▤ Dashboard: WebSocket push identitas #${objId}`, 'ok'); }, 820);
+  setTimeout(()=>{ barCounts.notif++; updateBarChart();
+    log(`🔔 Notifikasi pengguna Android: Benda #${objId} (${objType.type})`, 'ok'); }, 1100);
+
+  document.querySelectorAll('#beam1,#beam2,#beam3,#beam4').forEach(b=>b.setAttribute('stroke-opacity','0.75'));
+  setTimeout(()=>{ document.querySelectorAll('#beam1,#beam2,#beam3,#beam4').forEach(b=>b.setAttribute('stroke-opacity','0.25')); }, 700);
+
+  // Waterfall record
+  const stages = STAGE_BASE.map((b,i)=> b + Math.random()*STAGE_JITTER[i]);
+  wfEvents.push({ id: objId, stages });
+  updateWaterfallChart();
+
+  setTimeout(()=> setSensorRow(sensorIdx, 'ok', now()), 1500);
+}
+
+function pulseNode(id, mode){
+  const n = $(id);
+  if(mode==='alert'){ n.classList.remove('live'); n.classList.add('alert'); }
+  else { n.classList.remove('alert'); n.classList.add('live'); }
+}
+
+/* ============================================================
+   Coin Wallet — award, flash S5 sensor, redeem, QRIS, transactions
+   ============================================================ */
+function awardCoin(amount, reason){
+  coinBalance += amount;
+  coinsEarnedTotal += amount;
+  barCounts.coin += amount;
+  flashCoinSensor();
+  updateCoinUI();
+  updateBarChart();
+  log(`🪙 +${amount} coin dari ${reason} · saldo: ${coinBalance} coin`, 'info');
+  if(coinBalance >= 20 && coinBalance - amount < 20){
+    log(`💰 Saldo mencapai 20 coin — siap ditukarkan (Rp ${Math.floor(coinBalance/20)*10000})`, 'ok');
+  }
+}
+
+function flashCoinSensor(){
+  const g = $('sensor5'); if(!g) return;
+  const c = g.querySelector('circle:first-child');
+  c.setAttribute('stroke','#fff176'); c.setAttribute('stroke-width','4');
+  const beam = $('beam5');
+  if(beam){ beam.setAttribute('stroke-opacity','0.9'); beam.setAttribute('stroke-width','2.2'); }
+  // pop a coin icon above the sensor
+  const layer = $('labelsLayer');
+  if(layer){
+    const txt = document.createElementNS(SVG_NS,'text');
+    txt.setAttribute('x',300); txt.setAttribute('y',92);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('fill','#fff176');
+    txt.setAttribute('font-size','12');
+    txt.setAttribute('font-family','Orbitron');
+    txt.setAttribute('font-weight','700');
+    txt.setAttribute('opacity','1');
+    txt.textContent = '+🪙';
+    layer.appendChild(txt);
+    const start = performance.now();
+    function anim(t){
+      const k = Math.min(1,(t-start)/900);
+      txt.setAttribute('y', 92 - k*22);
+      txt.setAttribute('opacity', 1 - k);
+      if(k<1) requestAnimationFrame(anim); else txt.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+  setTimeout(()=>{ c.setAttribute('stroke','#ffd700'); c.setAttribute('stroke-width','2.5'); if(beam){ beam.setAttribute('stroke-opacity','0.30'); beam.setAttribute('stroke-width','1'); } }, 600);
+}
+
+function updateCoinUI(){
+  const best = bestTierForBalance(coinBalance);
+  const next = nextTierForBalance(coinBalance);
+  const nextCoins = next ? next.coins : 28;
+  const progressPct = next ? (coinBalance / nextCoins) * 100 : 100;
+  setMetric('m-coin', coinBalance + ' 🪙', 'm-coin-bar', progressPct);
+  if($('walletBalance')) $('walletBalance').textContent = coinBalance + ' 🪙';
+  if($('walletRP')) $('walletRP').textContent = best ? `Best: ${CURR_SYM[best.curr]} ${best.amount.toLocaleString('id-ID')} (${tierIDRStr(best)})` : 'Tier belum tercapai';
+  if($('walletProgress')) $('walletProgress').style.width = progressPct + '%';
+  if($('walletProgressTxt')) $('walletProgressTxt').textContent = next ? `${coinBalance} / ${next.coins} coin (tier berikutnya)` : 'MAX tier tercapai';
+  if($('walletTotal')) $('walletTotal').textContent = coinsEarnedTotal;
+  if($('walletCashout')) $('walletCashout').textContent = 'Rp ' + coinsCashedOut.toLocaleString('id-ID');
+  if($('walletTag')) $('walletTag').textContent = 'Saldo: ' + coinBalance + ' coin' + (best ? ' · Best: ' + tierIDRStr(best) : '');
+  // enable/disable redeem buttons (need best tier + valid input)
+  updateRedeemButtons(best);
+  updateTierTable();
+}
+
+/* ============================================================
+   Identity Verification + Redemption Flow
+   ============================================================ */
+function updateRedeemButtons(best){
+  const methods = [
+    {m:'DANA', id:'phone-DANA'},
+    {m:'GoPay', id:'phone-GoPay'},
+    {m:'BSI', id:'rek-BSI'},
+    {m:'BNI', id:'rek-BNI'},
+    {m:'BRI', id:'rek-BRI'},
+    {m:'Danamon', id:'rek-Danamon'},
+    {m:'Indomaret', id:null},
+    {m:'Alfamidi', id:null},
+    {m:'Alfamart', id:null},
+  ];
+  methods.forEach(({m, id}) => {
+    const btn = document.querySelector(`.redeem-btn[onclick*="'${m}'"]`);
+    if(!btn) return;
+    const inputOk = id ? ($(id) && $(id).value.trim().length >= 5) : true;
+    btn.disabled = !(best && inputOk);
+  });
+}
+
+function startRedeem(method){
+  const tier = bestTierForBalance(coinBalance);
+  if(!tier){
+    log(`✗ Tidak ada tier pencairan tersedia — kumpulkan minimal 1 coin`, 'err');
+    return;
+  }
+  const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
+  let accountType, accountValue;
+  if(isMerchant){
+    accountType = 'Merchant QRIS';
+    accountValue = method;
+  } else if(['DANA','GoPay'].includes(method)){
+    accountType = 'No. Telp';
+    accountValue = $('phone-' + method) ? $('phone-' + method).value.trim() : '';
+    if(accountValue.length < 5){
+      log(`✗ Isi No. Telp untuk ${method} dulu (min 5 digit)`, 'err');
+      return;
+    }
+  } else {
+    accountType = 'No. Rekening';
+    accountValue = $('rek-' + method) ? $('rek-' + method).value.trim() : '';
+    if(accountValue.length < 5){
+      log(`✗ Isi No. Rekening untuk ${method} dulu (min 5 digit)`, 'err');
+      return;
+    }
+  }
+  openVerifyModal(method, tier, accountType, accountValue);
+}
+
+function generateIdentity(seed){
+  const names = [
+    'Ahmad Rizki Pratama','Siti Nurhaliza Bt.','Budi Santoso','Dewi Lestari W.',
+    'Eko Wijaya P.','Fitri Handayani','Andi Nugroho S.','Rina Maharani',
+    'Joko Susilo','Maya Puspita D.'
+  ];
+  const initials = ['A','S','B','D','E','F','A','R','J','M'];
+  let h = 0;
+  for(let i=0;i<seed.length;i++) h = (h*31 + seed.charCodeAt(i)) & 0xFFFFFFFF;
+  h = Math.abs(h);
+  const idx = h % names.length;
+  const idNum = '320' + (h % 1000000000).toString().padStart(9,'0');
+  const dob = `${1980 + (h % 20)}-0${1 + (h % 9)}-0${1 + (h % 9)}`;
+  const addrs = ['Jakarta Selatan','Bandung, Jawa Barat','Surabaya, Jawa Timur','Medan, Sumatera Utara','Yogyakarta','Semarang, Jawa Tengah','Makassar, Sulsel','Denpasar, Bali'];
+  return { name: names[idx], initial: initials[idx], idNum, dob, addr: addrs[h % addrs.length] };
+}
+
+function openVerifyModal(method, tier, accountType, accountValue){
+  const modal = $('verifyModal');
+  if(!modal) return;
+  const idData = generateIdentity(method + accountValue);
+  $('viPhoto').textContent = idData.initial;
+  $('viName').textContent = idData.name;
+  $('viIdNum').textContent = idData.idNum;
+  $('viDob').textContent = idData.dob;
+  $('viAddr').textContent = idData.addr;
+  $('vaMethod').textContent = method;
+  $('vaType').textContent = accountType + ':';
+  $('vaValue').textContent = accountValue;
+  $('vaTier').textContent = `${tier.coins} coin = ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${tierIDRStr(tier)})`;
+  modal.dataset.method = method;
+  modal.dataset.tierCoins = tier.coins;
+  modal.classList.add('show');
+  log(`🆔 Identity verification dimulai untuk ${method} (${accountType}: ${accountValue})`, 'info');
+  log(`🪪 Identitas terverifikasi: ${idData.name} · KTP ${idData.idNum}`, 'ok');
+}
+
+function closeVerifyModal(){
+  const modal = $('verifyModal');
+  if(modal){ modal.classList.remove('show'); }
+}
+
+function confirmRedeem(){
+  const modal = $('verifyModal');
+  if(!modal) return;
+  const method = modal.dataset.method;
+  const tierCoins = parseFloat(modal.dataset.tierCoins);
+  const tier = COIN_TIERS.find(t => t.coins === tierCoins);
+  closeVerifyModal();
+  if(!tier){ log('✗ Tier tidak ditemukan', 'err'); return; }
+  log(`✓ Identitas disetujui — melanjutkan pencairan via ${method}`, 'ok');
+  proceedRedeem(method, tier);
+}
+
+function proceedRedeem(method, tier){
+  const idr = tierIDR(tier);
+  const origStr = `${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`;
+  const ref = method.substr(0,3).toUpperCase() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const isMerchant = ['Indomaret','Alfamidi','Alfamart'].includes(method);
+  log(`💸 Memproses: ${origStr} (≈ ${tierIDRStr(tier)}) → ${method}`, 'info');
+  setTimeout(()=>{
+    if(isMerchant){
+      log(`📷 QRIS ${method} discan komputer — verifikasi pembayaran ${origStr}...`, 'info');
+    } else {
+      log(`🏦 Transfer ${method} diproses — konversi ke ${origStr}...`, 'info');
+    }
+  }, 500);
+  setTimeout(()=>{
+    coinBalance -= tier.coins;
+    coinsCashedOut += idr;
+    updateCoinUI();
+    addTransaction(method, tier, idr, 'SUCCESS', ref);
+    log(`✓ Pencairan SUCCESS via ${method} — ${origStr} (≈ ${tierIDRStr(tier)}) · sisa ${coinBalance} coin (REF:${ref})`, 'ok');
+    if(isMerchant){
+      log(`🛒 Pembayaran ${method} diterima komputer — transaksi selesai`, 'ok');
+    }
+  }, 1400);
+}
+
+/* ============================================================
+   Camera Scan Barcode — Supermarket Shopping
+   ============================================================ */
+let camCart = [];
+let camMarket = null;
+const MARKET_PRODUCTS = {
+  Indomaret: [
+    {n:'Kopi Sachet Kapal Api', p:1},
+    {n:'Roti Sari Roti 280g', p:2},
+    {n:'Indomie Goreng', p:1},
+    {n:'Aqua Botol 600ml', p:2},
+    {n:'Chitato 65g', p:3},
+    {n:'Teh Botol Sosro 350ml', p:2},
+    {n:'Susu Bear Brand', p:3},
+  ],
+  Alfamart: [
+    {n:'Susu Ultra Coklat 250ml', p:2},
+    {n:'Beng-Beng Maxx', p:1},
+    {n:'Tolak Angin Cair', p:2},
+    {n:'Pocari Sweat 350ml', p:3},
+    {n:'Lifebuoy Sabun Batang', p:2},
+    {n:'Kopi ABC Susu', p:1},
+    {n:'Sprite Kaleng 330ml', p:3},
+  ],
+  Alfamidi: [
+    {n:'Beras Premium 5kg', p:8},
+    {n:'Minyak Goreng Bimoli 2L', p:6},
+    {n:'Gula Pasir Gulaku 1kg', p:4},
+    {n:'Telur Ayam 1kg', p:5},
+    {n:'Tepung Terigu Segitiga 1kg', p:3},
+    {n:'Susu UHT Diamond 1L', p:6},
+    {n:'Detergen Rinso 800g', p:5},
+  ],
+};
+
+function selectMarket(market){
+  camMarket = market;
+  document.querySelectorAll('.market-opt').forEach(o => o.classList.remove('active'));
+  const el = document.querySelector(`.market-opt[data-market="${market}"]`);
+  if(el) el.classList.add('active');
+  $('camStatus').textContent = `📍 Lokasi: ${market} · Siap scan produk`;
+  log(`📍 Lokasi supermarket dipilih: ${market}`, 'info');
+}
+
+function scanBarcode(){
+  if(!camMarket){
+    $('camStatus').textContent = '✗ Pilih lokasi dulu!';
+    log(`✗ Pilih lokasi supermarket dulu (Indomaret/Alfamart/Alfamidi)`, 'err');
+    return;
+  }
+  const list = MARKET_PRODUCTS[camMarket];
+  const prod = list[Math.floor(Math.random() * list.length)];
+  camCart.push({...prod});
+  renderCamCart();
+  $('camStatus').textContent = `✓ ${prod.n} ter-scan · +${prod.p} coin`;
+  log(`📷 Barcode scan: ${prod.n} (harga ${prod.p} coin) di ${camMarket}`, 'info');
+}
+
+function clearCart(){
+  if(camCart.length === 0){
+    $('camStatus').textContent = 'Keranjang sudah kosong';
+    return;
+  }
+  camCart = [];
+  renderCamCart();
+  $('camStatus').textContent = camMarket ? `📍 Lokasi: ${camMarket} · Keranjang dikosongkan` : '📍 Pilih lokasi supermarket dulu';
+  log(`🗑️ Keranjang dikosongkan`, 'warn');
+}
+
+function renderCamCart(){
+  const c = $('camCart');
+  if(!c) return;
+  if(camCart.length === 0){
+    c.innerHTML = '<div style="text-align:center;color:var(--muted);padding:10px">Keranjang kosong — scan produk untuk mulai</div>';
+    const btn = $('camCheckout');
+    if(btn) btn.disabled = true;
+    return;
+  }
+  let html = '';
+  let total = 0;
+  camCart.forEach(p => {
+    html += `<div class="ci"><span class="pn">${p.n}</span><span class="pp">${p.p} coin</span></div>`;
+    total += p.p;
+  });
+  html += `<div class="total"><span>TOTAL (${camCart.length} item)</span><span>${total} coin</span></div>`;
+  c.innerHTML = html;
+  const btn = $('camCheckout');
+  if(btn) btn.disabled = !(coinBalance >= total && total > 0);
+}
+
+function checkoutCam(){
+  const total = camCart.reduce((s,p)=>s+p.p, 0);
+  if(total === 0){ log('✗ Keranjang masih kosong', 'err'); return; }
+  if(coinBalance < total){ log(`✗ Coin kurang — butuh ${total}, saldo ${coinBalance}`, 'err'); return; }
+  // Simulate identity verification for checkout (lighter)
+  const idData = generateIdentity(camMarket + total);
+  log(`🆔 Verifikasi identitas checkout: ${idData.name}`, 'info');
+  const ref = 'CAM-' + camMarket.substr(0,3).toUpperCase() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const idrEq = total * 10000;
+  coinBalance -= total;
+  coinsCashedOut += idrEq;
+  setTimeout(()=>{
+    log(`🛒 Checkout ${camMarket}: ${camCart.length} produk, ${total} coin dibayar`, 'ok');
+    log(`📷 QRIS ${camMarket} discan komputer — pembayaran diterima (REF:${ref})`, 'ok');
+    addTransaction(camMarket + ' (Camera Scan)', {coins: total, curr:'Rp', amount: idrEq}, idrEq, 'SUCCESS', ref);
+    camCart = [];
+    renderCamCart();
+    $('camStatus').textContent = `✓ Transaksi selesai · Terima kasih belanja di ${camMarket}`;
+    updateCoinUI();
+  }, 800);
+}
+
+/* ===== Bottom nav scroll ===== */
+function scrollToSec(id){
+  const el = $(id);
+  if(el){
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+}
+
+function buildTierTable(){
+  const tbody = $('tierTableBody'); if(!tbody) return;
+  tbody.innerHTML = '';
+  for(const t of COIN_TIERS){
+    const tr = document.createElement('tr');
+    const idr = tierIDR(t);
+    const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+    tr.innerHTML = `<td><b>${t.coins}</b></td><td>${CURR_SYM[t.curr]}</td><td>${t.amount.toLocaleString('id-ID')}</td><td>${idrStr}</td><td><span class="chip idle"><span class="dot"></span> Locked</span></td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function updateTierTable(){
+  const tbody = $('tierTableBody'); if(!tbody) return;
+  const rows = tbody.children;
+  for(let i=0;i<rows.length;i++){
+    const t = COIN_TIERS[i];
+    const isAvail = t.coins <= coinBalance;
+    const isBest = bestTierForBalance(coinBalance) === t;
+    rows[i].classList.remove('tier-locked','tier-avail','tier-best');
+    const chipCell = rows[i].children[4];
+    if(isBest){
+      rows[i].classList.add('tier-best');
+      chipCell.innerHTML = '<span class="chip ok"><span class="dot"></span> BEST</span>';
+    } else if(isAvail){
+      rows[i].classList.add('tier-avail');
+      chipCell.innerHTML = '<span class="chip ok"><span class="dot"></span> Available</span>';
+    } else {
+      rows[i].classList.add('tier-locked');
+      chipCell.innerHTML = '<span class="chip idle"><span class="dot"></span> Locked</span>';
+    }
+  }
+}
+
+function generateQRIS(targetId, merchant){
+  const el = $(targetId); if(!el) return;
+  const size = 21; const cell = 5;
+  let seed = 0;
+  for(let i=0;i<merchant.length;i++) seed = (seed*31 + merchant.charCodeAt(i)) >>> 0;
+  function rand(){ seed = (seed * 1103515245 + 12345) >>> 0; return (seed & 0x7FFFFFFF)/0x7FFFFFFF; }
+  let svg = `<svg viewBox="0 0 ${size*cell} ${size*cell}" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<rect width="${size*cell}" height="${size*cell}" fill="#fff"/>`;
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      const isFinder = (x<7 && y<7) || (x>=size-7 && y<7) || (x<7 && y>=size-7);
+      if(isFinder){
+        const fx = x<7 ? 0 : size-7;
+        const fy = y<7 ? 0 : size-7;
+        const rx = x - fx, ry = y - fy;
+        if(rx===0||rx===6||ry===0||ry===6 || (rx>=2&&rx<=4&&ry>=2&&ry<=4)){
+          svg += `<rect x="${x*cell}" y="${y*cell}" width="${cell}" height="${cell}" fill="#000"/>`;
+        }
+      } else {
+        if(rand() < 0.45){
+          svg += `<rect x="${x*cell}" y="${y*cell}" width="${cell}" height="${cell}" fill="#000"/>`;
+        }
+      }
+    }
+  }
+  // center logo accent
+  svg += `<rect x="${(size*cell)/2-9}" y="${(size*cell)/2-9}" width="18" height="18" fill="#00e5ff" rx="3" opacity=".85"/>`;
+  svg += `<text x="${(size*cell)/2}" y="${(size*cell)/2+4}" text-anchor="middle" fill="#04060d" font-size="8" font-family="Orbitron" font-weight="700">QRIS</text>`;
+  svg += `</svg>`;
+  el.innerHTML = svg;
+}
+
+function addTransaction(method, tier, idrAmount, status, ref){
+  const tx = $('txHistory');
+  if(tx.children.length === 1 && tx.children[0].style.textAlign){
+    tx.innerHTML = '';
+  }
+  const div = document.createElement('div');
+  div.className = 'ln';
+  const cls = status === 'SUCCESS' ? 'ok' : 'err';
+  const origStr = `${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`;
+  const idrStr = idrAmount >= 1e6 ? 'Rp ' + (idrAmount/1e6).toFixed(2) + 'M' : 'Rp ' + idrAmount.toLocaleString('id-ID');
+  div.innerHTML = `<span class="t">[${now()}]</span><span class="${cls}">${method} · ${tier.coins} coin → ${origStr} (≈ ${idrStr}) · ${status} · REF:${ref}</span>`;
+  tx.insertBefore(div, tx.firstChild);
+  while(tx.children.length > 30) tx.removeChild(tx.lastChild);
+}
+
+/* (legacy redeemCoins replaced by startRedeem → openVerifyModal → confirmRedeem → proceedRedeem) */
+
+/* ============================================================
+   Interceptor
+   ============================================================ */
+function launchInterceptor(objId, ax, ay, cx, cy, onHit){
+  const layer = $('lasersLayer');
+  const line = document.createElementNS(SVG_NS,'line');
+  line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+  line.setAttribute('x2', cx); line.setAttribute('y2', cy);
+  line.setAttribute('stroke','#ffb74d');
+  line.setAttribute('stroke-width','2.8');
+  line.setAttribute('stroke-linecap','round');
+  line.setAttribute('filter','url(#glow)');
+  layer.appendChild(line);
+
+  const start = performance.now();
+  const dur = 360;
+  function step(t){
+    const k = Math.min(1,(t-start)/dur);
+    const e = 1 - Math.pow(1-k,3);
+    const x = cx + (ax-cx)*e;
+    const y = cy + (ay-cy)*e;
+    line.setAttribute('x2', x); line.setAttribute('y2', y);
+    if(k<1) requestAnimationFrame(step);
+    else { setTimeout(()=>line.remove(),120); if(onHit) onHit(); }
+  }
+  requestAnimationFrame(step);
+}
+
+function spawnExplosion(x, y, color){
+  const fx = $('fxLayer');
+  const g = document.createElementNS(SVG_NS,'g');
+  for(let i=0;i<10;i++){
+    const c = document.createElementNS(SVG_NS,'circle');
+    const ang = (i/10)*Math.PI*2;
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',4);
+    c.setAttribute('fill',color); c.setAttribute('opacity','0.95');
+    g.appendChild(c);
+    const start = performance.now(); const dur = 520;
+    function anim(t){
+      const k = Math.min(1,(t-start)/dur);
+      const e = 1-Math.pow(1-k,2);
+      c.setAttribute('cx', x+Math.cos(ang)*46*e);
+      c.setAttribute('cy', y+Math.sin(ang)*46*e);
+      c.setAttribute('r', 4*(1-e*0.5));
+      c.setAttribute('opacity', 0.95*(1-e));
+      if(k<1) requestAnimationFrame(anim); else c.remove();
+    }
+    requestAnimationFrame(anim);
+  }
+  fx.appendChild(g);
+}
+
+/* ============================================================
+   Identity Card — add to scan panel
+   ============================================================ */
+function addIdentityCard(id, objType, origin){
+  const grid = $('scanGrid');
+  // Remove placeholder
+  if(grid.children.length === 1 && grid.children[0].style.gridColumn){
+    grid.innerHTML = '';
+  }
+  const card = document.createElement('div');
+  card.className = 'id-card' + (objType.threat ? ' threat' : '');
+  const oidStr = 'OID-' + String(id).padStart(4,'0') + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+  const dim = objType.dim.join('×');
+  card.innerHTML = `
+    <div class="top">
+      <span class="oid">${oidStr}</span>
+      <span class="otype">${objType.icon}</span>
+    </div>
+    <div class="name">${objType.type}</div>
+    <div class="container-viz${objType.threat?' threat':''}"></div>
+    <div class="meta">
+      <b>ID:</b> #${id}<br/>
+      <b>Dimensi:</b> ${dim} cm<br/>
+      <b>Berat:</b> ${objType.wt}<br/>
+      <b>Asal:</b> ${origin}<br/>
+      <b>Pindai:</b> ${now()}
+    </div>
+    <div class="footer">
+      <span class="chip ${objType.threat?'threat':'ok'}"><span class="dot"></span> ${objType.threat?'THREAT':'AMAN'}</span>
+    </div>
+  `;
+  grid.insertBefore(card, grid.firstChild);
+  scannedObjects.push({ id, oidStr, ...objType, origin });
+  $('scanTag').textContent = scannedObjects.length + ' benda dipindai';
+  // Keep max 30 cards
+  while(grid.children.length > 30) grid.removeChild(grid.lastChild);
+}
+
+/* ============================================================
+   Stats + Threat level + Mode
+   ============================================================ */
+function updateStats(){
+  setMetric('m-det', stats.detected, 'm-det-bar', Math.min(100, stats.detected*5));
+  setMetric('m-stop', stats.stopped, 'm-stop-bar', stats.detected? (stats.stopped/stats.detected*100):0);
+  setMetric('m-breach', stats.breached, 'm-breach-bar', stats.detected? (stats.breached/stats.detected*100):0);
+
+  const rate = stats.detected? (stats.stopped/stats.detected):1;
+  let defcon = 'NORMAL';
+  if(stats.detected === 0) defcon = 'NORMAL';
+  else if(stats.breached === 0 && rate >= 0.8) defcon = 'SIAGA';
+  else if(stats.breached > 0 && rate >= 0.5) defcon = 'TINGGI';
+  else if(stats.breached > 0 && rate < 0.5) defcon = 'KRITIS';
+  $('topThreatTxt').textContent = 'DEFCON: ' + defcon;
+  const pill = $('topThreat');
+  if(defcon === 'KRITIS'){ pill.style.borderColor='rgba(255,59,59,.6)'; pill.style.color='#ff3b3b'; }
+  else if(defcon === 'TINGGI'){ pill.style.borderColor='rgba(255,183,77,.5)'; pill.style.color='#ffb74d'; }
+  else if(defcon === 'SIAGA'){ pill.style.borderColor='rgba(0,229,255,.4)'; pill.style.color='#00e5ff'; }
+  else { pill.style.borderColor='rgba(0,255,157,.4)'; pill.style.color='#00ff9d'; }
+}
+
+function setMode(mode){
+  const map = {STANDBY:'MODE: STANDBY', SCANNING:'MODE: PENELUSURAN BENDA', PAUSED:'MODE: DIJEDA'};
+  $('topModeTxt').textContent = map[mode] || mode;
+  $('stageTag').textContent = mode;
+}
+
+/* ============================================================
+   Bar Chart — Live Process Data
+   ============================================================ */
+const barCtx = $('barChart').getContext('2d');
+const barLabels = ['Sensor Trig','Gateway','Cloud Write','Dash Push','Intercept','Breach','Notif','🪙 Coin'];
+const barChart = new Chart(barCtx, {
   type:'bar',
   data:{
-    labels: stages,
+    labels: barLabels,
     datasets:[{
-      label:'Latensi (ms)',
-      data: dataPoints,
-      backgroundColor: colors,
-      borderColor: 'rgba(124,77,255,.6)',
-      borderWidth:1,
+      label:'Jumlah Event',
+      data:[0,0,0,0,0,0,0,0],
+      backgroundColor:[
+        'rgba(0,229,255,.75)',   // sensor
+        'rgba(124,77,255,.75)',  // gateway
+        'rgba(0,255,157,.75)',   // cloud
+        'rgba(0,229,255,.55)',   // dash
+        'rgba(255,183,77,.85)',  // intercept
+        'rgba(255,82,82,.85)',   // breach
+        'rgba(124,77,255,.55)',  // notif
+        'rgba(255,215,0,.85)'    // coin
+      ],
+      borderColor:[
+        '#00e5ff','#7c4dff','#00ff9d','#00e5ff','#ffb74d','#ff5252','#7c4dff','#ffd700'
+      ],
+      borderWidth:1.5,
       borderRadius:6,
-      barThickness: 38
+      barThickness:34
     }]
   },
   options:{
     responsive:true, maintainAspectRatio:false,
+    animation:{duration:400, easing:'easeOutQuart'},
     plugins:{
-      legend:{labels:{color:'#cfe6ff'}},
-      tooltip:{
-        backgroundColor:'#0a0e1a', borderColor:'rgba(0,229,255,.4)', borderWidth:1,
-        titleColor:'#00e5ff', bodyColor:'#e6f0ff',
-        callbacks:{
-          label:(ctx)=>{
-            const [s,d] = ctx.raw;
-            return [`Δ +${d} ms`, `Mulai: ${s} ms · Akhir: ${s+d} ms`];
-          }
-        }
-      },
-      title:{
-        display:true, text:'Alur Latensi End-to-End (Waterfall)',
-        color:'#cfe6ff', font:{size:14, weight:'700'}
-      }
+      legend:{display:false},
+      title:{display:true, text:'Proses Data Kubah Pertahanan Aktif (Live)', color:'#cfe6ff', font:{size:14, weight:'700', family:'Orbitron'}},
+      tooltip:{backgroundColor:'#04060d', borderColor:'rgba(0,229,255,.4)', borderWidth:1, titleColor:'#00e5ff', bodyColor:'#e6f0ff'}
     },
     scales:{
-      x:{
-        ticks:{color:'#9fd9ff', font:{size:10}, maxRotation:30, minRotation:0},
-        grid:{color:'rgba(255,255,255,.04)'}
-      },
-      y:{
-        beginAtZero:true,
-        ticks:{color:'#9fd9ff', callback:(v)=>v+' ms'},
-        grid:{color:'rgba(255,255,255,.06)'},
-        title:{display:true, text:'Waktu pemrosesan (ms)', color:'#7e8db5'}
-      }
+      x:{ticks:{color:'#9fd9ff', font:{size:10, family:'Orbitron'}}, grid:{color:'rgba(255,255,255,.04)'}},
+      y:{beginAtZero:true, ticks:{color:'#9fd9ff', stepSize:1}, grid:{color:'rgba(255,255,255,.06)'}, title:{display:true, text:'Jumlah Event', color:'#7e8db5'}}
     }
   }
 });
 
-// Waterfall summary
-$('wf-total').textContent = total + ' ms';
-$('wf-tp').textContent = (1000/ (deltas[1]+deltas[2]) ).toFixed(0) + ' pkt/s';
-$('wf-sla').textContent = total < 300 ? 'PASS' : 'CHECK';
-$('wf-sla').style.color = total < 300 ? 'var(--accent-3)' : 'var(--warn)';
-// bottleneck = max delta
-const maxIdx = deltas.indexOf(Math.max(...deltas));
-$('wf-bottle').textContent = stages[maxIdx].split(' ')[0];
+function updateBarChart(){
+  const data = [barCounts.sensor, barCounts.gateway, barCounts.cloud, barCounts.dash, barCounts.intercept, barCounts.breach, barCounts.notif, barCounts.coin];
+  barChart.data.datasets[0].data = data;
+  barChart.update();
+  $('bs-sensor').textContent = barCounts.sensor;
+  $('bs-gateway').textContent = barCounts.gateway;
+  $('bs-cloud').textContent = barCounts.cloud;
+  $('bs-intercept').textContent = barCounts.intercept;
+  $('bs-breach').textContent = barCounts.breach;
+  $('bs-coin').textContent = barCounts.coin;
+  $('barTag').textContent = (barCounts.sensor+barCounts.gateway+barCounts.cloud+barCounts.dash+barCounts.intercept+barCounts.breach+barCounts.notif+barCounts.coin) + ' events';
+}
 
-/* ----- Initial log + auto start hint ----- */
-log('Sistem Kuatro Sensor Dome siap digunakan.', 'ok');
-log('Klik [Jalankan Simulasi] untuk memulai deteksi objek di pusat area kubah.', 'warn');
+/* ============================================================
+   Waterfall Chart — synced with detections
+   ============================================================ */
+const wfCtx = $('wfChart').getContext('2d');
+const wfChart = new Chart(wfCtx, {
+  type:'bar',
+  data:{
+    labels: STAGE_NAMES,
+    datasets:[{
+      label:'Latensi kumulatif (ms)',
+      data: STAGE_BASE.map((b,i)=>[0,b]),
+      backgroundColor:'rgba(0,229,255,.75)',
+      borderColor:'rgba(124,77,255,.6)',
+      borderWidth:1, borderRadius:6, barThickness:40
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    animation:{duration:450, easing:'easeOutQuart'},
+    plugins:{
+      legend:{labels:{color:'#cfe6ff'}},
+      tooltip:{
+        backgroundColor:'#04060d', borderColor:'rgba(0,229,255,.4)', borderWidth:1,
+        titleColor:'#00e5ff', bodyColor:'#e6f0ff',
+        callbacks:{
+          title:(items)=> STAGE_NAMES[items[0].dataIndex],
+          label:(ctx)=>{ const [s,d]=ctx.raw; return [`Δ +${d.toFixed(1)} ms`, `Mulai: ${s.toFixed(1)} ms · Akhir: ${(s+d).toFixed(1)} ms`]; }
+        }
+      },
+      title:{display:true, text:'Alur Latensi End-to-End (Waterfall Live)', color:'#cfe6ff', font:{size:14, weight:'700', family:'Orbitron'}}
+    },
+    scales:{
+      x:{ticks:{color:'#9fd9ff', font:{size:10}}, grid:{color:'rgba(255,255,255,.04)'}},
+      y:{beginAtZero:true, ticks:{color:'#9fd9ff', callback:(v)=>v+' ms'}, grid:{color:'rgba(255,255,255,.06)'}, title:{display:true, text:'Waktu pemrosesan (ms)', color:'#7e8db5'}}
+    }
+  }
+});
+
+function updateWaterfallChart(){
+  const sums = STAGE_BASE.map(()=>0);
+  wfEvents.forEach(ev => ev.stages.forEach((v,i)=> sums[i]+=v));
+  const avg = sums.map(s => wfEvents.length? s/wfEvents.length : 0);
+  let running = 0;
+  const data = avg.map((d,i)=>{ const start=running; running+=d; return [start,d]; });
+  const maxIdx = avg.indexOf(Math.max(...avg));
+  const colors = avg.map((d,i)=>{
+    if(i === maxIdx && d > 0) return 'rgba(255,183,77,.85)';
+    if(i === avg.length-1) return 'rgba(0,255,157,.85)';
+    return 'rgba(0,229,255,.75)';
+  });
+  wfChart.data.datasets[0].data = data;
+  wfChart.data.datasets[0].backgroundColor = colors;
+  wfChart.update();
+  const total = running;
+  $('wf-events').textContent = wfEvents.length;
+  $('wf-avg').textContent = total.toFixed(1)+' ms';
+  $('wf-total').textContent = (wfEvents.reduce((a,ev)=>a+ev.stages.reduce((x,y)=>x+y,0),0)).toFixed(0)+' ms';
+  $('wf-bottle').textContent = STAGE_NAMES[maxIdx];
+  $('wf-sla').textContent = total < 300 ? 'PASS' : 'CHECK';
+  $('wf-sla').style.color = total < 300 ? 'var(--accent-3)' : 'var(--warn)';
+  $('wfTag').textContent = `Live sync · ${wfEvents.length} events`;
+}
+
+/* ============================================================
+   Simulation loop — Mode Penelusuran Benda
+   ============================================================ */
+function startSim(){
+  if(isRunning){ return; }
+  isRunning = true; isPaused = false;
+  log('▶ MODE PENELUSURAN BENDA AKTIF — kubah memindai semua benda masuk', 'ok');
+  log('🛡 Cloud data sync ON · auto-running tanpa gangguan', 'info');
+  setMetric('m-status','SCANNING');
+  setMode('SCANNING');
+  $('btnStart').textContent = '◉ Memindai...';
+  $('btnStart').disabled = true;
+  $('btnStart').style.opacity = '0.6';
+  scheduleNextObject();
+}
+function scheduleNextObject(){
+  if(!isRunning) return;
+  if(!isPaused){ spawnObject(); }
+  const next = 1600 + Math.random()*2000;
+  const t = setTimeout(scheduleNextObject, next);
+  simTimers.push(t);
+}
+function pauseSim(){
+  if(!isRunning) return;
+  isPaused = !isPaused;
+  if(isPaused){
+    log('⏸ Penelusuran dijeda', 'warn');
+    $('btnPause').textContent = '▶ Lanjut';
+    setMetric('m-status','PAUSED');
+    setMode('PAUSED');
+  } else {
+    log('▶ Penelusuran dilanjutkan', 'ok');
+    $('btnPause').textContent = '⏸ Jeda';
+    setMetric('m-status','SCANNING');
+    setMode('SCANNING');
+  }
+}
+function resetSim(){
+  isRunning = false; isPaused = false;
+  simTimers.forEach(clearTimeout); simTimers = [];
+  ['attacksLayer','lasersLayer','fxLayer'].forEach(id=>{ const l=$(id); while(l.firstChild) l.removeChild(l.firstChild); });
+  stats = { detected:0, stopped:0, breached:0 };
+  wfEvents = [];
+  barCounts = { sensor:0, gateway:0, cloud:0, dash:0, intercept:0, breach:0, notif:0, coin:0 };
+  scannedObjects = [];
+  coinBalance = 0; coinsEarnedTotal = 0; coinsCashedOut = 0; coinHistory = [];
+  updateStats(); updateWaterfallChart(); updateBarChart(); updateCoinUI();
+  for(let i=0;i<5;i++) setSensorRow(i,'idle','—');
+  if($('txHistory')) $('txHistory').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>';
+  // Reset camera cart & inputs
+  camCart = []; camMarket = null;
+  document.querySelectorAll('.market-opt').forEach(o => o.classList.remove('active'));
+  if($('camCart')) $('camCart').innerHTML = '<div style="text-align:center;color:var(--muted);padding:10px">Keranjang kosong — scan produk untuk mulai</div>';
+  if($('camStatus')) $('camStatus').textContent = '📍 Pilih lokasi supermarket dulu';
+  if($('camCheckout')) $('camCheckout').disabled = true;
+  // Clear payment input fields
+  ['phone-DANA','phone-GoPay','rek-BSI','rek-BNI','rek-BRI','rek-Danamon'].forEach(id => { if($(id)) $(id).value = ''; });
+  // Close verify modal if open
+  closeVerifyModal();
+  setMetric('m-status','ARMED');
+  setMode('STANDBY');
+  $('btnStart').textContent = '▶ Mode Penelusuran Benda';
+  $('btnStart').disabled = false;
+  $('btnStart').style.opacity = '1';
+  $('btnPause').textContent = '⏸ Jeda';
+  // reset scan grid
+  $('scanGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:24px">Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Mode Penelusuran Benda</b> untuk memulai pemindaian.</div>';
+  $('scanTag').textContent = '0 benda dipindai';
+  log('↺ Sistem direset — cloud data dibersihkan', 'warn');
+}
+
+$('btnStart').onclick = startSim;
+$('btnPause').onclick = pauseSim;
+$('btnReset').onclick = resetSim;
+
+/* Initialize QRIS displays */
+generateQRIS('qris-Indomaret', 'Indomaret-KubahSimulasi-2026');
+generateQRIS('qris-Alfamidi', 'Alfamidi-KubahSimulasi-2026');
+generateQRIS('qris-Alfamart', 'Alfamart-KubahSimulasi-2026');
+
+/* Initial */
+log('Sistem Kubah Pertahanan siap.', 'ok');
+log('Klik [▶ Mode Penelusuran Benda] — semua benda masuk akan dipindai identitasnya.', 'info');
+log('🪙 S5·COIN sensor aktif — 34 tier multi-currency (Rp/$/RM/SR/¥/₹). Kumpulkan coin, sistem auto-pick tier tertinggi saat cairkan.', 'info');
+buildTierTable();
+updateWaterfallChart();
+updateBarChart();
+updateStats();
+updateCoinUI();
+setMode('STANDBY');
 </script>
 
 </body>
