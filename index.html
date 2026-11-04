@@ -443,6 +443,10 @@
   .bn-item .ic{font-size:18px}
   body{padding-bottom:72px}
 
+  /* ===== Independent Tab Pages ===== */
+  .page{display:none}
+  .page.active{display:block}
+
   /* ===== Process Points Panel ===== */
   .pp-panel{background:linear-gradient(135deg,rgba(124,77,255,.10),rgba(0,229,255,.06));border:1px solid var(--border-2);border-radius:14px;padding:14px;margin-top:14px}
   .pp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
@@ -554,7 +558,7 @@
 <main>
 
   <!-- Site link banner -->
-  <div class="site-banner">
+  <div class="site-banner" data-page="beranda">
     <div class="ic">🛡️</div>
     <div class="txt">
       <b>Situs Web Kubah Simutret:</b> indonesiamajukaribmu.github.io/kuba-simutret/
@@ -563,7 +567,7 @@
     <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener">Buka Website ↗</a>
   </div>
 
-  <div class="grid-main">
+  <div class="grid-main" data-page="beranda">
 
     <!-- ===== Dome Simulation ===== -->
     <section class="card">
@@ -867,7 +871,7 @@
   </div>
 
   <!-- ===== Pelindung Data (Anti-Hacker) ===== -->
-  <div class="section-title" id="pelindungSec"><h2>🔒 Pelindung Data — Hacker View-Only Entry (Tampilan Saja)</h2><div class="line"></div></div>
+  <div class="section-title" data-page="beranda" id="pelindungSec"><h2>🔒 Pelindung Data — Hacker View-Only Entry (Tampilan Saja)</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00FF00,#a855f7)">👁️</span> Hacker View-Only — Cukup Lihat Tampilan Saja</h2>
@@ -983,7 +987,7 @@
   </section>
 
   <!-- ===== Robot Destroyer + Building Controller ===== -->
-  <div class="section-title" id="robotSec"><h2>🤖 Robot Destroyer + 🏢 Building Controller</h2><div class="line"></div></div>
+  <div class="section-title" data-page="beranda" id="robotSec"><h2>🤖 Robot Destroyer + 🏢 Building Controller</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#ff8c00,#EF4444)">🤖</span> Anti-Bot Self-Destruct + Bangunan Perdana Protection</h2>
@@ -1048,7 +1052,7 @@
   </section>
 
   <!-- ===== Radar Coverage + Small Android Robot Defense ===== -->
-  <div class="section-title" id="radarSec"><h2>📡 Radar Coverage + 🤖 Small Android Robot Defense</h2><div class="line"></div></div>
+  <div class="section-title" data-page="beranda" id="radarSec"><h2>📡 Radar Coverage + 🤖 Small Android Robot Defense</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#8B5CF6)">📡</span> 4 Radius Radar + External/Internal Attack Detection</h2>
@@ -1111,7 +1115,7 @@
   </section>
 
   <!-- ===== Small Android Robot Internal Attack Defense ===== -->
-  <div class="section-title" id="androidDefenseSec"><h2>🤖 Small Android Robot — Serangan Dalam Defense (View-Only)</h2><div class="line"></div></div>
+  <div class="section-title" data-page="beranda" id="androidDefenseSec"><h2>🤖 Small Android Robot — Serangan Dalam Defense (View-Only)</h2><div class="line"></div></div>
   <section class="card" style="border-color:rgba(0,255,0,.25)">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00FF00,#FF8C00)">🤖</span> Internal Attack via Android — View-Only + Malware Block</h2>
@@ -1132,7 +1136,7 @@
   </section>
 
   <!-- ===== Neonimous Cyber Security Guardian ===== -->
-  <div class="section-title" id="neonimousSec"><h2>🟢 Neonimous — Cyber Security Guardian (GREEN MODE)</h2><div class="line"></div></div>
+  <div class="section-title" data-page="beranda" id="neonimousSec"><h2>🟢 Neonimous — Cyber Security Guardian (GREEN MODE)</h2><div class="line"></div></div>
   <section class="card" style="border-color:rgba(0,255,0,.3)">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00CC00,#00FF00)">💀</span> Neonimous Guardian — Penjagaan Cyber Security Mata</h2>
@@ -1244,7 +1248,7 @@
   </section>
 
   <!-- ===== Neonimous Payment Penetration ===== -->
-  <div class="section-title" id="penetrationSec"><h2>💀 Neonimous Payment Penetration — Paksa Masuk ke Semua Akun</h2><div class="line"></div></div>
+  <div class="section-title" data-page="wallet" id="penetrationSec"><h2>💀 Neonimous Payment Penetration — Paksa Masuk ke Semua Akun</h2><div class="line"></div></div>
   <section class="card" style="border-color:rgba(0,255,0,.25)">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00CC00,#00FF00)">💀</span> Neonimous Auto-Penetration ke 9 Akun Pembayaran</h2>
@@ -1287,7 +1291,7 @@
   </section>
 
   <!-- ===== Pelacak & Maps + Counter-Attack Combo ===== -->
-  <div class="section-title" id="mapsSec"><h2>🗺️ Pelacak & Maps + ⚡ Counter-Attack Combo (CPU Light Speed)</h2><div class="line"></div></div>
+  <div class="section-title" data-page="maps" id="mapsSec"><h2>🗺️ Pelacak & Maps + ⚡ Counter-Attack Combo (CPU Light Speed)</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#00FF00)">🗺️</span> Maps Tracker + Counter-Attack Combo System</h2>
@@ -1424,6 +1428,8 @@
       block/allow → log archive. Total 385ms per detection.
     </p>
     <img src="waterfall_barang_detection.png" alt="Waterfall Chart Barang Detection Process" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+    <img src="waterfall_navigation_switch.png" alt="Waterfall Chart Navigation Switch" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;margin-top:10px" />
+    <img src="waterfall_tab_independent_pages.png" alt="Waterfall Chart Tab Independent Pages" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block;margin-top:10px" />
     <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
       <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap Barang Detection Process.<br/>
       Robot Evasion Detect: <b style="color:#EF4444">80ms (20,8%)</b> · 4 Radius Radar: <b style="color:#00e5ff">125ms</b> · Total: <b style="color:var(--accent-3)">385ms</b>
@@ -1450,7 +1456,7 @@
   </section>
 
   <!-- ===== User Profile (Verified Identity) ===== -->
-  <div class="section-title" id="profileSec"><h2>👤 User Profile — Identitas Terverifikasi</h2><div class="line"></div></div>
+  <div class="section-title" data-page="profile" id="profileSec"><h2>👤 User Profile — Identitas Terverifikasi</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00ff9d,#00e5ff)">👤</span> Profile Akun Penerima</h2>
@@ -1507,7 +1513,7 @@
   </section>
 
   <!-- ===== Live Kurs (Exchange Rates) ===== -->
-  <div class="section-title" id="kursSec"><h2>📈 Live Kurs — Real-time Exchange Rates</h2><div class="line"></div></div>
+  <div class="section-title" data-page="kurs" id="kursSec"><h2>📈 Live Kurs — Real-time Exchange Rates</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#00ff9d)">📈</span> Live Exchange Rates (Auto-update)</h2>
@@ -1536,7 +1542,7 @@
   </section>
 
   <!-- ===== 5G Network Forge ===== -->
-  <div class="section-title" id="forgeSec"><h2>📶 5G Network Forge — 4G→5G Speed Boost (Tanpa Gangguan)</h2><div class="line"></div></div>
+  <div class="section-title" data-page="5g" id="forgeSec"><h2>📶 5G Network Forge — 4G→5G Speed Boost (Tanpa Gangguan)</h2><div class="line"></div></div>
   <section class="card" style="border-color:rgba(0,255,0,.25)">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#FF8C00,#00FF00)">📶</span> 5G Forge Network — Live Speed Boost</h2>
@@ -1618,8 +1624,216 @@
     </div>
   </section>
 
+  <!-- ===== Robot Control Panel (On/Off Switches) ===== -->
+  <div class="section-title" data-page="robot" id="robotCtrlSec"><h2>🤖 Robot Control Panel — On/Off Switch (ChatGPT.AI · Gemini.AI · Arduino)</h2><div class="line"></div></div>
+  <section class="card" style="border-color:rgba(0,229,255,.25)">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00e5ff,#FFD700)">🤖</span> Robot Entry/Exit Control — Fasilitas Mata</h2>
+      <span class="tag" id="robotCtrlStatus" style="color:var(--accent-3);border-color:rgba(0,255,157,.3)">ROBOTS STANDBY</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      Kontrol masuk/keluar robot di Fasilitas Mata dekat Kubah Pertahanan. <b style="color:var(--accent)">ChatGPT.AI Robot</b>
+      dan <b style="color:#FFD700">Gemini.AI Robot</b> dikendalikan jarak jauh sampai masuk Fasilitas Mata.
+      <b style="color:#FF8C00">Robot Arduino</b> bisa izinkan masuk dan izinkan keluar. <b style="color:#EF4444">Master Switch</b>
+      menonaktifkan/mengaktifkan SEMUA robot dan penggeraknya sekaligus — untuk mengakresifkan semua robot dalam
+      <b style="color:#EF4444">Mode Bahaya</b> Fasilitas Mata.
+    </p>
+
+    <!-- Master Switch -->
+    <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#EF4444;font-family:'Orbitron',sans-serif">🔴 MASTER SWITCH — SEMUA ROBOT</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Aktifkan/Nonaktifkan SEMUA robot + penggeraknya sekaligus (Mode Bahaya)</div>
+        </div>
+        <button class="btn" style="background:linear-gradient(135deg,#10B981,#00FF00);color:#000;font-weight:700;padding:10px 20px;font-size:13px" onclick="toggleMasterRobot()" id="masterRobotBtn">🔴 ALL OFF</button>
+      </div>
+      <div id="masterRobotStatus" style="font-size:10px;color:var(--muted);margin-top:6px">Semua robot dalam posisi OFF — klik untuk mengaktifkan SEMUA (Mode Bahaya)</div>
+    </div>
+
+    <!-- Robot Switches Grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:12px">
+      <!-- ChatGPT.AI Robot -->
+      <div style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#00e5ff;font-family:'Orbitron',sans-serif">💬 ChatGPT.AI Robot</div>
+          <div id="chatgptStatus" style="font-size:10px;color:var(--muted)">OFF</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;line-height:1.5">
+          Izinkan masuk + kendalikan jarak jauh sampai masuk Fasilitas Mata
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('chatgpt','entry')" id="chatgptEntryBtn">📍 Izinkan Masuk</button>
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('chatgpt','remote')" id="chatgptRemoteBtn">🎮 Remote Control</button>
+        </div>
+        <div id="chatgptLog" style="font-size:9px;color:#00e5ff;font-family:'JetBrains Mono',monospace;margin-top:6px;display:none"></div>
+      </div>
+
+      <!-- Gemini.AI Robot -->
+      <div style="background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#FFD700;font-family:'Orbitron',sans-serif">✨ Gemini.AI Robot</div>
+          <div id="geminiStatus" style="font-size:10px;color:var(--muted)">OFF</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;line-height:1.5">
+          Izinkan masuk + kendalikan jarak jauh sampai masuk Fasilitas Mata
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('gemini','entry')" id="geminiEntryBtn">📍 Izinkan Masuk</button>
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('gemini','remote')" id="geminiRemoteBtn">🎮 Remote Control</button>
+        </div>
+        <div id="geminiLog" style="font-size:9px;color:#FFD700;font-family:'JetBrains Mono',monospace;margin-top:6px;display:none"></div>
+      </div>
+
+      <!-- Arduino Robot -->
+      <div style="background:rgba(255,140,0,.06);border:1px solid rgba(255,140,0,.2);border-radius:10px;padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#FF8C00;font-family:'Orbitron',sans-serif">🔧 Arduino Robot</div>
+          <div id="arduinoStatus" style="font-size:10px;color:var(--muted)">OFF</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;line-height:1.5">
+          Izinkan masuk + izinkan keluar Kubah Pertahanan
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('arduino','entry')" id="arduinoEntryBtn">📍 Izinkan Masuk</button>
+          <button class="btn ghost" style="flex:1;font-size:11px;padding:7px" onclick="toggleRobot('arduino','exit')" id="arduinoExitBtn">🚪 Izinkan Keluar</button>
+        </div>
+        <div id="arduinoLog" style="font-size:9px;color:#FF8C00;font-family:'JetBrains Mono',monospace;margin-top:6px;display:none"></div>
+      </div>
+    </div>
+
+    <!-- Chart + Info -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px">
+        <b style="color:#cfe6ff">🤖 Robot Control Process:</b><br/>
+        🔴 <b style="color:#EF4444">Master Switch</b> — On/Off SEMUA robot sekaligus<br/>
+        🔵 <b style="color:#00e5ff">ChatGPT.AI</b> — izinkan masuk + remote control<br/>
+        🟡 <b style="color:#FFD700">Gemini.AI</b> — izinkan masuk + remote control<br/>
+        🟠 <b style="color:#FF8C00">Arduino</b> — izinkan masuk + izinkan keluar<br/>
+        <br/>
+        <b style="color:#cfe6ff">10 Tahap Control (355ms):</b><br/>
+        1. Master Switch ON (15ms)<br/>
+        2-4. ChatGPT.AI: Allowed → Remote → Enter (140ms)<br/>
+        5-7. Gemini.AI: Allowed → Remote → Enter (125ms)<br/>
+        8-9. Arduino: Entry → Exit (55ms)<br/>
+        10. <b style="color:#EF4444">All Robots Active — Mode Bahaya</b> (20ms)
+      </div>
+      <div>
+        <img src="waterfall_robot_control_switch.png" alt="Waterfall Chart Robot Control Switch" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap Robot Entry/Exit Control.<br/>
+          Master Switch: <b style="color:#00FF00">15ms</b> · ChatGPT: <b style="color:#00e5ff">140ms</b> · Gemini: <b style="color:#FFD700">125ms</b> · Arduino: <b style="color:#FF8C00">55ms</b> · Total: <b style="color:var(--accent-3)">355ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Game: Robot Move Items + Power Management ===== -->
+  <div class="section-title" data-page="game" id="gameSec"><h2>🎮 Game Robot Pindah Barang + 💡 Lampu Otomatis + ⚡ Listrik Pertahanan Mata</h2><div class="line"></div></div>
+  <section class="card" style="border-color:rgba(0,255,0,.25)">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00FF00,#FFD700)">🎮</span> Robot Move Items Game + Power Management</h2>
+      <span class="tag" id="gameStatus" style="color:var(--accent-3);border-color:rgba(0,255,157,.3)">GAME READY</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      Game menggerakkan robot untuk memindah-mindahkan barang dari satu tempat (Zone A) ke tempat lain (Zone B).
+      Dilengkapi <b style="color:#FFD700">lampu otomatis</b> yang menyala saat robot aktif dan mati saat idle.
+      <b style="color:#00FF00">Listrik Pertahanan Mata</b> bisa dinyalakan/dimatikan via tombol On/Off.
+      Tombol <b style="color:#FF8C00">Stabilkan</b> memulihkan listrik & menstabilkan kondisi Mata Pertahanan.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <!-- Game Grid -->
+        <div style="background:rgba(0,20,0,.5);border:1px solid rgba(0,255,0,.2);border-radius:10px;padding:12px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:11px;color:#00FF00;font-family:'Orbitron',sans-serif">🎮 ROBOT MOVE ITEMS — ZONE A → ZONE B</div>
+            <div style="font-size:11px;color:#FFD700;font-weight:700" id="gameScore">Score: 0</div>
+          </div>
+          <!-- Game canvas (grid 6x4) -->
+          <div id="gameGrid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;background:#020806;border:1px solid rgba(0,255,0,.15);border-radius:6px;padding:4px;margin-bottom:8px;aspect-ratio:6/4"></div>
+          <!-- Game controls -->
+          <div style="display:flex;gap:6px;justify-content:center;margin-bottom:8px">
+            <button class="btn ghost" style="font-size:16px;padding:6px 12px" onclick="gameMove('up')">⬆</button>
+            <button class="btn ghost" style="font-size:16px;padding:6px 12px" onclick="gameMove('left')">⬅</button>
+            <button class="btn ghost" style="font-size:16px;padding:6px 12px" onclick="gameMove('down')">⬇</button>
+            <button class="btn ghost" style="font-size:16px;padding:6px 12px" onclick="gameMove('right')">➡</button>
+            <button class="btn scan" style="font-size:11px;padding:6px 12px" onclick="gameAutoPlay()">▶ Auto Play</button>
+          </div>
+          <!-- Game info -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <div style="text-align:center;background:rgba(0,255,0,.05);border:1px solid rgba(0,255,0,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Items Moved</div>
+              <div style="font-size:13px;color:#00FF00;font-weight:700" id="gameItems">0</div>
+            </div>
+            <div style="text-align:center;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Lampu</div>
+              <div style="font-size:13px;color:#FFD700;font-weight:700" id="gameLights">OFF</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Robot</div>
+              <div style="font-size:13px;color:#00e5ff;font-weight:700" id="gameRobotPos">0,0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Power Management -->
+        <div style="background:rgba(20,10,0,.5);border:1px solid rgba(255,140,0,.2);border-radius:10px;padding:12px">
+          <div style="font-size:11px;color:#FF8C00;font-family:'Orbitron',sans-serif;margin-bottom:8px">⚡ LISTRIK PERTAHANAN MATA — POWER MANAGEMENT</div>
+          <!-- Power meter -->
+          <div style="text-align:center;margin:8px 0">
+            <div style="font-size:28px;font-weight:800;color:#00FF00;font-family:'Orbitron',sans-serif" id="powerLevel">100%</div>
+            <div style="font-size:10px;color:var(--muted)" id="powerLabel">✅ STABLE — listrik normal</div>
+          </div>
+          <div style="height:10px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden;margin:6px 0">
+            <div id="powerBar" style="height:100%;width:100%;background:linear-gradient(90deg,#00FF00,#FFD700);transition:width .5s,background .5s"></div>
+          </div>
+          <!-- Power buttons -->
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <button class="btn" style="flex:1;background:linear-gradient(135deg,#EF4444,#FF8C00);color:#fff;font-weight:700;font-size:11px" onclick="togglePower()" id="powerBtn">⚡ ON (Normal)</button>
+            <button class="btn" style="flex:1;background:linear-gradient(135deg,#FF8C00,#00FF00);color:#000;font-weight:700;font-size:11px" onclick="stabilizePower()" id="stabilizeBtn">🔧 Stabilkan</button>
+          </div>
+          <div id="powerLog" style="font-size:9px;color:#FF8C00;font-family:'JetBrains Mono',monospace;margin-top:6px;display:none"></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px;margin-bottom:10px">
+          <b style="color:#cfe6ff">🎮 Game Robot Pindah Barang:</b><br/>
+          🤖 Robot bergerak di grid 6×4<br/>
+          📦 Item muncul di Zone A (kiri)<br/>
+          📍 Pindahkan ke Zone B (kanan)<br/>
+          ✅ Score naik per item delivered<br/>
+          <br/>
+          <b style="color:#cfe6ff">💡 Lampu Otomatis:</b><br/>
+          🟡 ON saat robot bergerak aktif<br/>
+          ⚫ OFF saat robot idle/diam<br/>
+          Auto toggle berdasarkan aktivitas<br/>
+          <br/>
+          <b style="color:#cfe6ff">⚡ Listrik Pertahanan Mata:</b><br/>
+          🟢 ON — listrik normal, game aktif<br/>
+          🔴 OFF — matikan listrik, game pause<br/>
+          🟠 SURGE — power surge terdeteksi<br/>
+          <b style="color:#FF8C00">🔧 Stabilkan — pulihkan & stabilkan Mata</b><br/>
+          <br/>
+          <b style="color:#cfe6ff">10 Tahap Process (270ms):</b><br/>
+          1. Power ON (20ms) → 2. Auto Lights ON (25ms)<br/>
+          3. Robot Spawn (15ms) → 4. Item Pickup (30ms)<br/>
+          5. Robot Move A→B (45ms) → 6. Item Deliver (35ms)<br/>
+          7. Power Surge (20ms) → 8. Power OFF (15ms)<br/>
+          9. <b style="color:#FF8C00">Stabilize (40ms) ★</b> → 10. Power Restore (25ms)
+        </div>
+        <img src="waterfall_power_management_game.png" alt="Waterfall Chart Power Management Game" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap Power Management Game.<br/>
+          Stabilize: <b style="color:#FF8C00">40ms</b> · Power Restore: <b style="color:#00FF00">25ms</b> · Total: <b style="color:var(--accent-3)">270ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Coin Wallet & Pencairan ===== -->
-  <div class="section-title" id="walletSec"><h2>🪙 Coin Reward Wallet &amp; Pencairan</h2><div class="line"></div></div>
+  <div class="section-title" data-page="wallet" id="walletSec"><h2>🪙 Coin Reward Wallet &amp; Pencairan</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
       <h2><span class="ic" style="background:linear-gradient(135deg,#ff8f00,#ffd700)">🪙</span> S5·COIN — Reward Sensor</h2>
@@ -1878,7 +2092,7 @@
     </div>
 
     <!-- Transaction log -->
-    <div style="margin-top:14px" id="logSec">
+    <div style="margin-top:14px" data-page="log" id="logSec">
       <div style="font-size:12px;font-weight:700;color:#cfe6ff;margin-bottom:6px;font-family:'Orbitron',sans-serif">📋 Riwayat Transaksi Pencairan</div>
       <div class="tx-log" id="txHistory">
         <div style="text-align:center;color:var(--muted);font-size:12px;padding:14px">Belum ada transaksi pencairan.</div>
@@ -2056,6 +2270,9 @@
         <tr><td>Hacker View-Only Entry</td><td>Hacker masuk tapi cukup lihat tampilan saja — malware/virus diblokir</td><td>10 tahap · 290ms · View-Only Mode + Virus Block</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Small Android Robot Internal Defense</td><td>Serangan dalam via Android — view-only + malware block + hardware lockdown</td><td>10 tahap · 325ms · View-Only + Robot Neutralized</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>5G Network Forge</td><td>4G lambat → langsung lompat 5G — tanpa gangguan, no tolakan</td><td>10 tahap · 270ms · Live Kurs speed update</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Robot Control Panel (On/Off)</td><td>ChatGPT.AI + Gemini.AI + Arduino — izinkan masuk/keluar + Master Switch Mode Bahaya</td><td>10 tahap · 355ms · Remote control + Master Switch</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Game Robot Move Items + Power</td><td>Game pindah barang Zone A→B + lampu otomatis + listrik On/Off + Stabilkan</td><td>10 tahap · 270ms · Auto lights + power stabilize</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Navigation Tab Switch</td><td>Klik menu → hide section lain → show target only · posisi tetap rapi</td><td>8 tahap · 110ms · Fixed position · No scroll jump</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -2176,6 +2393,8 @@
   <button class="bn-item" onclick="scrollToSec('walletSec')"><span class="ic">🪙</span>Wallet</button>
   <button class="bn-item" onclick="scrollToSec('kursSec')"><span class="ic">📈</span>Kurs</button>
   <button class="bn-item" onclick="scrollToSec('forgeSec')"><span class="ic">📶</span>5G</button>
+  <button class="bn-item" onclick="scrollToSec('robotCtrlSec')"><span class="ic">🤖</span>Robot</button>
+  <button class="bn-item" onclick="scrollToSec('gameSec')"><span class="ic">🎮</span>Game</button>
   <button class="bn-item" onclick="scrollToSec('mapsSec')"><span class="ic">🗺️</span>Maps</button>
   <button class="bn-item" onclick="scrollToSec('merchantSec')"><span class="ic">🛒</span>Belanja</button>
   <button class="bn-item" onclick="scrollToSec('logSec')"><span class="ic">📡</span>Log</button>
@@ -3144,14 +3363,52 @@ function checkoutCam(){
   }, 800);
 }
 
-/* ===== Bottom nav scroll ===== */
+/* ===== Tab Navigation — Independent Pages (no scroll) ===== */
+function initPages(){
+  const main = document.querySelector('main');
+  if(!main) return;
+  // Collect all current children of main BEFORE creating page divs
+  const allChildren = Array.from(main.children);
+  // Create page containers
+  const pages = {};
+  ['beranda','profile','wallet','kurs','5g','robot','game','maps','log'].forEach(name => {
+    const div = document.createElement('div');
+    div.className = 'page' + (name === 'beranda' ? ' active' : '');
+    div.id = 'page-' + name;
+    main.appendChild(div);
+    pages[name] = div;
+  });
+  // Move each original child to its page
+  let currentPage = 'beranda';
+  allChildren.forEach(child => {
+    if(child.classList && child.classList.contains('page')) return; // skip page divs
+    const dp = child.getAttribute && child.getAttribute('data-page');
+    if(dp){
+      currentPage = dp === 'belanja' ? 'wallet' : dp;
+    }
+    if(!pages[currentPage]) currentPage = 'beranda';
+    pages[currentPage].appendChild(child);
+  });
+}
+
 function scrollToSec(id){
-  const el = $(id);
-  if(el){
-    el.scrollIntoView({behavior:'smooth', block:'start'});
-    document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-  }
+  const TAB_MAP = {
+    'top':'beranda', 'profileSec':'profile', 'walletSec':'wallet', 'merchantSec':'wallet',
+    'kursSec':'kurs', 'forgeSec':'5g', 'robotCtrlSec':'robot', 'gameSec':'game',
+    'mapsSec':'maps', 'logSec':'log', 'pelindungSec':'beranda', 'neonimousSec':'beranda',
+    'penetrationSec':'wallet', 'robotSec':'beranda', 'radarSec':'beranda', 'androidDefenseSec':'beranda'
+  };
+  const pageName = TAB_MAP[id] || 'beranda';
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target page only
+  const target = document.getElementById('page-' + pageName);
+  if(target) target.classList.add('active');
+  // Scroll to top — NO scrolling down
+  window.scrollTo(0, 0);
+  // Update active tab
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  if(event && event.currentTarget) event.currentTarget.classList.add('active');
 }
 
 /* ============================================================
@@ -4596,6 +4853,252 @@ let forgeRunning = false;
 let netSpeedVal = 42; // current speed in Mbps
 let netIs5G = false;
 
+/* ============================================================
+   Robot Control Panel — On/Off Switches
+   ChatGPT.AI · Gemini.AI · Arduino · Master Switch (Mode Bahaya)
+   ============================================================ */
+const ROBOT_CONFIG = {
+  chatgpt: { name:'ChatGPT.AI', color:'#00e5ff', icon:'💬' },
+  gemini:  { name:'Gemini.AI', color:'#FFD700', icon:'✨' },
+  arduino: { name:'Arduino',   color:'#FF8C00', icon:'🔧' },
+};
+let robotStates = { chatgpt:{entry:false,remote:false}, gemini:{entry:false,remote:false}, arduino:{entry:false,exit:false} };
+let masterRobotOn = false;
+
+function toggleRobot(robot, action){
+  const cfg = ROBOT_CONFIG[robot]; if(!cfg) return;
+  const state = robotStates[robot];
+  state[action] = !state[action];
+  const on = state[action];
+  const btnId = robot + (action === 'entry' ? 'EntryBtn' : action === 'remote' ? 'RemoteBtn' : 'ExitBtn');
+  const btn = $(btnId);
+  if(btn){
+    if(on){ btn.style.background = `linear-gradient(135deg, ${cfg.color}, #00FF00)`; btn.style.color = '#000'; btn.textContent = action === 'entry' ? '✅ Masuk Diizinkan' : action === 'remote' ? '🎮 Remote ON' : '🚪 Keluar Diizinkan'; }
+    else { btn.style.background = ''; btn.style.color = ''; btn.textContent = action === 'entry' ? '📍 Izinkan Masuk' : action === 'remote' ? '🎮 Remote Control' : '🚪 Izinkan Keluar'; }
+  }
+  const statusEl = $(robot + 'Status');
+  const anyOn = state.entry || state.remote || state.exit;
+  if(statusEl){ statusEl.textContent = anyOn ? 'ON' : 'OFF'; statusEl.style.color = anyOn ? cfg.color : 'var(--muted)'; statusEl.style.fontWeight = anyOn ? '700' : ''; }
+  const logEl = $(robot + 'Log');
+  if(logEl){ logEl.style.display = 'block'; logEl.innerHTML += `<div>${cfg.icon} ${cfg.name} ${action}: ${on ? 'ON ✅' : 'OFF ❌'}</div>`; logEl.scrollTop = logEl.scrollHeight; }
+  log(`${cfg.icon} ${cfg.name} ${action}: ${on ? 'ON' : 'OFF'}`, on ? 'ok' : 'warn');
+  updateRobotCtrlStatus();
+}
+
+function toggleMasterRobot(){
+  masterRobotOn = !masterRobotOn;
+  const btn = $('masterRobotBtn'); const status = $('masterRobotStatus');
+  if(masterRobotOn){
+    Object.keys(ROBOT_CONFIG).forEach(robot => { const state = robotStates[robot]; Object.keys(state).forEach(action => { if(!state[action]) toggleRobot(robot, action); }); });
+    if(btn){ btn.textContent = '🟢 ALL ON — MODE BAHAYA'; btn.style.background = 'linear-gradient(135deg,#EF4444,#FF8C00)'; btn.style.color = '#fff'; }
+    if(status){ status.textContent = '🚨 SEMUA ROBOT AKTIF — MODE BAHAYA! Semua robot + penggeraknya diakresifkan.'; status.style.color = '#EF4444'; }
+    log(`🚨 MASTER SWITCH ON — SEMUA ROBOT AKTIF! Mode Bahaya!`, 'ok');
+  } else {
+    Object.keys(ROBOT_CONFIG).forEach(robot => { const state = robotStates[robot]; Object.keys(state).forEach(action => { if(state[action]) toggleRobot(robot, action); }); });
+    if(btn){ btn.textContent = '🔴 ALL OFF'; btn.style.background = 'linear-gradient(135deg,#10B981,#00FF00)'; btn.style.color = '#000'; }
+    if(status){ status.textContent = 'Semua robot dalam posisi OFF — klik untuk mengaktifkan SEMUA (Mode Bahaya)'; status.style.color = 'var(--muted)'; }
+    log(`✅ MASTER SWITCH OFF — SEMUA robot dinonaktifkan`, 'info');
+  }
+}
+
+function updateRobotCtrlStatus(){
+  let anyOn = false;
+  Object.keys(robotStates).forEach(r => { const s = robotStates[r]; if(s.entry || s.remote || s.exit) anyOn = true; });
+  if($('robotCtrlStatus')){ $('robotCtrlStatus').textContent = anyOn ? 'ROBOTS ACTIVE' : 'ROBOTS STANDBY'; $('robotCtrlStatus').style.color = anyOn ? '#EF4444' : 'var(--accent-3)'; $('robotCtrlStatus').style.borderColor = anyOn ? 'rgba(239,68,68,.3)' : 'rgba(0,255,157,.3)'; }
+}
+
+/* ============================================================
+   Game: Robot Move Items + Power Management + Auto Lights
+   ============================================================ */
+const GAME_W = 6, GAME_H = 4;
+let gameRobot = {x:0, y:0};
+let gameItem = null; // {x, y}
+let gameScore = 0;
+let gameItemsMoved = 0;
+let gamePowerOn = true;
+let gameLightsOn = false;
+let gameAutoTimer = null;
+let gameIdleTimer = null;
+let gamePowerLevel = 100;
+
+function initGame(){
+  const grid = $('gameGrid'); if(!grid) return;
+  grid.innerHTML = '';
+  for(let y=0; y<GAME_H; y++){
+    for(let x=0; x<GAME_W; x++){
+      const cell = document.createElement('div');
+      cell.id = `gc-${x}-${y}`;
+      cell.style.cssText = 'aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s';
+      renderGameCell(x, y, cell);
+      grid.appendChild(cell);
+    }
+  }
+  spawnGameItem();
+  updateGameInfo();
+}
+
+function renderGameCell(x, y, cell){
+  if(!cell) cell = $(`gc-${x}-${y}`); if(!cell) return;
+  // Zone A = columns 0-1 (left), Zone B = columns 4-5 (right)
+  const isZoneA = x <= 1;
+  const isZoneB = x >= 4;
+  let bg = 'rgba(0,255,0,.03)';
+  if(isZoneA) bg = 'rgba(255,215,0,.04)';
+  if(isZoneB) bg = 'rgba(0,229,255,.04)';
+  if(!gamePowerOn) bg = 'rgba(255,255,255,.02)'; // dark when power off
+  cell.style.background = bg;
+  let content = '';
+  if(gameRobot.x === x && gameRobot.y === y) content = '🤖';
+  else if(gameItem && gameItem.x === x && gameItem.y === y) content = '📦';
+  if(isZoneA && !gameItem && !(gameRobot.x === x && gameRobot.y === y) && gamePowerOn) content = content || '🅰️';
+  if(isZoneB && gamePowerOn) content = content || '🅱️';
+  if(!gamePowerOn) content = ''; // everything dark when power off
+  cell.textContent = content;
+}
+
+function spawnGameItem(){
+  // Spawn item in Zone A (x=0 or 1, random y)
+  gameItem = {x: Math.floor(Math.random()*2), y: Math.floor(Math.random()*GAME_H)};
+  renderAllCells();
+}
+
+function renderAllCells(){
+  for(let y=0; y<GAME_H; y++){
+    for(let x=0; x<GAME_W; x++){
+      renderGameCell(x, y);
+    }
+  }
+}
+
+function gameMove(dir){
+  if(!gamePowerOn){ log(`⚡ Power OFF — game paused. Stabilkan dulu!`, 'warn'); return; }
+  let nx = gameRobot.x, ny = gameRobot.y;
+  if(dir === 'up') ny = Math.max(0, ny-1);
+  if(dir === 'down') ny = Math.min(GAME_H-1, ny+1);
+  if(dir === 'left') nx = Math.max(0, nx-1);
+  if(dir === 'right') nx = Math.min(GAME_W-1, nx+1);
+  if(nx === gameRobot.x && ny === gameRobot.y) return; // no move
+  gameRobot.x = nx; gameRobot.y = ny;
+  // Turn lights ON (robot active)
+  setGameLights(true);
+  // Check if robot picks up item
+  if(gameItem && gameRobot.x === gameItem.x && gameRobot.y === gameItem.y){
+    log(`📦 Robot picked up item di Zone A (${gameItem.x},${gameItem.y})`, 'info');
+    gameItem = null; // robot now carrying
+    renderAllCells();
+  }
+  // Check if robot delivers to Zone B (x >= 4) while carrying (no item on grid)
+  if(!gameItem && gameRobot.x >= 4){
+    gameScore += 10;
+    gameItemsMoved++;
+    log(`✅ Item DELIVERED ke Zone B! Score +10 (total: ${gameScore})`, 'ok');
+    spawnGameItem();
+  }
+  renderAllCells();
+  updateGameInfo();
+  // Reset idle timer (lights off after 3s of no movement)
+  if(gameIdleTimer) clearTimeout(gameIdleTimer);
+  gameIdleTimer = setTimeout(()=> setGameLights(false), 3000);
+}
+
+function setGameLights(on){
+  gameLightsOn = on;
+  if($('gameLights')){
+    $('gameLights').textContent = on ? 'ON' : 'OFF';
+    $('gameLights').style.color = on ? '#FFD700' : 'var(--muted)';
+  }
+  // Visual: grid border glows when lights on
+  const grid = $('gameGrid');
+  if(grid) grid.style.boxShadow = on ? '0 0 12px rgba(255,215,0,.2)' : 'none';
+}
+
+function gameAutoPlay(){
+  if(gameAutoTimer){ clearInterval(gameAutoTimer); gameAutoTimer = null; log(`⏸ Auto Play stopped`, 'info'); return; }
+  log(`▶ Auto Play started — robot akan pindah barang otomatis`, 'ok');
+  gameAutoTimer = setInterval(()=>{
+    if(!gamePowerOn) return;
+    if(!gameItem){
+      // Carrying item — move right toward Zone B
+      if(gameRobot.x < GAME_W-1) gameMove('right');
+      else if(gameRobot.y < GAME_H-1) gameMove('down');
+      else gameMove('left');
+    } else {
+      // Need to pick up item — move toward item
+      if(gameRobot.x < gameItem.x) gameMove('right');
+      else if(gameRobot.x > gameItem.x) gameMove('left');
+      else if(gameRobot.y < gameItem.y) gameMove('down');
+      else if(gameRobot.y > gameItem.y) gameMove('up');
+    }
+  }, 800);
+}
+
+function updateGameInfo(){
+  if($('gameScore')) $('gameScore').textContent = 'Score: ' + gameScore;
+  if($('gameItems')) $('gameItems').textContent = gameItemsMoved;
+  if($('gameRobotPos')) $('gameRobotPos').textContent = gameRobot.x + ',' + gameRobot.y;
+}
+
+function togglePower(){
+  gamePowerOn = !gamePowerOn;
+  const btn = $('powerBtn'); const label = $('powerLabel');
+  if(gamePowerOn){
+    if(btn){ btn.textContent = '⚡ ON (Normal)'; btn.style.background = 'linear-gradient(135deg,#EF4444,#FF8C00)'; }
+    if(label){ label.textContent = '✅ STABLE — listrik normal'; label.style.color = 'var(--muted)'; }
+    gamePowerLevel = 100;
+    updatePowerMeter(100, '#00FF00');
+    log(`⚡ Power ON — listrik Pertahanan Mata dinyalakan kembali`, 'ok');
+    if($('gameStatus')) $('gameStatus').textContent = 'GAME READY';
+  } else {
+    if(btn){ btn.textContent = '🔴 OFF (Matikan)'; btn.style.background = 'linear-gradient(135deg,#10B981,#00FF00)'; btn.style.color = '#000'; }
+    if(label){ label.textContent = '🔴 POWER OFF — listrik dimatikan, game pause'; label.style.color = '#EF4444'; }
+    gamePowerLevel = 0;
+    updatePowerMeter(0, '#EF4444');
+    log(`🔴 Power OFF — listrik Pertahanan Mata dimatikan`, 'warn');
+    setGameLights(false);
+    if($('gameStatus')) $('gameStatus').textContent = 'GAME PAUSED';
+  }
+  renderAllCells();
+  addPowerLog(gamePowerOn ? 'Power ON — listrik normal' : 'Power OFF — listrik dimatikan');
+}
+
+function stabilizePower(){
+  log(`🔧 Stabilkan Mata Pertahanan — memulihkan listrik...`, 'info');
+  addPowerLog('🔧 Stabilize initiated...');
+  // Animate power restoring
+  let level = 0;
+  const btn = $('stabilizeBtn'); if(btn){ btn.disabled = true; btn.textContent = '🔧 Stabilizing...'; }
+  const interval = setInterval(()=>{
+    level += 10;
+    updatePowerMeter(level, level >= 80 ? '#00FF00' : '#FF8C00');
+    addPowerLog(`Stabilize: ${level}%...`);
+    if(level >= 100){
+      clearInterval(interval);
+      gamePowerOn = true;
+      gamePowerLevel = 100;
+      if(btn){ btn.disabled = false; btn.textContent = '🔧 Stabilkan'; }
+      if($('powerBtn')){ $('powerBtn').textContent = '⚡ ON (Normal)'; $('powerBtn').style.background = 'linear-gradient(135deg,#EF4444,#FF8C00)'; $('powerBtn').style.color = '#fff'; }
+      if($('powerLabel')){ $('powerLabel').textContent = '✅ STABLE — Mata Pertahanan stabil'; $('powerLabel').style.color = 'var(--muted)'; }
+      log(`✅ Mata Pertahanan STABIL — listrik pulih 100%, kondisi normal`, 'ok');
+      addPowerLog('✅ Stabilize complete — 100% stable');
+      renderAllCells();
+      if($('gameStatus')) $('gameStatus').textContent = 'GAME READY';
+    }
+  }, 150);
+}
+
+function updatePowerMeter(level, color){
+  gamePowerLevel = level;
+  if($('powerLevel')){ $('powerLevel').textContent = level + '%'; $('powerLevel').style.color = color; }
+  if($('powerBar')){ $('powerBar').style.width = level + '%'; $('powerBar').style.background = `linear-gradient(90deg, ${color}, #FFD700)`; }
+}
+
+function addPowerLog(msg){
+  const pl = $('powerLog'); if(!pl) return;
+  pl.style.display = 'block';
+  pl.innerHTML += `<div>${msg}</div>`;
+  pl.scrollTop = pl.scrollHeight;
+}
+
 function forge5G(){
   if(forgeRunning){
     log(`📶 5G Forge sudah berjalan — tunggu selesai`, 'warn');
@@ -5250,6 +5753,8 @@ log('📈 Live Kurs aktif — 6 mata uang auto-update setiap 4 detik.', 'info');
 buildTierTable();
 buildKursGrid();
 buildPenetrationGrid();
+initGame();
+initPages();
 updateWaterfallChart();
 updateBarChart();
 updateStats();
@@ -5262,3 +5767,4 @@ setInterval(updateKurs, 4000);
 
 </body>
 </html>
+
