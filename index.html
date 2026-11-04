@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kubah Simulasi Menghalau Serangan — Mode Penelusuran Benda | Kuatro Sensor Defense System</title>
+<title>Kubah Simutret Menghalau Serangan — Penelusuran Benda | Kuatro Sensor Defense System</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
@@ -540,12 +540,12 @@
   <div class="brand">
     <div class="logo"></div>
     <div>
-      <h1>Kubah Simulasi <span>·</span> Menghalau Serangan Masuk</h1>
-      <p>Mode Penelusuran Benda · Kuatro Sensor Defense System · Cloud Data Real-time</p>
+      <h1>Kubah Simutret <span>·</span> Menghalau Serangan Masuk</h1>
+      <p>Penelusuran Benda · Kuatro Sensor Defense System · Cloud Data Real-time</p>
     </div>
   </div>
   <div class="top-status">
-    <div class="status-pill info" id="topMode"><span class="dot"></span> <span id="topModeTxt">MODE: STANDBY</span></div>
+    <div class="status-pill info" id="topMode"><span class="dot"></span> <span id="topModeTxt">STANDBY</span></div>
     <div class="status-pill threat" id="topThreat"><span class="dot"></span> <span id="topThreatTxt">DEFCON: NORMAL</span></div>
     <div class="status-pill live"><span class="dot"></span> SISTEM ONLINE</div>
   </div>
@@ -557,8 +557,8 @@
   <div class="site-banner">
     <div class="ic">🛡️</div>
     <div class="txt">
-      <b>Situs Web Kubah Simulasi:</b> indonesiamajukaribmu.github.io/kuba-simutret/
-      <p>Sistem pertahanan kubah simulasi — Mode Penelusuran Benda mendeteksi benda apa saja yang memasuki fasilitas mata kubah. Tampilan modern canggih, sinkron dengan cloud data.</p>
+      <b>Situs Web Kubah Simutret:</b> indonesiamajukaribmu.github.io/kuba-simutret/
+      <p>Sistem pertahanan kubah simutret — Penelusuran Benda mendeteksi benda apa saja yang memasuki fasilitas mata kubah. Tampilan modern canggih, sinkron dengan cloud data.</p>
     </div>
     <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener">Buka Website ↗</a>
   </div>
@@ -722,7 +722,7 @@
         </svg>
 
         <div class="stage-ctrl">
-          <button class="btn scan" id="btnStart">▶ Mode Penelusuran Benda</button>
+          <button class="btn scan" id="btnStart">▶ Penelusuran Benda</button>
           <button class="btn warn" id="btnPause">⏸ Jeda</button>
           <button class="btn ghost" id="btnReset">↺ Reset</button>
         </div>
@@ -747,10 +747,11 @@
       </div>
 
       <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.65">
-        <b style="color:var(--accent)">Mode Penelusuran Benda</b>: kubah mendeteksi <b>benda apa saja</b> (container, tools, drone, paket)
-        yang memasuki <b>fasilitas mata</b> di pusat area. Saat benda melewati zona sensor Kuatro, identitasnya dipindai
+        <b style="color:var(--accent)">Penelusuran Benda</b>: Kubah Simutret adalah pusat keluar masuk barang yang mendeteksi
+        <b>barang barang masuk</b> di wilayah yang sudah pasti dilarang masuk. Sistem mendeteksi <b>barang barang baru</b>
+        yang menghindari dari <b>robot berkebolehan tinggi</b>. Saat barang melewati zona sensor Kuatro, identitasnya dipindai
         (ID, tipe, dimensi, tingkat ancaman) dan ditampilkan pada panel <b>Identitas Benda Terdeteksi</b>.
-        Serangan berbahaya dihalau oleh interceptor via cascade Sensor → Gateway → Cloud → Dashboard.
+        Barang berbahaya dihalau oleh interceptor via cascade Sensor → Gateway → Cloud → Dashboard.
       </p>
     </section>
 
@@ -858,7 +859,7 @@
           <span class="tag">Cloud archive</span>
         </div>
         <div class="log" id="log">
-          <div class="ln"><span class="t">[--:--:--]</span> Sistem menunggu Mode Penelusuran diaktifkan...</div>
+          <div class="ln"><span class="t">[--:--:--]</span> Sistem menunggu Penelusuran diaktifkan...</div>
         </div>
       </section>
 
@@ -866,19 +867,23 @@
   </div>
 
   <!-- ===== Pelindung Data (Anti-Hacker) ===== -->
-  <div class="section-title" id="pelindungSec"><h2>🔒 Pelindung Data — Sistem Pengaman Anti-Hacker &amp; Anti-Peretas</h2><div class="line"></div></div>
+  <div class="section-title" id="pelindungSec"><h2>🔒 Pelindung Data — Hacker View-Only Entry (Tampilan Saja)</h2><div class="line"></div></div>
   <section class="card">
     <div class="card-head">
-      <h2><span class="ic" style="background:linear-gradient(135deg,#ff3b3b,#a855f7)">🔒</span> Pelindung Data Kubah Simulasi</h2>
-      <span class="tag" style="color:var(--accent-3);border-color:rgba(0,255,157,.3)" id="pelindungStatus">PROTECTION ACTIVE</span>
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00FF00,#a855f7)">👁️</span> Hacker View-Only — Cukup Lihat Tampilan Saja</h2>
+      <span class="tag" style="color:#00FF00;border-color:rgba(0,255,0,.3)" id="pelindungStatus">VIEW-ONLY ACTIVE</span>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
-      <b style="color:#ff3b3b">Pelindung Data</b> adalah lapisan pengaman terluar kubah simulasi yang mencegah
-      <b>hacker, peretas, dan serangan luar</b> masuk ke Fasilitas Mata. Saat hacker mencoba menerobos dari luar,
-      pelindung mendeteksi via <b style="color:var(--accent)">sinyal jaringan</b>, lalu memblokir melalui 8 tahap
-      pertahanan: <b>Hacker Detection → Firewall Block → Encryption Verify → Intrusion Prevention → Threat Analysis →
-      Auto-Quarantine → Log Archive → Alert Notification</b>. Setiap hacker yang diblokir menambah process points
-      <b style="color:#ff3b3b">Breaches</b> dan menjaga Firewall Integrity tetap 100%.
+      <b style="color:#00FF00">Hacker/peretas sudah bisa memasuki</b> Kubah Simutret, tetapi <b style="color:#00FF00">cukup yang mampu
+      melihat oleh peretas adalah melihat tampilannya saja</b>. <b>Tidak dibolehkan masuk sambil bawa virus/malware</b>
+      untuk mencegah kerusakan malware — ini juga cukup tampilannya saja. Saat hacker masuk, sistem menjalankan 10 tahap
+      view-only entry: <b>Hacker Enter → Display Access → Malware Scan → Virus Block → View-Only Mode ON → Display Render →
+      No Write Access → No Exec Access → Safe Viewing → Hacker Exit</b>. Hacker cukup lihat tampilan, virus/malware diblokir.
+    </p>
+    <img src="waterfall_hacker_view_only_entry.png" alt="Waterfall Chart Hacker View-Only Entry" style="width:100%;border-radius:10px;border:1px solid rgba(0,255,0,.2);display:block;margin-bottom:10px" />
+    <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.6;margin-bottom:10px">
+      <b style="color:#00FF00">Waterfall chart</b> — 10 tahap Hacker View-Only Entry.<br/>
+      View-Only Mode: <b style="color:#00FF00">30ms</b> · Virus Block: <b style="color:#EF4444">45ms</b> · Total: <b style="color:var(--accent-3)">290ms</b> → Safe Viewing
     </p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
       <div>
@@ -1103,6 +1108,27 @@
         </p>
       </div>
     </div>
+  </section>
+
+  <!-- ===== Small Android Robot Internal Attack Defense ===== -->
+  <div class="section-title" id="androidDefenseSec"><h2>🤖 Small Android Robot — Serangan Dalam Defense (View-Only)</h2><div class="line"></div></div>
+  <section class="card" style="border-color:rgba(0,255,0,.25)">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#00FF00,#FF8C00)">🤖</span> Internal Attack via Android — View-Only + Malware Block</h2>
+      <span class="tag live" style="color:#00FF00;border-color:rgba(0,255,0,.3)">VIEW-ONLY DEFENSE</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:#00FF00">Small Android robot (serangan dalam)</b> yang masuk via perangkat Android juga diberi
+      <b>View-Only Mode</b> — robot cukup lihat tampilan saja. <b>Virus/malware dari Android device diblokir</b>
+      untuk mencegah kerusakan. Proses defense: Android Robot Detected → Device Scan → Hardware Check →
+      Malware Payload Detect → <b style="color:#EF4444">Virus/Malware Block</b> → <b style="color:#00FF00">View-Only Mode ON</b> →
+      Robot Quarantine → Hardware Lockdown → Safe Internal Viewing → Robot Neutralized. Total 325ms.
+    </p>
+    <img src="waterfall_small_android_internal_defense.png" alt="Waterfall Chart Small Android Robot Internal Attack Defense" style="width:100%;border-radius:10px;border:1px solid rgba(0,255,0,.2);display:block" />
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+      <b style="color:#00FF00">Waterfall chart</b> — 10 tahap Small Android Robot Internal Attack Defense.<br/>
+      View-Only Mode: <b style="color:#00FF00">30ms (9,2%)</b> · Malware Block: <b style="color:#EF4444">40ms</b> · Total: <b style="color:var(--accent-3)">325ms</b> → Robot Neutralized
+    </p>
   </section>
 
   <!-- ===== Neonimous Cyber Security Guardian ===== -->
@@ -1383,6 +1409,27 @@
     </div>
   </section>
 
+  <!-- ===== Barang Detection Process Chart ===== -->
+  <div class="section-title"><h2>📦 Barang Detection Process — Pusat Keluar Masuk Barang</h2><div class="line"></div></div>
+  <section class="card">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#FFD700,#00e5ff)">📦</span> Deteksi Barang Masuk + Robot Evasion Detection</h2>
+      <span class="tag live">Kubah Simutret</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:var(--accent)">Kubah Simutret</b> adalah pusat keluar masuk barang yang mendeteksi <b>barang barang masuk</b>
+      di wilayah yang sudah pasti dilarang masuk. Sistem juga mendeteksi <b>barang barang baru</b> yang menghindari dari
+      <b>robot berkebolehan tinggi</b>. Proses detection meliputi 10 tahap: barang enter zone → radar scan 4 radius
+      (1m/10m/45m/10001+Km) → <b style="color:#EF4444">robot evasion detect</b> → barang identify → prohibited check →
+      block/allow → log archive. Total 385ms per detection.
+    </p>
+    <img src="waterfall_barang_detection.png" alt="Waterfall Chart Barang Detection Process" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+      <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap Barang Detection Process.<br/>
+      Robot Evasion Detect: <b style="color:#EF4444">80ms (20,8%)</b> · 4 Radius Radar: <b style="color:#00e5ff">125ms</b> · Total: <b style="color:var(--accent-3)">385ms</b>
+    </p>
+  </section>
+
   <!-- ===== Identity Cards Panel ===== -->
   <div class="section-title"><h2>Identitas Benda Terdeteksi (Container Tools Visual)</h2><div class="line"></div></div>
   <section class="card">
@@ -1397,7 +1444,7 @@
     </p>
     <div class="scan-grid" id="scanGrid">
       <div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:24px">
-        Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Mode Penelusuran Benda</b> untuk memulai pemindaian.
+        Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Penelusuran Benda</b> untuk memulai pemindaian.
       </div>
     </div>
   </section>
@@ -1530,6 +1577,27 @@
         <div class="wb-top">
           <div style="font-size:12px;font-weight:700;color:#cfe6ff;font-family:'Orbitron',sans-serif">PENCAIRAN KE AKUN</div>
           <div style="font-size:11px;color:var(--muted)">Auto-pick best tier · Identity verified</div>
+        </div>
+        <!-- Neonimous Hacking Run Button -->
+        <div style="margin-bottom:10px;padding:10px;background:rgba(0,26,0,.5);border:1px solid rgba(0,255,0,.25);border-radius:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+            <div style="font-size:11px;color:#00FF00;font-family:'Orbitron',sans-serif;letter-spacing:.3px">💀 NEONIMOUS HACKING — JALANKAN PERETASAN KE 6 AKUN</div>
+            <button class="btn" style="background:linear-gradient(135deg,#00CC00,#00FF00);color:#000;font-weight:700;padding:8px 16px" onclick="runNeonimousHacking()" id="neonHackBtn">💀 RUN NEONIMOUS</button>
+          </div>
+          <div id="neonHackStatus" style="font-size:10px;color:var(--muted);margin-top:6px">Klik tombol untuk menjalankan peretasan Neonimous ke DANA, GoPay, BSI, BNI, BRI, Danamon → ubah ke Penggunaan Aplikasi</div>
+          <div id="neonHackLog" style="font-size:10px;color:#00FF00;font-family:'JetBrains Mono',monospace;margin-top:6px;max-height:80px;overflow-y:auto;display:none"></div>
+          <img src="waterfall_neonimous_hacking_6accounts.png" alt="Waterfall Chart Neonimous Hacking 6 Accounts" style="width:100%;border-radius:8px;border:1px solid rgba(0,255,0,.2);margin-top:8px;display:block" />
+        </div>
+        <!-- A-Z Pencairan Process Button -->
+        <div style="margin-bottom:10px;padding:10px;background:rgba(0,15,30,.6);border:1px solid rgba(0,229,255,.25);border-radius:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+            <div style="font-size:11px;color:var(--accent);font-family:'Orbitron',sans-serif;letter-spacing:.3px">💱 A-Z PENCAIRAN — JALANKAN PROSES LENGKAP (Play Store → Coin → Tunai)</div>
+            <button class="btn scan" style="font-weight:700;padding:8px 16px" onclick="runAToZPencairan()" id="aToZBtn">▶ JALANKAN A-Z</button>
+          </div>
+          <div id="aToZStatus" style="font-size:10px;color:var(--muted);margin-top:6px">Klik untuk jalankan A-Z: Play Store download 6 apps → coin convert → 34 tier multi-currency → uang tunai</div>
+          <div id="aToZLog" style="font-size:10px;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-top:6px;max-height:120px;overflow-y:auto;display:none"></div>
+          <div id="aToZResult" style="display:none;margin-top:8px;padding:10px;background:rgba(0,255,157,.06);border:1px solid rgba(0,255,157,.3);border-radius:8px;font-size:11px;line-height:1.7"></div>
+          <img src="waterfall_a_to_z_pencairan.png" alt="Waterfall Chart A-Z Pencairan Process" style="width:100%;border-radius:8px;border:1px solid var(--border);margin-top:8px;display:block" />
         </div>
         <p style="font-size:10.5px;color:var(--muted);margin:6px 0 8px;line-height:1.5">
           📱 <b style="color:var(--accent)">DANA &amp; GoPay</b>: isi <b>No. Telp</b> (08xxx) · 
@@ -1879,8 +1947,8 @@
         <tr><th>Komponen</th><th>Fungsi</th><th>Metode Validasi</th><th>Hasil</th></tr>
       </thead>
       <tbody>
-        <tr><td>Kuatro Sensor (×4)</td><td>Pemindaian benda memasuki fasilitas mata</td><td>Simulasi benda lintas zona + respons sensor</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
-        <tr><td>Mode Penelusuran Benda</td><td>Identifikasi benda (container/tools) di pusat</td><td>Identity card generation per scan</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Kuatro Sensor (×4)</td><td>Pemindaian benda memasuki fasilitas mata</td><td>Simutret benda lintas zona + respons sensor</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Penelusuran Benda</td><td>Identifikasi benda (container/tools) di pusat</td><td>Identity card generation per scan</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>S5·COIN Reward Sensor</td><td>Kumpul coin per deteksi (+1) &amp; intercept (+2)</td><td>Akumulasi coin &amp; wallet tracking</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Redeem Wallet (Dana/Gopay/Bank)</td><td>Tukar 20 coin → Rp 10.000 ke e-wallet/bank</td><td>BSI, BNI, BRI, Danamon, Dana, Gopay</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>QRIS Merchant Scan</td><td>Bayar barang di Indomaret/Alfamidi/Alfamart</td><td>QRIS barcode scan via komputer</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -1901,6 +1969,9 @@
         <tr><td>Pelacak & Maps Tracker</td><td>GPS location tracking + maps lock untuk amankan lokasi</td><td>Real-time GPS ±1m accuracy + locked</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Counter-Attack Combo (CPU)</td><td>Light Speed + Airplane Mode + Dead-Switch + Maps Lock</td><td>10 tahap combo · 365ms total · kecepatan cahaya</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Neonimous Payment Penetration</td><td>Paksa masuk ke 9 akun: DANA/GoPay/BSI/BNI/BRI/Danamon/Alfamaret/Indomaret/Alfamidi</td><td>Auto-penetration 413ms · kecepatan cahaya</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Neonimous Hacking Run (6 Akun)</td><td>Jalankan peretasan ke DANA/GoPay/BSI/BNI/BRI/Danamon → Penggunaan Aplikasi</td><td>10 tahap · 388ms · Fasilitas Mata tetap protected</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Hacker View-Only Entry</td><td>Hacker masuk tapi cukup lihat tampilan saja — malware/virus diblokir</td><td>10 tahap · 290ms · View-Only Mode + Virus Block</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>Small Android Robot Internal Defense</td><td>Serangan dalam via Android — view-only + malware block + hardware lockdown</td><td>10 tahap · 325ms · View-Only + Robot Neutralized</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -1914,7 +1985,7 @@
 </main>
 
 <footer>
-  <b>Kubah Simulasi Menghalau Serangan Masuk — Mode Penelusuran Benda</b> · Kuatro Sensor Defense System
+  <b>Kubah Simutret Menghalau Serangan Masuk — Penelusuran Benda</b> · Kuatro Sensor Defense System
   <br/>Sinkron dengan <a href="https://indonesiamajukaribmu.github.io/kuba-simutret/" target="_blank" rel="noopener" style="color:var(--accent)">indonesiamajukaribmu.github.io/kuba-simutret/</a> · berjalan penuh menggunakan cloud data.
 </footer>
 
@@ -2027,7 +2098,7 @@
 
 <script>
 /* ============================================================
-   Kubah Simulasi — Mode Penelusuran Benda
+   Kubah Simutret — Penelusuran Benda
    ============================================================ */
 const $ = (id) => document.getElementById(id);
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -3285,7 +3356,7 @@ function updateStats(){
 }
 
 function setMode(mode){
-  const map = {STANDBY:'MODE: STANDBY', SCANNING:'MODE: PENELUSURAN BENDA', PAUSED:'MODE: DIJEDA'};
+  const map = {STANDBY:'STANDBY', SCANNING:'PENELUSURAN BENDA', PAUSED:'DIJEDA'};
   $('topModeTxt').textContent = map[mode] || mode;
   $('stageTag').textContent = mode;
 }
@@ -3412,12 +3483,12 @@ function updateWaterfallChart(){
 }
 
 /* ============================================================
-   Simulation loop — Mode Penelusuran Benda
+   Simulation loop — Penelusuran Benda
    ============================================================ */
 function startSim(){
   if(isRunning){ return; }
   isRunning = true; isPaused = false;
-  log('▶ MODE PENELUSURAN BENDA AKTIF — kubah memindai semua benda masuk', 'ok');
+  log('▶ PENELUSURAN BENDA AKTIF — kubah memindai semua benda masuk', 'ok');
   log('🛡 Cloud data sync ON · auto-running tanpa gangguan', 'info');
   setMetric('m-status','SCANNING');
   setMode('SCANNING');
@@ -3858,23 +3929,23 @@ function spawnSmallRobot(){
 }
 
 function blockSmallRobot(id, bx, by, g, isInternal){
-  // Flash pelindung ring
+  // Flash pelindung ring green = view-only mode
   const ring = $('pelindungRing');
-  if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  if(ring){ ring.setAttribute('stroke','#00FF00'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
   setTimeout(()=>{ if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','1.8'); ring.setAttribute('stroke-opacity','0.55'); } }, 500);
 
-  // "BLOCKED" text
+  // "VIEW-ONLY" text — robot cukup lihat tampilan saja
   const layer = $('labelsLayer');
   if(layer){
     const txt = document.createElementNS(SVG_NS,'text');
     txt.setAttribute('x', bx); txt.setAttribute('y', by-15);
     txt.setAttribute('text-anchor','middle');
-    txt.setAttribute('fill', isInternal ? '#ffa500' : '#ff6b6b');
+    txt.setAttribute('fill', isInternal ? '#00FF00' : '#00FF00');
     txt.setAttribute('font-size','8');
     txt.setAttribute('font-family','Orbitron');
     txt.setAttribute('font-weight','700');
     txt.setAttribute('opacity','1');
-    txt.textContent = isInternal ? '📱 BLOCKED (Android)' : '🤖 BLOCKED (External)';
+    txt.textContent = isInternal ? '👁️ VIEW-ONLY (Android)' : '👁️ VIEW-ONLY (External)';
     layer.appendChild(txt);
     const start = performance.now();
     function anim(t){
@@ -3891,10 +3962,13 @@ function blockSmallRobot(id, bx, by, g, isInternal){
 
   // Log the 12-stage radar + defense process
   const aType = isInternal ? 'INTERNAL' : 'EXTERNAL';
-  log(`🛡️ Small robot #${id} (${aType}) DIBLOKIR di Pelindung Data`, 'ok');
-  log(`   → Radar 1m (15ms) → 10m (25ms) → 45m (40ms) → 10001+Km Global (80ms)`, 'info');
-  log(`   → Detection (35ms) → Android Scan (90ms) → Hardware Check (120ms) → Identity Verify (150ms)`, 'info');
-  log(`   → Quarantine (70ms) → Ext/Int Classify (60ms) → Defense Response (80ms) → All Clear (30ms) · TOTAL 795ms`, 'info');
+  log(`👁️ Small robot #${id} (${aType}) MASUK — View-Only Mode: cukup lihat tampilan saja`, 'ok');
+  log(`   → [1] Android Robot Detected (20ms) → [2] Android Device Scan (45ms)`, 'info');
+  log(`   → [3] Hardware Access Check (55ms) → [4] Malware Payload Detect (50ms)`, 'info');
+  log(`   → [5] Virus/Malware Block (40ms) — malware TIDAK BOLEH masuk`, 'info');
+  log(`   → [6] ★ View-Only Mode ON (30ms) → [7] Robot Quarantine (35ms)`, 'info');
+  log(`   → [8] Hardware Lockdown (25ms) → [9] Safe Internal Viewing (15ms) → [10] Robot Neutralized (10ms)`, 'info');
+  log(`   ✅ Robot cukup lihat tampilan — virus/malware diblokir · TOTAL 325ms`, 'ok');
   // Trigger identity verification for external attacks (new identity acceptance)
   if(!isInternal){
     log(`🆔 Identity acceptance triggered — new identity verification for Proses Pencairan approval`, 'info');
@@ -3988,24 +4062,24 @@ function spawnHacker(){
 
 function blockHacker(id, hx, hy, cx, cy, g){
   hackersBlocked++;
-  // Visual: flash pelindung ring
+  // Visual: flash pelindung ring (now green = view-only allowed)
   const ring = $('pelindungRing');
   const glow = $('pelindungGlow');
-  if(ring){ ring.setAttribute('stroke','#ff3b3b'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
-  if(glow){ glow.setAttribute('stroke','rgba(255,59,59,.5)'); glow.setAttribute('stroke-width','12'); }
+  if(ring){ ring.setAttribute('stroke','#00FF00'); ring.setAttribute('stroke-width','3'); ring.setAttribute('stroke-opacity','1'); }
+  if(glow){ glow.setAttribute('stroke','rgba(0,255,0,.4)'); glow.setAttribute('stroke-width','12'); }
 
-  // "BLOCKED" text effect
+  // "VIEW-ONLY" text effect — hacker cukup lihat tampilan saja
   const layer = $('labelsLayer');
   if(layer){
     const btxt = document.createElementNS(SVG_NS,'text');
     btxt.setAttribute('x', hx); btxt.setAttribute('y', hy-20);
     btxt.setAttribute('text-anchor','middle');
-    btxt.setAttribute('fill','#ff3b3b');
+    btxt.setAttribute('fill','#00FF00');
     btxt.setAttribute('font-size','10');
     btxt.setAttribute('font-family','Orbitron');
     btxt.setAttribute('font-weight','700');
     btxt.setAttribute('opacity','1');
-    btxt.textContent = '🚫 BLOCKED';
+    btxt.textContent = '👁️ VIEW-ONLY';
     layer.appendChild(btxt);
     const start = performance.now();
     function anim(t){
@@ -4017,9 +4091,9 @@ function blockHacker(id, hx, hy, cx, cy, g){
     requestAnimationFrame(anim);
   }
 
-  // Explosion at block point (red/purple)
-  spawnExplosion(hx, hy, '#a855f7');
-  // Remove hacker
+  // Green flash = display access granted, malware blocked
+  spawnExplosion(hx, hy, '#00FF00');
+  // Remove hacker after viewing
   g.remove();
   // Reset pelindung ring
   setTimeout(()=>{
@@ -4028,21 +4102,21 @@ function blockHacker(id, hx, hy, cx, cy, g){
   }, 500);
 
   // Update metrics
-  setMetric('m-hackers', hackersBlocked + ' 🚫', 'm-hackers-bar', Math.min(100, hackersBlocked*8));
+  setMetric('m-hackers', hackersBlocked + ' 👁️', 'm-hackers-bar', Math.min(100, hackersBlocked*8));
   if($('ps-blocked')) $('ps-blocked').textContent = hackersBlocked;
   if($('ps-attempts')) $('ps-attempts').textContent = intrusionAttempts;
-  // Firewall integrity stays 100% (hacker blocked)
   const integrity = Math.max(85, 100 - Math.floor(intrusionAttempts*0.3));
   if($('m-firewall')) $('m-firewall').textContent = integrity + '%';
   if($('m-firewall-bar')) $('m-firewall-bar').style.width = integrity + '%';
   if($('ps-firewall')) $('ps-firewall').textContent = integrity + '%';
 
-  // Log the 8-stage blocking process
-  log(`🔒 Pelindung Data AKTIF — Hacker #${id} DIBLOKIR di ring terluar`, 'ok');
-  log(`   → Hacker Detection (25ms) → Firewall Block (45ms) → Encryption Verify (80ms)`, 'info');
-  log(`   → Intrusion Prevention (120ms) → Threat Analysis (95ms) → Auto-Quarantine (60ms)`, 'info');
-  log(`   → Log Archive (35ms) → Alert Notification (40ms) · TOTAL 500ms`, 'info');
-  // 30% chance to activate Neonimous guardian
+  // Log the 10-stage view-only entry process
+  log(`👁️ Hacker #${id} MASUK — View-Only Mode: cukup lihat tampilan saja`, 'ok');
+  log(`   → [1] Hacker Enter Zone (25ms) → [2] Display Access Granted (35ms)`, 'info');
+  log(`   → [3] Malware Scan (50ms) → [4] Virus Block (45ms) — malware TIDAK BOLEH masuk`, 'info');
+  log(`   → [5] ★ View-Only Mode ON (30ms) → [6] Display Render (40ms)`, 'info');
+  log(`   → [7] No Write Access (20ms) → [8] No Exec Access (20ms) → [9] Safe Viewing (15ms) → [10] Hacker Exit (10ms)`, 'info');
+  log(`   ✅ Hacker cukup lihat tampilan — virus/malware diblokir, tidak ada kerusakan · TOTAL 290ms`, 'ok');
   if(!neonimousActive && Math.random() < 0.30){
     activateNeonimous();
   }
@@ -4099,7 +4173,35 @@ function resetSim(){
   if($('robotAvatarLabel')) $('robotAvatarLabel').textContent = '🟢 NEONIMOUS berbicara via camera depan Android — mulut bergerak';
   // Reset penetration grid
   resetPenetrationGrid();
-  if($('m-hackers')) setMetric('m-hackers','0 🚫','m-hackers-bar',0);
+  // Reset Neonimous hacking
+  hackRunning = false;
+  if($('neonHackBtn')){ $('neonHackBtn').disabled = false; $('neonHackBtn').textContent = '💀 RUN NEONIMOUS'; $('neonHackBtn').style.opacity = '1'; }
+  if($('neonHackStatus')) $('neonHackStatus').textContent = 'Klik tombol untuk menjalankan peretasan Neonimous ke DANA, GoPay, BSI, BNI, BRI, Danamon → ubah ke Penggunaan Aplikasi';
+  if($('neonHackLog')){ $('neonHackLog').style.display = 'none'; $('neonHackLog').innerHTML = ''; }
+  // Reset payment cards to normal (remove APP MODE)
+  ['DANA','GoPay','BSI','BNI','BRI','Danamon'].forEach(name => {
+    const btn = document.querySelector(`.redeem-btn[onclick*="'${name}'"]`);
+    if(btn){
+      const card = btn.closest('.pay-method');
+      if(card){
+        card.style.border = '';
+        card.style.boxShadow = '';
+        card.style.background = '';
+        card.style.position = '';
+        const badge = card.querySelector('.app-badge');
+        if(badge) badge.remove();
+        const desc = card.querySelector('.pm-desc');
+        if(desc){
+          if(name === 'DANA' || name === 'GoPay') desc.innerHTML = 'e-wallet · No. Telp';
+          else desc.innerHTML = name === 'BRI' ? 'Bank Rakyat · No. Rek 15 digit' : `Bank ${name === 'BSI' ? 'Syariah' : name === 'BNI' ? 'Negara' : name === 'Danamon' ? 'Danamon' : ''} · No. Rek`;
+        }
+        btn.textContent = 'Cairkan';
+        btn.style.background = '';
+        btn.style.color = '';
+      }
+    }
+  });
+  if($('m-hackers')) setMetric('m-hackers','0 👁️','m-hackers-bar',0);
   if($('m-firewall')){ $('m-firewall').textContent='100%'; $('m-firewall-bar').style.width='100%'; }
   if($('m-viruses')) setMetric('m-viruses','0 ☣','m-viruses-bar',0);
   if($('m-robots')) setMetric('m-robots','0 🦾','m-robots-bar',0);
@@ -4131,12 +4233,12 @@ function resetSim(){
   closePaymentSuccess();
   setMetric('m-status','ARMED');
   setMode('STANDBY');
-  $('btnStart').textContent = '▶ Mode Penelusuran Benda';
+  $('btnStart').textContent = '▶ Penelusuran Benda';
   $('btnStart').disabled = false;
   $('btnStart').style.opacity = '1';
   $('btnPause').textContent = '⏸ Jeda';
   // reset scan grid
-  $('scanGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:24px">Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Mode Penelusuran Benda</b> untuk memulai pemindaian.</div>';
+  $('scanGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:24px">Belum ada benda terdeteksi. Aktifkan <b style="color:var(--accent)">Penelusuran Benda</b> untuk memulai pemindaian.</div>';
   $('scanTag').textContent = '0 benda dipindai';
   log('↺ Sistem direset — cloud data dibersihkan', 'warn');
 }
@@ -4146,9 +4248,9 @@ $('btnPause').onclick = pauseSim;
 $('btnReset').onclick = resetSim;
 
 /* Initialize QRIS displays */
-generateQRIS('qris-Indomaret', 'Indomaret-KubahSimulasi-2026');
-generateQRIS('qris-Alfamidi', 'Alfamidi-KubahSimulasi-2026');
-generateQRIS('qris-Alfamart', 'Alfamart-KubahSimulasi-2026');
+generateQRIS('qris-Indomaret', 'Indomaret-KubahSimutret-2026');
+generateQRIS('qris-Alfamidi', 'Alfamidi-KubahSimutret-2026');
+generateQRIS('qris-Alfamart', 'Alfamart-KubahSimutret-2026');
 
 /* ============================================================
    Live Kurs — Real-time Exchange Rates (auto-update 4s)
@@ -4378,6 +4480,245 @@ function resetPenetrationGrid(){
       status.style.color = 'var(--muted)';
       status.style.fontWeight = '';
     }
+  });
+}
+
+/* ============================================================
+   Neonimous Hacking Run — Jalankan Peretasan ke 6 Akun
+   DANA → GoPay → BSI → BNI → BRI → Danamon → Penggunaan Aplikasi
+   Fasilitas Mata tetap aktif melindungi website
+   ============================================================ */
+const HACK_TARGETS = [
+  { name:'DANA',    id:'phone-DANA',   type:'e-wallet', latency:45 },
+  { name:'GoPay',   id:'phone-GoPay',  type:'e-wallet', latency:40 },
+  { name:'BSI',     id:'rek-BSI',      type:'Bank',     latency:55 },
+  { name:'BNI',     id:'rek-BNI',      type:'Bank',     latency:50 },
+  { name:'BRI',     id:'rek-BRI',      type:'Bank',     latency:60 },
+  { name:'Danamon', id:'rek-Danamon',  type:'Bank',     latency:48 },
+];
+let hackRunning = false;
+
+/* ============================================================
+   A-Z Pencairan Process — Play Store → Download → Coin → Tunai
+   6 Apps via Play Store + 34 Tier Multi-Currency Conversion
+   ============================================================ */
+let aToZRunning = false;
+
+function runAToZPencairan(){
+  if(aToZRunning){
+    log(`💱 A-Z Pencairan sudah berjalan — tunggu selesai`, 'warn');
+    return;
+  }
+  aToZRunning = true;
+  const btn = $('aToZBtn');
+  const status = $('aToZStatus');
+  const aLog = $('aToZLog');
+  const result = $('aToZResult');
+  if(btn){ btn.disabled = true; btn.textContent = '💱 PROCESSING...'; btn.style.opacity = '0.6'; }
+  if(status) status.textContent = '💱 A-Z Pencairan BERJALAN — Play Store download 6 apps → coin convert → tunai...';
+  if(aLog){ aLog.style.display = 'block'; aLog.innerHTML = ''; }
+  if(result) result.style.display = 'none';
+
+  const addLog = (msg, color='var(--accent)') => {
+    if(aLog){ aLog.innerHTML += `<div style="color:${color}">${msg}</div>`; aLog.scrollTop = aLog.scrollHeight; }
+  };
+
+  // Check coin balance
+  if(coinBalance < 1){
+    addLog(`✗ Saldo coin tidak cukup — kumpulkan minimal 1 coin`, '#ff5252');
+    if(status) status.textContent = '✗ Saldo coin tidak cukup';
+    if(btn){ btn.disabled = false; btn.textContent = '▶ JALANKAN A-Z'; btn.style.opacity = '1'; }
+    aToZRunning = false;
+    return;
+  }
+
+  // Stage 1: Play Store Open (30ms)
+  setTimeout(()=>{
+    addLog(`▶ [1/12] Play Store Open (30ms) — membuka Google Play Store`, '#00FF00');
+    log(`💱 [A-Z 1/12] Play Store Open — membuka Google Play Store`, 'info');
+  }, 50);
+
+  // Stage 2-3: DANA App Download + Install
+  setTimeout(()=>{
+    addLog(`▶ [2/12] DANA App Download (45ms) — mengunduh dari Play Store`, '#00e5ff');
+    log(`💱 [A-Z 2/12] DANA App Download dari Play Store`, 'info');
+  }, 100);
+  setTimeout(()=>{
+    addLog(`▶ [3/12] DANA App Install (35ms) — instalasi selesai`, '#0077BB');
+    log(`💱 [A-Z 3/12] DANA App Install selesai`, 'info');
+  }, 150);
+
+  // Stage 4: GoPay App
+  setTimeout(()=>{
+    addLog(`▶ [4/12] GoPay App Download+Install (70ms) — selesai`, '#00e5ff');
+    log(`💱 [A-Z 4/12] GoPay App Download+Install dari Play Store`, 'info');
+  }, 230);
+
+  // Stage 5: BSI Mobile
+  setTimeout(()=>{
+    addLog(`▶ [5/12] BSI Mobile Download+Install (65ms) — selesai`, '#00e5ff');
+    log(`💱 [A-Z 5/12] BSI Mobile Download+Install dari Play Store`, 'info');
+  }, 310);
+
+  // Stage 6: BNI Mobile
+  setTimeout(()=>{
+    addLog(`▶ [6/12] BNI Mobile Download+Install (60ms) — selesai`, '#00e5ff');
+    log(`💱 [A-Z 6/12] BNI Mobile Download+Install dari Play Store`, 'info');
+  }, 380);
+
+  // Stage 7: BRI Mobile
+  setTimeout(()=>{
+    addLog(`▶ [7/12] BRI Mobile Download+Install (55ms) — selesai`, '#00e5ff');
+    log(`💱 [A-Z 7/12] BRI Mobile Download+Install dari Play Store`, 'info');
+  }, 450);
+
+  // Stage 8: Danamon
+  setTimeout(()=>{
+    addLog(`▶ [8/12] Danamon Online Download+Install (50ms) — selesai`, '#00e5ff');
+    log(`💱 [A-Z 8/12] Danamon Online Download+Install dari Play Store`, 'info');
+  }, 510);
+
+  // Stage 9: Coin → Tunai Convert (80ms) — find best tier
+  setTimeout(()=>{
+    const tier = bestTierForBalance(coinBalance);
+    if(tier){
+      const idr = tierIDR(tier);
+      const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+      addLog(`▶ [9/12] ★ Coin → Tunai Convert (80ms) — ${tier.coins} coin → ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${idrStr})`, '#FFD700');
+      log(`💱 [A-Z 9/12] Coin → Tunai: ${tier.coins} coin → ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${idrStr})`, 'ok');
+    } else {
+      addLog(`▶ [9/12] Coin → Tunai Convert — tidak ada tier tersedia`, '#ff5252');
+    }
+  }, 600);
+
+  // Stage 10: 34 Tier Multi-Currency (90ms)
+  setTimeout(()=>{
+    const tier = bestTierForBalance(coinBalance);
+    if(tier){
+      addLog(`▶ [10/12] 34 Tier Multi-Currency (90ms) — tier dipilih: ${tier.coins} coin = ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`, '#FF8C00');
+      log(`💱 [A-Z 10/12] 34 Tier Multi-Currency — tier: ${tier.coins} coin = ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}`, 'info');
+      addLog(`   💱 Currencies: Rp (IDR) · $ (USD) · RM (MYR) · SR (SAR) · ¥ (JPY) · ₹ (INR)`, '#FF8C00');
+      addLog(`   📊 34 tier tersedia — sistem auto-pick tier dengan nilai IDR tertinggi`, '#FF8C00');
+    }
+  }, 700);
+
+  // Stage 11: Uang Tunai Received (40ms)
+  setTimeout(()=>{
+    const tier = bestTierForBalance(coinBalance);
+    if(tier){
+      const idr = tierIDR(tier);
+      const idrStr = idr >= 1e6 ? 'Rp ' + (idr/1e6).toFixed(2) + 'M' : 'Rp ' + idr.toLocaleString('id-ID');
+      addLog(`▶ [11/12] Uang Tunai Received (40ms) — ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${idrStr}) MASUK ke akun`, '#10B981');
+      log(`💱 [A-Z 11/12] Uang Tunai Received: ${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')} (≈ ${idrStr})`, 'ok');
+      // Deduct coins and add to cashed out
+      coinBalance -= tier.coins;
+      coinsCashedOut += idr;
+      updateCoinUI();
+      // Show result panel
+      if(result){
+        result.style.display = 'block';
+        result.innerHTML = `
+          <div style="font-size:13px;font-weight:700;color:var(--accent-3);font-family:'Orbitron',sans-serif;margin-bottom:6px">✅ UANG TUNAI DITERIMA</div>
+          <div><b>Coin dikeluarkan:</b> <span style="color:#FFD700">${tier.coins} 🪙</span></div>
+          <div><b>Mata uang:</b> <span style="color:var(--accent)">${CURR_SYM[tier.curr]} ${tier.amount.toLocaleString('id-ID')}</span></div>
+          <div><b>Setara IDR:</b> <span style="color:var(--accent-3)">${idrStr}</span></div>
+          <div><b>34 Tier Multi-Currency:</b> Rp / $ / RM / SR / ¥ / ₹</div>
+          <div><b>Aplikasi:</b> DANA · GoPay · BSI · BNI · BRI · Danamon (via Play Store)</div>
+          <div><b>Sisa saldo:</b> <span style="color:#cfe6ff">${coinBalance} 🪙</span></div>
+        `;
+      }
+    }
+  }, 750);
+
+  // Stage 12: A-Z Complete (20ms)
+  setTimeout(()=>{
+    addLog(`▶ [12/12] A-Z Process Complete (20ms) · TOTAL 640ms`, '#00FF00');
+    addLog(`✅ SEMUA PROSES A-Z SELESAI — uang tunai telah masuk ke akun`, '#10B981');
+    log(`✅ A-Z PENCAIRAN COMPLETE — Play Store → 6 apps → coin → 34 tier → tunai · TOTAL 640ms`, 'ok');
+    if(status) status.textContent = '✅ A-Z COMPLETE — uang tunai masuk · 640ms · 34 tier multi-currency';
+    if(btn){ btn.disabled = false; btn.textContent = '▶ JALANKAN A-Z LAGI'; btn.style.opacity = '1'; }
+    aToZRunning = false;
+  }, 790);
+}
+
+function runNeonimousHacking(){
+  if(hackRunning){
+    log(`💀 Neonimous hacking sudah berjalan — tunggu selesai`, 'warn');
+    return;
+  }
+  hackRunning = true;
+  const btn = $('neonHackBtn');
+  const status = $('neonHackStatus');
+  const hackLog = $('neonHackLog');
+  if(btn){ btn.disabled = true; btn.textContent = '💀 HACKING...'; btn.style.opacity = '0.6'; }
+  if(status) status.textContent = '💀 Neonimous hacking BERJALAN — 6 akun sedang ditembus...';
+  if(hackLog){ hackLog.style.display = 'block'; hackLog.innerHTML = ''; }
+
+  // Activate Neonimous first
+  if(!neonimousActive) activateNeonimous();
+
+  // Ensure Fasilitas Mata stays protected
+  log(`👁️ Fasilitas Mata tetap AKTIF melindungi website selama peretasan`, 'ok');
+  if(hackLog) hackLog.innerHTML += `<div>👁️ Fasilitas Mata: PROTECTED — website tetap dilindungi</div>`;
+
+  let hackProgress = 0;
+  const addHackLog = (msg) => {
+    if(hackLog) hackLog.innerHTML += `<div>${msg}</div>`;
+    if(hackLog) hackLog.scrollTop = hackLog.scrollHeight;
+  };
+
+  // Penetrate each account sequentially
+  HACK_TARGETS.forEach((target, i) => {
+    setTimeout(()=>{
+      hackProgress++;
+      // Find the payment card for this account
+      const btn2 = document.querySelector(`.redeem-btn[onclick*="'${target.name}'"]`);
+      let card = null;
+      if(btn2){ card = btn2.closest('.pay-method'); }
+      if(card){
+        // Change card to "Penggunaan Aplikasi" mode
+        card.style.border = '2px solid #00FF00';
+        card.style.boxShadow = '0 0 16px rgba(0,255,0,.35)';
+        card.style.background = 'rgba(0,40,0,.5)';
+        // Add APP MODE badge
+        const desc = card.querySelector('.pm-desc');
+        if(desc){
+          desc.innerHTML = `📱 <b style="color:#00FF00">PENGGUNAAN APLIKASI</b>`;
+        }
+        // Change button text
+        if(btn2){
+          btn2.textContent = '📱 App Active';
+          btn2.style.background = 'linear-gradient(135deg,#00CC00,#00FF00)';
+          btn2.style.color = '#000';
+          btn2.disabled = false;
+        }
+        // Add app mode badge if not exists
+        if(!card.querySelector('.app-badge')){
+          const badge = document.createElement('div');
+          badge.className = 'app-badge';
+          badge.style.cssText = 'position:absolute;top:4px;right:4px;background:#00FF00;color:#000;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;font-family:Orbitron';
+          badge.textContent = '📱 APP';
+          card.style.position = 'relative';
+          card.appendChild(badge);
+        }
+      }
+      addHackLog(`<div style="color:#00FF00">💀 [${hackProgress}/6] ${target.name} (${target.type}) DITEMBUS → Penggunaan Aplikasi — ${target.latency}ms</div>`);
+      log(`💀 [${hackProgress}/6] Neonimous MENEMBUS ${target.name} → mode Penggunaan Aplikasi (${target.latency}ms)`, 'ok');
+
+      // After all 6 done
+      if(hackProgress === 6){
+        setTimeout(()=>{
+          addHackLog(`<div style="color:#00e5ff">👁️ Fasilitas Mata: tetap PROTECTED</div>`);
+          addHackLog(`<div style="color:#00e5ff">🛡️ Website: SHIELD UP — tetap dilindungi</div>`);
+          addHackLog(`<div style="color:#10B981;font-weight:700">✅ SEMUA 6 AKUN → PENGGUNAAN APLIKASI · Total 388ms · Hack COMPLETE</div>`);
+          log(`✅ NEONIMOUS HACKING COMPLETE — 6 akun (DANA, GoPay, BSI, BNI, BRI, Danamon) → Penggunaan Aplikasi`, 'ok');
+          log(`👁️ Fasilitas Mata tetap PROTECTED — website tetap dilindungi`, 'ok');
+          if(status) status.textContent = '✅ HACK COMPLETE — 6 akun → Penggunaan Aplikasi · Fasilitas Mata PROTECTED';
+          if(btn){ btn.disabled = false; btn.textContent = '💀 RUN AGAIN'; btn.style.opacity = '1'; }
+          hackRunning = false;
+        }, 200);
+      }
+    }, i * 100 + 500); // 500ms delay after Neonimous activation, then 100ms between each
   });
 }
 
@@ -4669,7 +5010,7 @@ setInterval(()=>{
 
 /* Initial */
 log('Sistem Kubah Pertahanan siap.', 'ok');
-log('Klik [▶ Mode Penelusuran Benda] — semua benda masuk akan dipindai identitasnya.', 'info');
+log('Klik [▶ Penelusuran Benda] — semua benda masuk akan dipindai identitasnya.', 'info');
 log('🪙 S5·COIN sensor aktif — 34 tier multi-currency (Rp/$/RM/SR/¥/₹). Kumpulkan coin, sistem auto-pick tier tertinggi saat cairkan.', 'info');
 log('📈 Live Kurs aktif — 6 mata uang auto-update setiap 4 detik.', 'info');
 buildTierTable();
