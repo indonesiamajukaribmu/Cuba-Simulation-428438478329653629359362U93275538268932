@@ -1535,6 +1535,89 @@
     </p>
   </section>
 
+  <!-- ===== 5G Network Forge ===== -->
+  <div class="section-title" id="forgeSec"><h2>📶 5G Network Forge — 4G→5G Speed Boost (Tanpa Gangguan)</h2><div class="line"></div></div>
+  <section class="card" style="border-color:rgba(0,255,0,.25)">
+    <div class="card-head">
+      <h2><span class="ic" style="background:linear-gradient(135deg,#FF8C00,#00FF00)">📶</span> 5G Forge Network — Live Speed Boost</h2>
+      <span class="tag" id="forgeStatus" style="color:#EF4444;border-color:rgba(239,68,68,.3)">4G LAMBAT</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.65">
+      <b style="color:var(--accent)">5G Network Forge</b>: jaringan yang tadinya lambat (4G) tiba-tiba langsung lompat
+      menjadi <b style="color:#00FF00">5G</b> — tidak ada tolakan, langsung lanjut perkembangan. Tanpa gangguan,
+      jaringan lancar terus. <b>Live Kurs speed update</b> menampilkan kecepatan jaringan real-time. Proses 5G Forge
+      berjalan dalam pertahanan Fasilitas Mata: 4G detected (lambat) → Forge initiate → <b style="color:#8B5CF6">4G→5G jump</b>
+      → <b style="color:#00FF00">5G connected</b> → speed boost ON → no lag → continuous streaming → live Kurs update →
+      Fasilitas Mata defense ON. Total 270ms.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="pelindung-grid">
+      <div>
+        <!-- Live Network Speed Display -->
+        <div style="background:rgba(0,15,30,.6);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:14px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-size:11px;color:var(--accent);font-family:'Orbitron',sans-serif;letter-spacing:.3px">📡 LIVE NETWORK SPEED</div>
+            <div id="netType" style="font-size:20px;font-weight:800;color:#EF4444;font-family:'Orbitron',sans-serif">4G</div>
+          </div>
+          <!-- Speed gauge -->
+          <div style="text-align:center;margin:10px 0">
+            <div style="font-size:36px;font-weight:800;color:#EF4444;font-family:'Orbitron',sans-serif;text-shadow:0 0 10px rgba(239,68,68,.4)" id="netSpeed">42 Mbps</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px" id="netLabel">⚠ LAMBAT — jaringan 4G lambat</div>
+          </div>
+          <!-- Speed bar -->
+          <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin:8px 0">
+            <div id="netSpeedBar" style="height:100%;width:15%;background:linear-gradient(90deg,#EF4444,#FF8C00);transition:width .5s ease,background .5s ease"></div>
+          </div>
+          <!-- Stats grid -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px">
+            <div style="text-align:center;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Latency</div>
+              <div style="font-size:11px;color:#EF4444;font-weight:700" id="netLatency">120ms</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Ping</div>
+              <div style="font-size:11px;color:#EF4444;font-weight:700" id="netPing">85ms</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:6px;padding:5px">
+              <div style="font-size:8px;color:var(--muted)">Status</div>
+              <div style="font-size:11px;color:#EF4444;font-weight:700" id="netStatus">LAGGING</div>
+            </div>
+          </div>
+          <!-- Forge button -->
+          <button class="btn" style="width:100%;margin-top:10px;background:linear-gradient(135deg,#FF8C00,#00FF00);color:#000;font-weight:700" onclick="forge5G()" id="forgeBtn">🔥 FORGE 5G — BOOST NOW</button>
+          <div id="forgeLog" style="font-size:10px;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-top:6px;max-height:80px;overflow-y:auto;display:none"></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:rgba(4,6,13,.5);border:1px solid var(--border);border-radius:10px;margin-bottom:10px">
+          <b style="color:#cfe6ff">📶 5G Network Forge Process:</b><br/>
+          🔴 <b style="color:#EF4444">4G Lambat</b> — jaringan lambat, speed rendah<br/>
+          🟠 <b style="color:#FF8C00">Forge Initiate</b> — mulai boost<br/>
+          🟣 <b style="color:#8B5CF6">4G → 5G Jump</b> — langsung lompat, no tolakan<br/>
+          🟢 <b style="color:#00FF00">5G Connected</b> — kecepatan maksimum<br/>
+          🔵 <b style="color:#00e5ff">No Lag</b> — tanpa gangguan, langsung lancar<br/>
+          🟢 <b style="color:#10B981">Continuous</b> — streaming lancar terus<br/>
+          <br/>
+          <b style="color:#cfe6ff">10 Tahap Forge (270ms):</b><br/>
+          1. Network Detected 4G (20ms)<br/>
+          2. Speed Low Lambat (45ms)<br/>
+          3. Forge Initiate (30ms)<br/>
+          4. <b style="color:#8B5CF6">4G → 5G Jump (25ms) ★</b><br/>
+          5. <b style="color:#00FF00">5G Connected (15ms)</b><br/>
+          6. Speed Boost ON (10ms)<br/>
+          7. No Lag No Tolakan (20ms)<br/>
+          8. Continuous Streaming (35ms)<br/>
+          9. Live Kurs Speed Update (40ms)<br/>
+          10. Fasilitas Mata Defense ON (30ms)
+        </div>
+        <img src="waterfall_5g_network_forge.png" alt="Waterfall Chart 5G Network Forge" style="width:100%;border-radius:10px;border:1px solid var(--border);display:block" />
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6">
+          <b style="color:var(--accent)">Waterfall chart</b> — 10 tahap 5G Network Forge.<br/>
+          4G→5G Jump: <b style="color:#8B5CF6">25ms</b> · 5G Connected: <b style="color:#00FF00">15ms</b> · Total: <b style="color:var(--accent-3)">270ms</b>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Coin Wallet & Pencairan ===== -->
   <div class="section-title" id="walletSec"><h2>🪙 Coin Reward Wallet &amp; Pencairan</h2><div class="line"></div></div>
   <section class="card">
@@ -1972,6 +2055,7 @@
         <tr><td>Neonimous Hacking Run (6 Akun)</td><td>Jalankan peretasan ke DANA/GoPay/BSI/BNI/BRI/Danamon → Penggunaan Aplikasi</td><td>10 tahap · 388ms · Fasilitas Mata tetap protected</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Hacker View-Only Entry</td><td>Hacker masuk tapi cukup lihat tampilan saja — malware/virus diblokir</td><td>10 tahap · 290ms · View-Only Mode + Virus Block</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Small Android Robot Internal Defense</td><td>Serangan dalam via Android — view-only + malware block + hardware lockdown</td><td>10 tahap · 325ms · View-Only + Robot Neutralized</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
+        <tr><td>5G Network Forge</td><td>4G lambat → langsung lompat 5G — tanpa gangguan, no tolakan</td><td>10 tahap · 270ms · Live Kurs speed update</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Gateway</td><td>Agregasi sinyal &amp; relay ke cloud</td><td>Pengukuran RTT &amp; throughput</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>Cloud Server</td><td>Penyimpanan identitas &amp; analitik</td><td>Verifikasi write time-series + object storage</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
         <tr><td>User Dashboard</td><td>Visualisasi real-time + command interceptor</td><td>WebSocket push &amp; render metric</td><td><span class="chip ok"><span class="dot"></span> Berfungsi</span></td></tr>
@@ -2091,6 +2175,7 @@
   <button class="bn-item" onclick="scrollToSec('profileSec')"><span class="ic">👤</span>Profile</button>
   <button class="bn-item" onclick="scrollToSec('walletSec')"><span class="ic">🪙</span>Wallet</button>
   <button class="bn-item" onclick="scrollToSec('kursSec')"><span class="ic">📈</span>Kurs</button>
+  <button class="bn-item" onclick="scrollToSec('forgeSec')"><span class="ic">📶</span>5G</button>
   <button class="bn-item" onclick="scrollToSec('mapsSec')"><span class="ic">🗺️</span>Maps</button>
   <button class="bn-item" onclick="scrollToSec('merchantSec')"><span class="ic">🛒</span>Belanja</button>
   <button class="bn-item" onclick="scrollToSec('logSec')"><span class="ic">📡</span>Log</button>
@@ -4503,6 +4588,155 @@ let hackRunning = false;
    6 Apps via Play Store + 34 Tier Multi-Currency Conversion
    ============================================================ */
 let aToZRunning = false;
+
+/* ============================================================
+   5G Network Forge — 4G→5G Speed Boost (No Lag, Continuous)
+   ============================================================ */
+let forgeRunning = false;
+let netSpeedVal = 42; // current speed in Mbps
+let netIs5G = false;
+
+function forge5G(){
+  if(forgeRunning){
+    log(`📶 5G Forge sudah berjalan — tunggu selesai`, 'warn');
+    return;
+  }
+  forgeRunning = true;
+  const btn = $('forgeBtn');
+  const fLog = $('forgeLog');
+  if(btn){ btn.disabled = true; btn.textContent = '🔥 FORGING 5G...'; btn.style.opacity = '0.6'; }
+  if(fLog){ fLog.style.display = 'block'; fLog.innerHTML = ''; }
+
+  const addFLog = (msg, color='var(--accent)') => {
+    if(fLog){ fLog.innerHTML += `<div style="color:${color}">${msg}</div>`; fLog.scrollTop = fLog.scrollHeight; }
+  };
+
+  log(`🔥 5G NETWORK FORGE DIMULAI — 4G lambat akan lompat ke 5G!`, 'ok');
+
+  // Stage 1: Network Detected 4G (20ms)
+  setTimeout(()=>{
+    addFLog(`▶ [1/10] Network Detected 4G (20ms) — jaringan saat ini: 4G, 42 Mbps`, '#EF4444');
+    log(`📶 [Forge 1/10] Network Detected: 4G, 42 Mbps — LAMBAT`, 'info');
+  }, 30);
+
+  // Stage 2: Speed Low Lambat (45ms)
+  setTimeout(()=>{
+    addFLog(`▶ [2/10] Speed Low (45ms) — jaringan lambat, latency 120ms, ping 85ms`, '#EF4444');
+    log(`📶 [Forge 2/10] Speed Low — jaringan 4G lambat`, 'info');
+  }, 80);
+
+  // Stage 3: Forge Initiate (30ms)
+  setTimeout(()=>{
+    addFLog(`▶ [3/10] Forge Initiate (30ms) — mulai boost jaringan...`, '#FF8C00');
+    log(`📶 [Forge 3/10] Forge Initiate — mulai boost`, 'info');
+    // Speed starts increasing slightly
+    updateNetSpeed(85, '4G', '#FF8C00', '🟠 FORGING... boost dimulai', 180, 60, 'BOOSTING');
+  }, 120);
+
+  // Stage 4: 4G → 5G Jump (25ms) ★ KEY
+  setTimeout(()=>{
+    addFLog(`▶ [4/10] ★ 4G → 5G JUMP (25ms) — LANGSUNG LOMPAT! Tidak ada tolakan!`, '#8B5CF6');
+    log(`📶 [Forge 4/10] ★ 4G → 5G JUMP — langsung lompat, no tolakan!`, 'ok');
+    // Jump to 5G
+    netIs5G = true;
+    updateNetSpeed(350, '5G', '#00FF00', '🟣 4G→5G JUMP — langsung lompat!', 25, 12, 'JUMPING');
+  }, 150);
+
+  // Stage 5: 5G Connected (15ms)
+  setTimeout(()=>{
+    addFLog(`▶ [5/10] 5G Connected (15ms) — 5G aktif! Kecepatan maksimum!`, '#00FF00');
+    log(`📶 [Forge 5/10] 5G Connected — kecepatan maksimum!`, 'ok');
+    updateNetSpeed(750, '5G', '#00FF00', '🟢 5G CONNECTED — kecepatan maksimum', 10, 5, '5G ACTIVE');
+  }, 170);
+
+  // Stage 6: Speed Boost ON (10ms)
+  setTimeout(()=>{
+    addFLog(`▶ [6/10] Speed Boost ON (10ms) — speed naik ke 1200 Mbps!`, '#00CC00');
+    log(`📶 [Forge 6/10] Speed Boost ON — 1200 Mbps!`, 'ok');
+    updateNetSpeed(1200, '5G', '#00FF00', '🟢 SPEED BOOST — 1200 Mbps maksimum!', 5, 2, 'BOOSTED');
+  }, 185);
+
+  // Stage 7: No Lag No Tolakan (20ms)
+  setTimeout(()=>{
+    addFLog(`▶ [7/10] No Lag (20ms) — tanpa gangguan, langsung lancar!`, '#00e5ff');
+    log(`📶 [Forge 7/10] No Lag — tanpa gangguan, langsung lancar`, 'ok');
+    updateNetSpeed(1500, '5G', '#00FF00', '🔵 NO LAG — tanpa gangguan, lancar terus', 3, 1, 'NO LAG');
+  }, 210);
+
+  // Stage 8: Continuous Streaming (35ms)
+  setTimeout(()=>{
+    addFLog(`▶ [8/10] Continuous Streaming (35ms) — streaming lancar, tidak ada tolakan`, '#0077BB');
+    log(`📶 [Forge 8/10] Continuous Streaming — lancar terus, no tolakan`, 'ok');
+    updateNetSpeed(1800, '5G', '#00FF00', '🟢 CONTINUOUS — streaming lancar terus', 2, 1, 'STREAMING');
+  }, 250);
+
+  // Stage 9: Live Kurs Speed Update (40ms)
+  setTimeout(()=>{
+    addFLog(`▶ [9/10] Live Kurs Speed Update (40ms) — Kurs update lebih cepat dengan 5G`, '#3AAFA9');
+    log(`📶 [Forge 9/10] Live Kurs Speed Update — Kurs lebih cepat dengan 5G`, 'ok');
+    // Speed up Kurs update interval
+    updateNetSpeed(2000, '5G', '#00FF00', '📡 LIVE KURS — update cepat via 5G', 1, 1, 'KURS FAST');
+  }, 295);
+
+  // Stage 10: Fasilitas Mata Defense ON (30ms)
+  setTimeout(()=>{
+    addFLog(`▶ [10/10] Fasilitas Mata Defense ON (30ms) · TOTAL 270ms`, '#10B981');
+    addFLog(`✅ 5G FORGE COMPLETE — jaringan dari 4G lambat → 5G lancar tanpa gangguan!`, '#00FF00');
+    log(`✅ 5G NETWORK FORGE COMPLETE — 4G lambat → 5G lancar · 270ms · no tolakan`, 'ok');
+    updateNetSpeed(2100, '5G', '#00FF00', '✅ 5G FORGE COMPLETE — Fasilitas Mata defense ON', 1, 1, '5G FORGE');
+    if(btn){ btn.disabled = false; btn.textContent = '🔥 FORGE 5G AGAIN'; btn.style.opacity = '1'; }
+    forgeRunning = false;
+  }, 330);
+}
+
+function updateNetSpeed(speed, type, color, label, latency, ping, status){
+  netSpeedVal = speed;
+  if($('netSpeed')){
+    $('netSpeed').textContent = speed + ' Mbps';
+    $('netSpeed').style.color = color;
+    $('netSpeed').style.textShadow = `0 0 10px ${color}66`;
+  }
+  if($('netType')){
+    $('netType').textContent = type;
+    $('netType').style.color = color;
+  }
+  if($('netLabel')) $('netLabel').innerHTML = label;
+  if($('netSpeedBar')){
+    const pct = Math.min(100, speed / 25); // 2000 Mbps = 100%
+    $('netSpeedBar').style.width = pct + '%';
+    $('netSpeedBar').style.background = `linear-gradient(90deg, ${color}, #00FF00)`;
+  }
+  if($('netLatency')){
+    $('netLatency').textContent = latency + 'ms';
+    $('netLatency').style.color = color;
+  }
+  if($('netPing')){
+    $('netPing').textContent = ping + 'ms';
+    $('netPing').style.color = color;
+  }
+  if($('netStatus')){
+    $('netStatus').textContent = status;
+    $('netStatus').style.color = color;
+  }
+  if($('forgeStatus')){
+    $('forgeStatus').textContent = type === '5G' ? '5G LANCAR' : '4G LAMBAT';
+    $('forgeStatus').style.color = color;
+    $('forgeStatus').style.borderColor = color + '4d';
+  }
+}
+
+// Auto-fluctuate network speed slightly (simulating live network)
+setInterval(()=>{
+  if(!forgeRunning && netIs5G){
+    // 5G mode: small fluctuations around 2000 Mbps
+    const fluct = 2000 + Math.floor(Math.random() * 200) - 100;
+    if($('netSpeed')) $('netSpeed').textContent = fluct + ' Mbps';
+  } else if(!forgeRunning && !netIs5G){
+    // 4G mode: small fluctuations around 42 Mbps
+    const fluct = 42 + Math.floor(Math.random() * 10) - 5;
+    if($('netSpeed')) $('netSpeed').textContent = fluct + ' Mbps';
+  }
+}, 2000);
 
 function runAToZPencairan(){
   if(aToZRunning){
